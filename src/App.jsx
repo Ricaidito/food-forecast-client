@@ -3,7 +3,7 @@ import "./App.css";
 const App = () => {
   return (
     <div>
-      <div>Food Forecast</div>
+      <p className="text-3xl font-bold underline">Food Forecast</p>
     </div>
   );
 };
