@@ -10,7 +10,7 @@ const Home = () => {
       <div className="pt-[9rem] grid justify-items-center">
         <div>
           <p className="text-center text-white text-xl font-bold">
-            ¡Somos FoodForecast!
+            ¡Somos Food Forecast!
           </p>
         </div>
         <div>

@@ -5,7 +5,7 @@ const FrequentQuestion = () => {
   return (
     <div className="h-[787px] bg-opacity-25 bg-lime-600 pt-[8.81rem] grid justify-items-center">
       <div className="">
-        <p className="text-stone-900 text-xl font-bold">Preguntas Frecuentes</p>
+        <p className="text-stone-900 text-xl font-bold">Preguntas frecuentes</p>
         <p className=" w-[718px] text-stone-950 text-sm font-normal leading-relaxed pt-[1.38rem]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
           id risus sed augue porta bibendum. Phasellus erat ex, feugiat tempus

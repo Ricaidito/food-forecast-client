@@ -6,7 +6,7 @@ const Subscription = () => {
       <div className="pt-[9rem] grid justify-items-center">
         <div className="">
           <p className="text-center text-zinc-950 text-xl font-bold">
-            Subscripcion
+            Subscripción
           </p>
         </div>
         <div className=" pt-[6rem] flex justify-center">
@@ -34,7 +34,7 @@ const Subscription = () => {
             </div>
 
             <button className=" w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-              Consiguelo
+              Consíguelo
             </button>
           </div>
           <div className="w-[297px] h-[523px] bg-lime-600 bg-opacity-5 rounded-[10px] shadow border border-lime-600 border-opacity-25 grid justify-items-center mx-5">
@@ -61,7 +61,7 @@ const Subscription = () => {
             </div>
 
             <button className=" w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-              Consiguelo
+              Consíguelo
             </button>
           </div>
         </div>

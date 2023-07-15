@@ -14,13 +14,13 @@ const Navbar = () => {
               type="button"
               className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
             >
-              Iniciar Sesión
+              Iniciar sesión
             </button>
             <button
               type="button"
               className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-3 mr-3 md:mr-0"
             >
-              Registrar
+              Registrarse
             </button>
           </div>
           <div
@@ -41,7 +41,7 @@ const Navbar = () => {
                   href="#"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
-                  Sobre Nosotros
+                  Sobre nosotros
                 </a>
               </li>
               <li>
@@ -49,7 +49,7 @@ const Navbar = () => {
                   href="#"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
-                  Subscripcion
+                  Subscripción
                 </a>
               </li>
               <li>

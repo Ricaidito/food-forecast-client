@@ -12,7 +12,7 @@ const Footer = () => {
         </div>
         <div className=" pt-[4.5rem]">
           <p className="text-center text-white text-base font-medium">
-            ©2023. Lorem ipsum dolor sit amet
+            ©2023 Food Forecast. Todos los derechos reservados.
           </p>
         </div>
         <div className=" grid justify-items-center pt-[3.87rem]">
