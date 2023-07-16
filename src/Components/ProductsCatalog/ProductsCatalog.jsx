@@ -27,6 +27,14 @@ const ProductsCatalog = () => {
           </div>
         </nav>
       </div>
+
+      <div>
+        <div className=" grid grid-rows-1 justify-items-center">
+          <div>
+            <button></button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
