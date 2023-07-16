@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import logo from "../../../images/LogoFoodForecast.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -10,18 +11,22 @@ const Navbar = () => {
             <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />
           </a>
           <div className="flex md:order-2">
-            <button
-              type="button"
-              className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-            >
-              Iniciar sesión
-            </button>
-            <button
-              type="button"
-              className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-3 mr-3 md:mr-0"
-            >
-              Registrarse
-            </button>
+            <Link to="/login">
+              <button
+                type="button"
+                className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              >
+                Iniciar sesión
+              </button>
+            </Link>
+            <Link to="/register">
+              <button
+                type="button"
+                className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-3 mr-3 md:mr-0"
+              >
+                Registrarse
+              </button>
+            </Link>
           </div>
           <div
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
