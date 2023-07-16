@@ -35,7 +35,7 @@ const Navbar = () => {
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
               <li>
                 <a
-                  href="#"
+                  href="#home"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
                   Inicio
@@ -43,7 +43,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#about-us"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
                   Sobre nosotros
@@ -51,7 +51,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#subscription"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
                   Subscripción
@@ -59,10 +59,10 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#faq"
                   className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
                 >
-                  Contacto
+                  FAQ
                 </a>
               </li>
             </ul>
