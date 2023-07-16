@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
+import ProductsCatalog from "./Components/ProductsCatalog/ProductsCatalog";
 import "./App.css";
 
 const App = () => {
@@ -18,6 +19,10 @@ const App = () => {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/products-catalog",
+      element: <ProductsCatalog />,
     },
   ]);
 

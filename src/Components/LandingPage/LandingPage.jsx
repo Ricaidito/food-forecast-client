@@ -12,16 +12,16 @@ const LandingPage = () => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div id="home">
         <Home />
       </div>
-      <div>
+      <div id="about-us">
         <AboutUs />
       </div>
-      <div>
+      <div id="subscription">
         <Subscription />
       </div>
-      <div className=" mt-[9.5rem]">
+      <div id="faq" className=" mt-[9.5rem]">
         <FrequentQuestion />
       </div>
       <div>
