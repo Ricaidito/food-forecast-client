@@ -1,5 +1,5 @@
 import "./LandingPage.css";
-import Navbar from "./NavBar/Navbar";
+import Navbar from "../Layouts/LandingPageNavBar/LandingNavBar";
 import Home from "./Home/Home";
 import AboutUs from "./AboutUs/AboutUs";
 import Subscription from "./Subscription/Subscription";
