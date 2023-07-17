@@ -4,6 +4,7 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import ProductsCatalog from "./Components/ProductsCatalog/ProductsCatalog";
+import MyProducts from "./Components/MyProducts/MyProducts";
 import "./App.css";
 
 const App = () => {
@@ -23,6 +24,10 @@ const App = () => {
     {
       path: "/products-catalog",
       element: <ProductsCatalog />,
+    },
+    {
+      path: "/my-products",
+      element: <MyProducts />,
     },
   ]);
 
