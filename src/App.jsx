@@ -1,41 +1,22 @@
-import * as React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LandingPage from "./Components/LandingPage/LandingPage";
-import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
-import ProductsCatalog from "./Components/ProductsCatalog/ProductsCatalog";
-import MyProducts from "./Components/MyProducts/MyProducts";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ReactDOM from "react-dom";
+
 import "./App.css";
 
 const App = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/products-catalog",
-      element: <ProductsCatalog />,
-    },
-    {
-      path: "/my-products",
-      element: <MyProducts />,
-    },
-  ]);
-
   return (
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={""} />
+        <Route index element={""} />
+        <Route path="/login" element={""} />
+        <Route path="/register" element={""} />
+        <Route path="/products" element={""} />
+        <Route path="/myproducts" element={""} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
