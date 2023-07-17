@@ -1,25 +1,48 @@
 import "./Login.css";
-import FoodForecastLogo from "../../images/LogoFoodForecast.png";
-import FoodPhoto from "../../images/FoodImage1.png";
-import GoogleLogo from "../../images/GoogleLogo.png";
+import FoodPhoto from "../../../images/FoodImage1.png";
+import GoogleLogo from "../../../images/GoogleLogo.png";
+import { useState } from "react";
+import useUserContext from "../../../Contexts/useUserContext";
+import userLogin from "../../../services/user";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  return (
-    <div>
-      <div>
-        <nav className="bg-white w-full">
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" className="flex items-center">
-              <img
-                src={FoodForecastLogo}
-                className="h-8 mr-3"
-                alt="Flowbite Logo"
-              />
-            </a>
-          </div>
-        </nav>
-      </div>
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
+  const navigate = useNavigate();
+
+  const { userID, name, lastName, email, isLogged, login, logout } =
+    useUserContext();
+
+  console.log(isLogged);
+  console.log(user);
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    userLogin(user.email, user.password)
+      .then((response) => {
+        console.log(response.data);
+        login(response.data);
+        navigate("/admin");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.name);
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  return (
+    <div className=" mt-6">
       <div className=" grid grid-cols-2 grid-rows-1">
         <div className=" justify-self-center pt-[5.53rem]">
           <div className=" text-start">
@@ -47,10 +70,13 @@ const Login = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="name@flowbite.com"
                   required
+                  value={user.email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-6">
@@ -62,8 +88,11 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
+                  name="password"
                   id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  value={user.password}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -75,6 +104,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="w-[429px] h-[53px] bg-lime-600 rounded-[32px] shadow text-white text-[17px] font-medium mt-[3.75rem] hover:bg-white hover:text-lime-600 hover:shadow-lg"
+                onClick={(event) => handleLogin(event)}
               >
                 Login
               </button>

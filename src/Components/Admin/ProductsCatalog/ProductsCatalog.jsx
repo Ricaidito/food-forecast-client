@@ -1,12 +1,15 @@
 import "./ProductsCatalog.css";
-import FoodForecastLogo from "../../images/LogoFoodForecast.png";
-import ProfilePhoto from "../../images/ProfilePhoto.png";
-import getProducts from "../../services/products";
+import FoodForecastLogo from "../../../images/LogoFoodForecast.png";
+import ProfilePhoto from "../../../images/ProfilePhoto.png";
+import getProducts from "../../../services/products";
 import { useState, useEffect } from "react";
+import useUserContext from "../../../Contexts/useUserContext";
 
 const ProductsCatalog = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const { userID, name, lastName, email, isLogged, login, logout } =
+    useUserContext();
 
   const getAllProducts = (page) => {
     return getProducts(page, 54);
@@ -29,6 +32,8 @@ const ProductsCatalog = () => {
       setProducts(response.data);
     });
   }, [currentPage]);
+
+  console.log(name);
 
   return (
     <div>

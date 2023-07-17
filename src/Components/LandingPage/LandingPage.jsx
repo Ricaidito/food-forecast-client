@@ -1,5 +1,4 @@
 import "./LandingPage.css";
-import Navbar from "../Layouts/LandingPageNavBar/LandingNavBar";
 import Home from "./Home/Home";
 import AboutUs from "./AboutUs/AboutUs";
 import Subscription from "./Subscription/Subscription";
@@ -9,9 +8,6 @@ import Footer from "./Footer/Footer";
 const LandingPage = () => {
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
       <div id="home">
         <Home />
       </div>

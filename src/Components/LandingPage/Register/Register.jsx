@@ -1,25 +1,10 @@
 import "./Register.css";
-import FoodForecastLogo from "../../images/LogoFoodForecast.png";
-import FoodPhoto from "../../images/FoodImage1.png";
-import GoogleLogo from "../../images/GoogleLogo.png";
+import FoodPhoto from "../../../images/FoodImage1.png";
+import GoogleLogo from "../../../images/GoogleLogo.png";
 
 const Register = () => {
   return (
-    <div>
-      <div>
-        <nav className="bg-white w-full">
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" className="flex items-center">
-              <img
-                src={FoodForecastLogo}
-                className="h-8 mr-3"
-                alt="FoodForecastLogo"
-              />
-            </a>
-          </div>
-        </nav>
-      </div>
-
+    <div className=" mt-6">
       <div className=" grid grid-cols-2 grid-rows-1">
         <div className=" justify-self-center pt-[3.53rem]">
           <div className=" text-start">
