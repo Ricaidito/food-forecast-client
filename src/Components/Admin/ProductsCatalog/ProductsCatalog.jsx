@@ -1,7 +1,5 @@
 import "./ProductsCatalog.css";
-import FoodForecastLogo from "../../../images/LogoFoodForecast.png";
-import ProfilePhoto from "../../../images/ProfilePhoto.png";
-import getProducts from "../../../services/products";
+import getProducts from "../../../services/products.service";
 import { useState, useEffect } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
 
@@ -37,49 +35,6 @@ const ProductsCatalog = () => {
 
   return (
     <div>
-      <div>
-        <nav className="bg-white">
-          <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-            <a href="#">
-              <img
-                src={FoodForecastLogo}
-                className="mr-3"
-                alt="Flowbite Logo"
-              />
-            </a>
-            <div>
-              <a href="#">
-                <img
-                  src={ProfilePhoto}
-                  className="w-10 h-10 rounded-full"
-                  alt="ProfilePhoto"
-                />
-              </a>
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      <div className=" pt-[3.19rem]">
-        <div className=" flex justify-center gap-x-[3.19rem]">
-          <button className="w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-            Dashboard
-          </button>
-
-          <button className="w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-            Catalogo
-          </button>
-
-          <button className="w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-            Mis Productos
-          </button>
-
-          <button className="w-[213px] h-[43px] bg-lime-600 rounded-[5px] text-center text-green-50 text-base font-normal">
-            Cuenta
-          </button>
-        </div>
-      </div>
-
       <div className=" pl-[8.88rem] pt-[4.94rem]">
         <p className="text-black text-3xl font-medium">CATALOGO</p>
       </div>

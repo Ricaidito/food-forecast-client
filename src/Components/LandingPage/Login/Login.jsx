@@ -3,7 +3,7 @@ import FoodPhoto from "../../../images/FoodImage1.png";
 import GoogleLogo from "../../../images/GoogleLogo.png";
 import { useState } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
-import userLogin from "../../../services/user";
+import { userLogin } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -16,9 +16,6 @@ const Login = () => {
 
   const { userID, name, lastName, email, isLogged, login, logout } =
     useUserContext();
-
-  console.log(isLogged);
-  console.log(user);
 
   const handleLogin = (event) => {
     event.preventDefault();

@@ -6,4 +6,8 @@ const userLogin = (email, password) => {
   return axios.post(`${url}/users/validate`, { email, password });
 };
 
-export default userLogin;
+const getUserImage = (id) => {
+  return axios.get(`${url}/users/profile-pic/${id}`);
+};
+
+export { userLogin, getUserImage, deleteAllProducts, deleteProduct };
