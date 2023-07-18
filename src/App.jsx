@@ -23,6 +23,7 @@ const App = () => {
           <Route index element={<ProductsCatalog />} />
           <Route path="/admin/products" element={""} />
           <Route path="/admin/myproducts" element={<MyProducts />} />
+          <Route path="/admin/micuenta" element={""} />
         </Route>
       </Routes>
     </BrowserRouter>

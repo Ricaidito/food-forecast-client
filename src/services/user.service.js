@@ -10,4 +10,4 @@ const getUserImage = (id) => {
   return axios.get(`${url}/users/profile-pic/${id}`);
 };
 
-export { userLogin, getUserImage, deleteAllProducts, deleteProduct };
+export { userLogin, getUserImage };

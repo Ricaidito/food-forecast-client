@@ -10,13 +10,15 @@ import {
 } from "../../../services/userProducts.service";
 
 const MyProducts = () => {
-  const [newProduct, setNewProduct] = useState({
+  const productInitialState = {
     productName: "",
     price: "",
     category: "",
     productImage: "",
     origin: "",
-  });
+  };
+
+  const [newProduct, setNewProduct] = useState(productInitialState);
 
   const [userProducts, setUserProducts] = useState([]);
 
@@ -76,6 +78,7 @@ const MyProducts = () => {
       .then((response) => {
         console.log(response.status);
         getProducts();
+        setNewProduct(productInitialState);
       })
       .catch((error) => {
         console.log(error);
@@ -171,7 +174,7 @@ const MyProducts = () => {
                 onChange={handleChange}
                 required
               >
-                <option selected>Escoge la categoria</option>
+                <option defaultValue>Escoge la categoria</option>
                 <option value="carne">Carne</option>
                 <option value="pescado">Pescado</option>
                 <option value="mariscos">Mariscos</option>
@@ -179,45 +182,17 @@ const MyProducts = () => {
               </select>
             </div>
             <div>
-              <p className="block mb-2 text-sm font-medium text-gray-900">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="default_size"
+              >
                 Foto del Producto
-              </p>
-              <div className="flex items-center justify-center w-full">
-                <label
-                  type="dropzone-file"
-                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload</span> or
-                      drag and drop
-                    </p>
-                    <p className="text-xs text-gray-500">JPG (MAX. 1 MB)</p>
-                  </div>
-                  <input
-                    id="dropzone-file"
-                    name="productImage"
-                    type="file"
-                    className="hidden"
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
+              </label>
+              <input
+                className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                id="default_size"
+                type="file"
+              />
             </div>
             <button
               type="submit"
@@ -275,38 +250,36 @@ const MyProducts = () => {
                       Categoria: {product.category}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-700">
-                      Precio: {product.price}
-                    </span>
-                    <div className=" flex gap-x-2">
-                      <a
-                        href="#"
-                        className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  <span className="text-lg font-bold text-gray-700">
+                    Precio: RD${product.price}
+                  </span>
+                  <div className=" flex gap-x-2 mt-4">
+                    <a
+                      href="#"
+                      className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                    >
+                      Comparar
+                    </a>
+                    <button
+                      className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md"
+                      onClick={() => deleteOneUserProduct(product._id)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        Comparar
-                      </a>
-                      <button
-                        className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md"
-                        onClick={() => deleteOneUserProduct(product._id)}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                        Delete
-                      </button>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
