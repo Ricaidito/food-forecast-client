@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
 
 const Product = () => {
@@ -76,60 +77,82 @@ const Product = () => {
       ?.productPrice | 0;
 
   return (
-    <div className="m-6">
-      <div>
-        <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
-          <img src={productWithPrice.product.imageUrl} alt="" />
-          <div className="px-5 pb-5">
-            <h5 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-              Nombre: {productWithPrice.product.productName}
-            </h5>
-            <span className="text-lg font-bold text-gray-700">
-              Precio actual: RD${latestPrice}
-            </span>
-            <div className="mb-3 mt-2.5 flex items-center">
-              <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
-                Categoria: {productWithPrice.product.category}
-              </p>
-            </div>
-            <div className="mb-3 mt-2.5 flex items-center">
-              <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                Lugar: {productWithPrice.product.origin}
-              </p>
-            </div>
-            <div className="mb-3 mt-2.5 flex items-center">
-              <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                Fecha de extracción:{" "}
-                {formatDate(productWithPrice.product.extractionDate)}
-              </p>
+    <div className="m-10">
+      <div className=" flex justify-center gap-56">
+        <div>
+          <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
+            <img src={productWithPrice.product.imageUrl} alt="" />
+            <div className="px-5 pb-5 pt-6">
+              <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                Nombre: {productWithPrice.product.productName}
+              </h5>
+              <span className="text-lg font-bold text-gray-700">
+                Precio actual: RD${latestPrice}
+              </span>
+              <div className="mb-3 mt-2.5 flex items-center">
+                <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
+                  Categoria: {productWithPrice.product.category}
+                </p>
+              </div>
+              <div className="mb-3 mt-2.5 flex items-center">
+                <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
+                  Lugar: {productWithPrice.product.origin}
+                </p>
+              </div>
+              <div className="mb-3 mt-2.5 flex items-center">
+                <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
+                  Fecha de extracción:{" "}
+                  {formatDate(productWithPrice.product.extractionDate)}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className=" mt-6">
-        <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-          Historial de Precios
-          <div>
-            <LineChart
-              width={500}
-              height={300}
-              data={productWithPrice.priceHistory}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis dataKey="productPrice" />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="productPrice"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-            </LineChart>
+        <div className="mt-6">
+          <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+            Historial de Precios
+          </h3>
+          <div className="  flex justify-start gap-x-6">
+            <div>
+              <Table>
+                <Table.Head>
+                  <Table.HeadCell>Fecha</Table.HeadCell>
+                  <Table.HeadCell>Precio</Table.HeadCell>
+                </Table.Head>
+                <Table.Body>
+                  {productWithPrice.priceHistory.map(item => (
+                    <Table.Row key={item._id}>
+                      <Table.Cell>{item.date}</Table.Cell>
+                      <Table.Cell>{item.productPrice}</Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </div>
+            <div>
+              <div>
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={productWithPrice.priceHistory}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis dataKey="productPrice" />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="productPrice"
+                    stroke="#8884d8"
+                    activeDot={{ r: 8 }}
+                  />
+                </LineChart>
+              </div>
+            </div>
           </div>
-        </h3>
+        </div>
       </div>
     </div>
   );

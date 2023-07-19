@@ -216,7 +216,7 @@ const MyProducts = () => {
           <div className=" mb-6 pl-[3.88rem] pt-[4.94rem]">
             <p className="text-3xl font-medium text-black">Mis Productos</p>
           </div>
-          <div className=" w-[30%]">
+          <div className=" ml-[3.88rem] w-96">
             <label
               htmlFor="default-search"
               className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -226,7 +226,7 @@ const MyProducts = () => {
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg
-                  className="h-4 w-4 text-gray-500 dark:text-gray-400"
+                  className="h-4 w-4 text-gray-500"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -245,7 +245,7 @@ const MyProducts = () => {
                 type="search"
                 id="default-search"
                 value={searchTerm}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 placeholder="Buscar"
                 onChange={handleSearch}
                 required
@@ -253,7 +253,7 @@ const MyProducts = () => {
             </div>
           </div>
           <button
-            className="ml-[3.88rem] inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+            className="ml-[3.88rem] mt-6 inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
             onClick={() => deleteAllUserProducts()}
           >
             <svg
