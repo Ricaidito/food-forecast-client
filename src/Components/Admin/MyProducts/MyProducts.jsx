@@ -191,7 +191,9 @@ const MyProducts = () => {
               <input
                 className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
                 id="default_size"
+                name="productImage"
                 type="file"
+                onChange={handleChange}
               />
             </div>
             <button

@@ -1,7 +1,7 @@
 import "./AdminNavBar.css";
 import logo from "../../../images/LogoFoodForecast.png";
 import { Link, Outlet } from "react-router-dom";
-import { Dropdown, Navbar } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
@@ -34,6 +34,8 @@ const AdminNavBar = () => {
           <div className="flex md:order-2">
             <Dropdown
               inline
+              placement="bottom"
+              arrowIcon={false}
               label={
                 <img
                   src={`data:image/jpeg;base64,${userImage}`}
