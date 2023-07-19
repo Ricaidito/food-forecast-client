@@ -101,4 +101,12 @@ const MyLineChart = () => (
   </div>
 );
 
-export default MyLineChart;
+const Dashboard = () => {
+  return (
+    <div>
+      <MyLineChart />
+    </div>
+  );
+};
+
+export default Dashboard;
