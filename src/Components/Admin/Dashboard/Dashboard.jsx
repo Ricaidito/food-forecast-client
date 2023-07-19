@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LineChart,
   Line,
@@ -8,7 +7,6 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import SearchBar from "../../SearchBar/SearchBar";
 import { format, parseISO } from "date-fns";
 
 const data = [
@@ -36,15 +34,12 @@ const data = [
     productUrl: "https://sirena.do/products/index/product2",
     date: "2023-07-17",
   },
-  // ... remaining data items
 ];
 
-// Parse dates to JavaScript Date objects
 data.forEach(item => {
   item.date = parseISO(item.date);
 });
 
-// Function to generate random color
 const getRandomColor = () => {
   let letters = "0123456789ABCDEF";
   let color = "#";
@@ -54,7 +49,6 @@ const getRandomColor = () => {
   return color;
 };
 
-// Function to create a Line for each product
 const renderLines = () => {
   const productUrls = [...new Set(data.map(item => item.productUrl))];
 
@@ -91,9 +85,6 @@ const CustomTooltip = ({ active, payload }) => {
 
 const MyLineChart = () => (
   <div>
-    <div>
-      <SearchBar />
-    </div>
     <LineChart
       width={500}
       height={300}
