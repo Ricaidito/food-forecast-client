@@ -14,25 +14,22 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { userID, name, lastName, email, isLogged, login, logout } =
-    useUserContext();
+  const { login } = useUserContext();
 
-  const handleLogin = (event) => {
+  const handleLogin = event => {
     event.preventDefault();
     userLogin(user.email, user.password)
-      .then((response) => {
-        console.log(response.data);
+      .then(response => {
         login(response.data);
         sessionStorage.setItem("session", JSON.stringify(response.data));
         navigate("/admin");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  const handleChange = (event) => {
-    console.log(event.target.name);
+  const handleChange = event => {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
@@ -44,14 +41,14 @@ const Login = () => {
       <div className=" grid grid-cols-2 grid-rows-1">
         <div className=" justify-self-center pt-[5.53rem]">
           <div className=" text-start">
-            <p className="text-black text-3xl font-medium">Iniciar Sesion</p>
+            <p className="text-3xl font-medium text-black">Iniciar Sesion</p>
             <div className=" pt-[1.37rem]">
-              <p className="w-[308px] text-black text-base font-normal">
+              <p className="w-[308px] text-base font-normal text-black">
                 Si no tienes una cuenta aun
               </p>
               <a
                 href="#"
-                className="w-[308px] text-lime-600 text-base font-semibold"
+                className="w-[308px] text-base font-semibold text-lime-600"
               >
                 ¡Registrate aqui!
               </a>
@@ -62,7 +59,7 @@ const Login = () => {
               <div className="mb-6">
                 <label
                   type="email"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Your email
                 </label>
@@ -70,7 +67,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   placeholder="name@flowbite.com"
                   required
                   value={user.email}
@@ -80,7 +77,7 @@ const Login = () => {
               <div className="mb-6">
                 <label
                   type="password"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Your password
                 </label>
@@ -88,26 +85,26 @@ const Login = () => {
                   type="password"
                   name="password"
                   id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   value={user.password}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className=" grid justify-items-end">
-                <a href="#" className="text-neutral-600 text-xs font-light">
+                <a href="#" className="text-xs font-light text-neutral-600">
                   ¿Olvido su contraseña?
                 </a>
               </div>
               <button
                 type="submit"
-                className="w-[429px] h-[53px] bg-lime-600 rounded-[32px] shadow text-white text-[17px] font-medium mt-[3.75rem] hover:bg-white hover:text-lime-600 hover:shadow-lg"
-                onClick={(event) => handleLogin(event)}
+                className="mt-[3.75rem] h-[53px] w-[429px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+                onClick={event => handleLogin(event)}
               >
                 Login
               </button>
 
-              <p className="text-zinc-400 text-base font-medium text-center pt-[3.25rem]">
+              <p className="pt-[3.25rem] text-center text-base font-medium text-zinc-400">
                 o continua con
               </p>
               <div className=" grid justify-items-center pt-[1.13rem]">
@@ -118,10 +115,10 @@ const Login = () => {
             </form>
           </div>
         </div>
-        <div className="w-[1145px] h-[1003px] bg-lime-600 rounded-[15px] grid justify-items-center">
+        <div className="grid h-[1003px] w-[1145px] justify-items-center rounded-[15px] bg-lime-600">
           <img
             src={FoodPhoto}
-            className="w-[1028px] h-[599px] mt-[12.62rem]"
+            className="mt-[12.62rem] h-[599px] w-[1028px]"
             alt="Food Photo"
           />
         </div>
