@@ -111,7 +111,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8000/products/product-info/64b7738d6a401271120fe0a6"
+      "http://localhost:8000/products/product-info/64b788929d7cef72dcf28f5c"
     )
       .then(response => response.json())
       .then(data => setProduct1(data))
@@ -120,7 +120,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8000/products/product-info/64b7738d6a401271120fe0a7"
+      "http://localhost:8000/products/product-info/64b788929d7cef72dcf28f5d"
     )
       .then(response => response.json())
       .then(data => setProduct2(data))
@@ -135,10 +135,10 @@ const Dashboard = () => {
         <ProductInfo product={product2} />
       </div>
       <PriceComparisonTable
-        productId1="64b7738d6a401271120fe0a6"
-        productId2="64b7738d6a401271120fe0a7"
+        productId1="64b788929d7cef72dcf28f5c"
+        productId2="64b788929d7cef72dcf28f5d"
       />
-      <MyLineChart />
+      {/* <MyLineChart /> */}
     </div>
   );
 };
