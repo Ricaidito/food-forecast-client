@@ -23,6 +23,7 @@ const Login = () => {
       .then((response) => {
         console.log(response.data);
         login(response.data);
+        sessionStorage.setItem("session", JSON.stringify(response.data));
         navigate("/admin");
       })
       .catch((error) => {

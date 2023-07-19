@@ -6,6 +6,8 @@ import Register from "./Components/LandingPage/Register/Register";
 import AdminNavBar from "./Components/Layouts/AdminNavBar/AdminNavBar";
 import ProductsCatalog from "./Components/Admin/ProductsCatalog/ProductsCatalog";
 import MyProducts from "./Components/Admin/MyProducts/MyProducts";
+import Settings from "./Components/Admin/Settings/Settings";
+import Dashboard from "./Components/Admin/Dashboard/Dashboard";
 
 import "./App.css";
 import Product from "./Components/Admin/Product/Product";
@@ -21,10 +23,10 @@ const App = () => {
         </Route>
 
         <Route path="/admin" element={<AdminNavBar />}>
-          <Route index element={<ProductsCatalog />} />
-          <Route path="/admin/product/:productId" element={<Product />} />
-          <Route path="/admin/products" element={""} />
+          <Route index element={<Dashboard />} />
+          <Route path="/admin/products" element={<ProductsCatalog />} />
           <Route path="/admin/myproducts" element={<MyProducts />} />
+          <Route path="/admin/micuenta" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
