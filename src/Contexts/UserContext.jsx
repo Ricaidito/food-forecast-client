@@ -1,12 +1,12 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 // Initial state
 const initialState = {
-  userID: null,
-  name: null,
-  lastName: null,
-  email: null,
-  isLogged: false,
+  userID: sessionStorage.getItem("userID") || null,
+  name: sessionStorage.getItem("name") || null,
+  lastName: sessionStorage.getItem("lastName") || null,
+  email: sessionStorage.getItem("email") || null,
+  isLogged: sessionStorage.getItem("isLogged") === "true" || false,
 };
 
 // Create context
@@ -41,6 +41,14 @@ const userReducer = (state, action) => {
 // Provider component
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
+
+  useEffect(() => {
+    sessionStorage.setItem("userID", state.userID);
+    sessionStorage.setItem("name", state.name);
+    sessionStorage.setItem("lastName", state.lastName);
+    sessionStorage.setItem("email", state.email);
+    sessionStorage.setItem("isLogged", state.isLogged);
+  }, [state]);
 
   // Actions
   const login = (userData) => {

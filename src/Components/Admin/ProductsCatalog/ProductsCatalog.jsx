@@ -15,6 +15,7 @@ const ProductsCatalog = () => {
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
+    window.scrollTo(0, 0);
   };
 
   const handlePreviousPage = () => {
@@ -23,6 +24,7 @@ const ProductsCatalog = () => {
     }
 
     setCurrentPage(currentPage - 1);
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
