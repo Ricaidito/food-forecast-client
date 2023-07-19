@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import SearchBar from "../../SearchBar/SearchBar";
 import { format, parseISO } from "date-fns";
 
 const data = [
@@ -39,7 +40,7 @@ const data = [
 ];
 
 // Parse dates to JavaScript Date objects
-data.forEach((item) => {
+data.forEach(item => {
   item.date = parseISO(item.date);
 });
 
@@ -55,16 +56,16 @@ const getRandomColor = () => {
 
 // Function to create a Line for each product
 const renderLines = () => {
-  const productUrls = [...new Set(data.map((item) => item.productUrl))];
+  const productUrls = [...new Set(data.map(item => item.productUrl))];
 
-  return productUrls.map((url) => {
+  return productUrls.map(url => {
     return (
       <Line
         key={url}
         type="monotone"
         dataKey="productPrice"
         stroke={getRandomColor()}
-        data={data.filter((item) => item.productUrl === url)}
+        data={data.filter(item => item.productUrl === url)}
         name={url}
       />
     );
@@ -89,19 +90,24 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const MyLineChart = () => (
-  <LineChart
-    width={500}
-    height={300}
-    data={data}
-    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-  >
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey={(data) => format(data.date, "dd/MM/yyyy")} />
-    <YAxis />
-    <Tooltip content={<CustomTooltip />} />
-    <Legend />
-    {renderLines()}
-  </LineChart>
+  <div>
+    <div>
+      <SearchBar />
+    </div>
+    <LineChart
+      width={500}
+      height={300}
+      data={data}
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey={data => format(data.date, "dd/MM/yyyy")} />
+      <YAxis />
+      <Tooltip content={<CustomTooltip />} />
+      <Legend />
+      {renderLines()}
+    </LineChart>
+  </div>
 );
 
 export default MyLineChart;

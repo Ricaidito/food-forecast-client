@@ -2,6 +2,7 @@ import "./ProductsCatalog.css";
 import { getProducts } from "../../../services/products.service";
 import { useState, useEffect } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
+import SearchBar from "../../SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 
 const ProductsCatalog = () => {
@@ -40,6 +41,10 @@ const ProductsCatalog = () => {
     <div>
       <div className=" pl-[8.88rem] pt-[4.94rem]">
         <p className="text-3xl font-medium text-black">CATALOGO</p>
+      </div>
+
+      <div>
+        <SearchBar />
       </div>
 
       <div className=" pt-[2.71rem]">
