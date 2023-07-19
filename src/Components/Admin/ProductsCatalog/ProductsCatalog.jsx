@@ -2,15 +2,13 @@ import "./ProductsCatalog.css";
 import { getProducts } from "../../../services/products.service";
 import { useState, useEffect } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductsCatalog = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { userID, name, lastName, email, isLogged, login, logout } =
     useUserContext();
-
-  const navigate = useNavigate();
 
   const getAllProducts = page => {
     return getProducts(page, 54);
