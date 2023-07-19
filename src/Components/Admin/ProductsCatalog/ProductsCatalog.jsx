@@ -38,7 +38,7 @@ const ProductsCatalog = () => {
         <p className="text-3xl font-medium text-black">CATALOGO</p>
       </div>
 
-      <div>
+      <div className=" ml-[4.88rem]">
         <SearchBar />
       </div>
 
