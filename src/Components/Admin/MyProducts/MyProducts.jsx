@@ -183,13 +183,13 @@ const MyProducts = () => {
             </div>
             <div>
               <label
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
                 htmlFor="default_size"
               >
                 Foto del Producto
               </label>
               <input
-                className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                className="mb-5 block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:text-gray-400"
                 id="default_size"
                 name="productImage"
                 type="file"
@@ -255,20 +255,20 @@ const MyProducts = () => {
                   <span className="text-lg font-bold text-gray-700">
                     Precio: RD${product.price}
                   </span>
-                  <div className=" flex gap-x-2 mt-4">
+                  <div className=" mt-4 flex gap-x-2">
                     <a
                       href="#"
-                      className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                      className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
                     >
                       Comparar
                     </a>
                     <button
-                      className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md"
+                      className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                       onClick={() => deleteOneUserProduct(product._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-2"
+                        className="mr-2 h-5 w-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
