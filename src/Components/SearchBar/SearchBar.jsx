@@ -57,8 +57,8 @@ const SearchBar = () => {
       {products.length > 0 && searchTerm && (
         <ul className="dropdown-menu rounded-lg border border-gray-300">
           {products.slice(0, 6).map(product => (
-            <Link to={`/admin/product/${product._id}`}>
-              <li key={product._id} className="dropdown-item hover:bg-gray-400">
+            <Link key={product._id} to={`/admin/product/${product._id}`}>
+              <li className="dropdown-item hover:bg-gray-400">
                 <img src={product.imageUrl} alt={product.productName} />
                 {product.productName}
               </li>
