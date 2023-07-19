@@ -8,6 +8,7 @@ import ProductsCatalog from "./Components/Admin/ProductsCatalog/ProductsCatalog"
 import MyProducts from "./Components/Admin/MyProducts/MyProducts";
 
 import "./App.css";
+import Product from "./Components/Admin/Product/Product";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
 
         <Route path="/admin" element={<AdminNavBar />}>
           <Route index element={<ProductsCatalog />} />
+          <Route path="/admin/product/:productId" element={<Product />} />
           <Route path="/admin/products" element={""} />
           <Route path="/admin/myproducts" element={<MyProducts />} />
         </Route>
