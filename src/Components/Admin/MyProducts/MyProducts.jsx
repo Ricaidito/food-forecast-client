@@ -26,33 +26,33 @@ const MyProducts = () => {
 
   const getProducts = () => {
     getUserProducts(userID)
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
         setUserProducts(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
   const deleteAllUserProducts = () => {
     deleteAllProducts(userID)
-      .then((response) => {
+      .then(response => {
         console.log(response.status);
         getProducts();
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  const deleteOneUserProduct = (productID) => {
+  const deleteOneUserProduct = productID => {
     deleteProduct(userID, productID)
-      .then((response) => {
+      .then(response => {
         console.log(response.status);
         getProducts();
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -61,7 +61,7 @@ const MyProducts = () => {
     getProducts();
   }, []);
 
-  const handleAddProduct = (event) => {
+  const handleAddProduct = event => {
     event.preventDefault();
 
     let formData = new FormData();
@@ -75,17 +75,17 @@ const MyProducts = () => {
       console.log(pair[0] + ", " + pair[1]);
     }
     addProduct(userID, formData)
-      .then((response) => {
+      .then(response => {
         console.log(response.status);
         getProducts();
         setNewProduct(productInitialState);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     if (event.target.name === "productImage") {
       // handle file
       setNewProduct({
@@ -104,14 +104,14 @@ const MyProducts = () => {
     <div className=" mt-6">
       <div className=" grid grid-cols-1 grid-rows-2 pt-10">
         <div className="w-[429px] pl-[5.88rem]">
-          <p className="text-black text-2xl font-medium mb-6">
+          <p className="mb-6 text-2xl font-medium text-black">
             Añdir Productos
           </p>
           <form>
             <div className="mb-6">
               <label
                 type="text"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
               >
                 Nombre del Producto
               </label>
@@ -119,7 +119,7 @@ const MyProducts = () => {
                 type="text"
                 name="productName"
                 id="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 value={newProduct.productName}
                 onChange={handleChange}
                 required
@@ -128,7 +128,7 @@ const MyProducts = () => {
             <div className="mb-6">
               <label
                 type="number"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
               >
                 Precio
               </label>
@@ -136,7 +136,7 @@ const MyProducts = () => {
                 type="number"
                 name="price"
                 id="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 value={newProduct.price}
                 onChange={handleChange}
                 required
@@ -145,7 +145,7 @@ const MyProducts = () => {
             <div className="mb-6">
               <label
                 type="number"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
               >
                 Origen
               </label>
@@ -153,7 +153,7 @@ const MyProducts = () => {
                 type="text"
                 name="origin"
                 id="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 value={newProduct.origin}
                 onChange={handleChange}
                 required
@@ -162,14 +162,14 @@ const MyProducts = () => {
             <div className="mb-6">
               <label
                 type="products"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
               >
                 Escoge una Categoria
               </label>
               <select
                 id="products"
                 name="category"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 value={newProduct.category}
                 onChange={handleChange}
                 required
@@ -183,13 +183,13 @@ const MyProducts = () => {
             </div>
             <div>
               <label
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="mb-2 block text-sm font-medium text-gray-900"
                 htmlFor="default_size"
               >
                 Foto del Producto
               </label>
               <input
-                className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
+                className="mb-5 block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:text-gray-400"
                 id="default_size"
                 name="productImage"
                 type="file"
@@ -198,24 +198,24 @@ const MyProducts = () => {
             </div>
             <button
               type="submit"
-              className="w-[229px] h-[53px] bg-lime-600 rounded-[32px] shadow text-white text-[17px] font-medium mt-[3.75rem] hover:bg-white hover:text-lime-600 hover:shadow-lg"
-              onClick={(event) => handleAddProduct(event)}
+              className="mt-[3.75rem] h-[53px] w-[229px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              onClick={event => handleAddProduct(event)}
             >
               Añadir Producto
             </button>
           </form>
         </div>
         <div className=" pt-5">
-          <div className=" pl-[3.88rem] pt-[4.94rem] mb-6">
-            <p className="text-black text-3xl font-medium">Mis Productos</p>
+          <div className=" mb-6 pl-[3.88rem] pt-[4.94rem]">
+            <p className="text-3xl font-medium text-black">Mis Productos</p>
           </div>
           <button
-            className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md ml-[3.88rem]"
+            className="ml-[3.88rem] inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
             onClick={() => deleteAllUserProducts()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 mr-2"
+              className="mr-2 h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -230,45 +230,45 @@ const MyProducts = () => {
             Delete All
           </button>
           <div className=" grid grid-cols-6 justify-items-center gap-y-6 pt-10">
-            {userProducts.map((product) => (
+            {userProducts.map(product => (
               <div
                 key={product._id}
-                className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow"
+                className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow"
               >
                 <a href="#">
                   <BufferImage
                     bufferImage={product.productImage}
-                    className="p-8 rounded-t-lg"
+                    className="rounded-t-lg p-8"
                   />
                 </a>
                 <div className="px-5 pb-5">
                   <a href="#">
-                    <h5 className="text-gray-700 text-base font-bold leading-tight tracking-tight w-[141.11px]">
+                    <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
                       {product.productName}
                     </h5>
                   </a>
-                  <div className="flex items-center mt-2.5 mb-3">
-                    <p className=" text-lg text-gray-700 font-bold leading-tight tracking-tight w-[141.11px]">
+                  <div className="mb-3 mt-2.5 flex items-center">
+                    <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
                       Categoria: {product.category}
                     </p>
                   </div>
                   <span className="text-lg font-bold text-gray-700">
                     Precio: RD${product.price}
                   </span>
-                  <div className=" flex gap-x-2 mt-4">
+                  <div className=" mt-4 flex gap-x-2">
                     <a
                       href="#"
-                      className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                      className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
                     >
                       Comparar
                     </a>
                     <button
-                      className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md"
+                      className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                       onClick={() => deleteOneUserProduct(product._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-2"
+                        className="mr-2 h-5 w-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

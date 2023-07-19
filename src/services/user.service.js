@@ -6,7 +6,7 @@ const userLogin = (email, password) => {
   return axios.post(`${url}/users/validate`, { email, password });
 };
 
-const getUserImage = (id) => {
+const getUserImage = id => {
   return axios.get(`${url}/users/profile-pic/${id}`);
 };
 

@@ -10,6 +10,7 @@ import Settings from "./Components/Admin/Settings/Settings";
 import Dashboard from "./Components/Admin/Dashboard/Dashboard";
 
 import "./App.css";
+import Product from "./Components/Admin/Product/Product";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/admin" element={<AdminNavBar />}>
           <Route index element={<Dashboard />} />
           <Route path="/admin/products" element={<ProductsCatalog />} />
+          <Route path="/admin/product/:productId" element={<Product />} />
           <Route path="/admin/myproducts" element={<MyProducts />} />
           <Route path="/admin/micuenta" element={<Settings />} />
         </Route>
