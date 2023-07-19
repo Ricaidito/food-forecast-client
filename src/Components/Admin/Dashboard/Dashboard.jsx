@@ -8,6 +8,10 @@ import {
   Legend,
 } from "recharts";
 import { format, parseISO } from "date-fns";
+import PriceComparisonTable from "../../PriceComparisonTable/PriceComparisonTable";
+import ProductInfo from "../../ProductInfo/ProductInfo";
+import { useEffect, useState } from "react";
+import SearchBar from "../../SearchBar/SearchBar";
 
 const data = [
   {
@@ -101,4 +105,42 @@ const MyLineChart = () => (
   </div>
 );
 
-export default MyLineChart;
+const Dashboard = () => {
+  const [product1, setProduct1] = useState(null);
+  const [product2, setProduct2] = useState(null);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:8000/products/product-info/64b7738d6a401271120fe0a6"
+    )
+      .then(response => response.json())
+      .then(data => setProduct1(data))
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:8000/products/product-info/64b7738d6a401271120fe0a7"
+    )
+      .then(response => response.json())
+      .then(data => setProduct2(data))
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
+
+  return (
+    <div className="m-2 p-2">
+      <SearchBar />
+      <div className="m-2 flex justify-evenly p-2">
+        <ProductInfo product={product1} />
+        <ProductInfo product={product2} />
+      </div>
+      <PriceComparisonTable
+        productId1="64b7738d6a401271120fe0a6"
+        productId2="64b7738d6a401271120fe0a7"
+      />
+      <MyLineChart />
+    </div>
+  );
+};
+
+export default Dashboard;
