@@ -13,7 +13,7 @@ const AdminNavBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserImage(userID).then((response) => {
+    getUserImage(userID).then(response => {
       setUserImage(response.data);
     });
   }, [userID]);
@@ -26,10 +26,10 @@ const AdminNavBar = () => {
 
   return (
     <div>
-      <nav className="bg-white w-full border-b border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <nav className="w-full border-b border-gray-200 bg-white">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
           <Link to="/admin" className="flex items-center">
-            <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />
+            <img src={logo} className="mr-3 h-8" alt="Flowbite Logo" />
           </Link>
           <div className="flex md:order-2">
             <Dropdown
@@ -39,7 +39,7 @@ const AdminNavBar = () => {
               label={
                 <img
                   src={`data:image/jpeg;base64,${userImage}`}
-                  className="w-10 h-10 rounded-full"
+                  className="h-10 w-10 rounded-full"
                   alt="User Image"
                 />
               }
@@ -63,14 +63,14 @@ const AdminNavBar = () => {
           </div>
 
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
             id="navbar-sticky"
           >
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+            <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0">
               <li>
                 <Link
                   to="/admin"
-                  className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Dashboard
                 </Link>
@@ -78,15 +78,23 @@ const AdminNavBar = () => {
               <li>
                 <Link
                   to="/admin/products"
-                  className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Catalogo
                 </Link>
               </li>
               <li>
                 <Link
+                  to="/admin/basket"
+                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
+                >
+                  Canasta Basica
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/admin/myproducts"
-                  className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Mis Productos
                 </Link>
