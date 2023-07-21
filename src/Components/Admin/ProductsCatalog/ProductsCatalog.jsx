@@ -3,8 +3,10 @@ import { getProducts } from "../../../services/products.service";
 import { useState, useEffect } from "react";
 import SearchBar from "../../SearchBar/SearchBar";
 import { Link } from "react-router-dom";
+import { useProductContext } from "../../../Contexts/ProductContext";
 
 const ProductsCatalog = () => {
+  const { isProductIdSelected, addProductId } = useProductContext();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -71,12 +73,16 @@ const ProductsCatalog = () => {
                   <span className="text-lg font-bold text-gray-700">
                     Lugar: {p.origin}
                   </span>
-                  <a
-                    href="#"
-                    className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                  >
-                    Comparar
-                  </a>
+                  {!isProductIdSelected(p._id) && (
+                    <button
+                      onClick={() => {
+                        addProductId(p._id);
+                      }}
+                      className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    >
+                      Comparar
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

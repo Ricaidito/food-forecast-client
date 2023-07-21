@@ -9,9 +9,9 @@ import {
 } from "recharts";
 import { format, parseISO } from "date-fns";
 import PriceComparisonTable from "../../PriceComparisonTable/PriceComparisonTable";
-import ProductInfo from "../../ProductInfo/ProductInfo";
-import { useEffect, useState } from "react";
-import SearchBar from "../../SearchBar/SearchBar";
+import ProductInfoFrame from "../../ProductInfoFrame/ProductInfoFrame";
+import { useProductContext } from "../../../Contexts/ProductContext";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -106,38 +106,28 @@ const MyLineChart = () => (
 );
 
 const Dashboard = () => {
-  const [product1, setProduct1] = useState(null);
-  const [product2, setProduct2] = useState(null);
+  const { selectedProductIds } = useProductContext();
 
-  useEffect(() => {
-    fetch(
-      "http://localhost:8000/products/product-info/64b788929d7cef72dcf28f5c"
-    )
-      .then(response => response.json())
-      .then(data => setProduct1(data))
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      "http://localhost:8000/products/product-info/64b788929d7cef72dcf28f5d"
-    )
-      .then(response => response.json())
-      .then(data => setProduct2(data))
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
+  if (selectedProductIds.length === 0) {
+    return (
+      <div className="m-2 p-2">
+        <p className="text-3xl font-medium text-black">
+          Parece que no has seleccionado ningún producto para comparar
+        </p>
+        <p>
+          Puedes seleccionar los productos en el{" "}
+          <Link to="/admin/products" className="underline decoration-sky-500">
+            catalogo
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="m-2 p-2">
-      <SearchBar />
-      <div className="m-2 flex justify-evenly p-2">
-        <ProductInfo product={product1} />
-        <ProductInfo product={product2} />
-      </div>
-      <PriceComparisonTable
-        productId1="64b788929d7cef72dcf28f5c"
-        productId2="64b788929d7cef72dcf28f5d"
-      />
+      <ProductInfoFrame productIds={selectedProductIds} />
+      <PriceComparisonTable productIds={selectedProductIds} />
       {/* <MyLineChart /> */}
     </div>
   );
