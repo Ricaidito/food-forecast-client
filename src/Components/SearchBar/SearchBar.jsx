@@ -17,7 +17,7 @@ const SearchBar = () => {
   const fetchProducts = debounce(async searchTerm => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/products/search/${searchTerm}`
+        `http://localhost:8000/products?productName=${searchTerm}`
       );
       setProducts(response.data);
     } catch (err) {
