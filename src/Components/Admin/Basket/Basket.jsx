@@ -1,14 +1,14 @@
-import "./Basket.css";
 import { useState, useEffect } from "react";
-import { getBasket } from "../../../services/basket.service";
+import { getBasket, getBasketInfo } from "../../../services/basket.service";
 import { Table } from "flowbite-react";
+import "./Basket.css";
 
 const Basket = () => {
-  const [basket, setBasket] = useState([]);
-  const [date, setDate] = useState();
+  const [basket, setBasket] = useState({});
+  const [basketInfo, setBasketInfo] = useState({});
 
-  const convertDateFormat = input => {
-    let date = new Date(input);
+  const convertDateFormat = inputDate => {
+    let date = new Date(inputDate);
     let month = date.getMonth() + 1;
     let day = date.getDate();
     let year = date.getFullYear();
@@ -20,30 +20,47 @@ const Basket = () => {
 
   useEffect(() => {
     getBasket().then(response => {
-      setBasket(response.data.products);
-      setDate(convertDateFormat(response.data.extractionDate));
+      setBasket(response.data);
+    });
+    getBasketInfo().then(response => {
+      setBasketInfo(response.data);
     });
   }, []);
-
-  console.log(basket);
 
   return (
     <div>
       <div className=" pl-[8.88rem]">
         <p className="text-3xl font-medium text-black">Canasta Basica</p>
         <p className="text-2xl font-medium text-black">
-          Fecha Extraida: {date}
+          Fecha Extraida: {convertDateFormat(basket.extractionDate)}
+        </p>
+        <p className="text-1xl font-medium text-black">
+          Precio total de la canasta: RD${basket.totalAmount}
+        </p>
+      </div>
+      <div className=" pl-[8.88rem]">
+        <p className="text-3xl font-medium text-black">
+          Comparación con canasta anterior
+        </p>
+        <p className="text-2xl font-medium text-black">
+          Diferencia: RD${basketInfo.difference}
+        </p>
+        <p className="text-1xl font-medium text-black">
+          Precio total de la canasta anterior: RD${basketInfo.previousPrice}
+        </p>
+        <p className="text-1xl font-medium text-black">
+          Fecha Extraida: {convertDateFormat(basketInfo.previousExtractionDate)}
         </p>
       </div>
       <div className=" mt-8">
         <Table>
           <Table.Head>
-            <Table.HeadCell>{""}</Table.HeadCell>
+            <Table.HeadCell>Imagen</Table.HeadCell>
             <Table.HeadCell>Nombre</Table.HeadCell>
             <Table.HeadCell>Precio</Table.HeadCell>
           </Table.Head>
           <Table.Body>
-            {basket.map(item => (
+            {basket.products?.map(item => (
               <Table.Row key={item._id}>
                 <Table.Cell>
                   <img

@@ -10,4 +10,12 @@ const getUserImage = id => {
   return axios.get(`${url}/users/profile-pic/${id}`);
 };
 
-export { userLogin, getUserImage };
+const createUser = userData => {
+  return axios.post(`${url}/users`, userData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export { userLogin, getUserImage, createUser };

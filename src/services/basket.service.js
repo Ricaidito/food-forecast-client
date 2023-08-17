@@ -3,7 +3,11 @@ import axios from "axios";
 const url = "http://localhost:8000";
 
 const getBasket = () => {
-  return axios.get(`${url}/baskets/`);
+  return axios.get(`${url}/baskets`);
 };
 
-export { getBasket };
+const getBasketInfo = () => {
+  return axios.get(`${url}/baskets/info`);
+};
+
+export { getBasket, getBasketInfo };

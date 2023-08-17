@@ -1,4 +1,3 @@
-import "./AdminNavBar.css";
 import logo from "../../../images/LogoFoodForecast.png";
 import { Link, Outlet } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
@@ -6,6 +5,7 @@ import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import "./AdminNavBar.css";
 
 const AdminNavBar = () => {
   const { userID, name, lastName, email, logout } = useUserContext();
@@ -53,11 +53,11 @@ const AdminNavBar = () => {
                 </span>
               </Dropdown.Header>
               <Link to="/admin/micuenta">
-                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Item>Configuración</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Dropdown.Item onClick={() => handleLogout()}>
-                Sign out
+                Cerrar sesión
               </Dropdown.Item>
             </Dropdown>
           </div>
@@ -70,7 +70,7 @@ const AdminNavBar = () => {
               <li>
                 <Link
                   to="/admin"
-                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
+                  className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Dashboard
                 </Link>
@@ -78,7 +78,7 @@ const AdminNavBar = () => {
               <li>
                 <Link
                   to="/admin/products"
-                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
+                  className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Catalogo
                 </Link>
@@ -86,7 +86,7 @@ const AdminNavBar = () => {
               <li>
                 <Link
                   to="/admin/basket"
-                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
+                  className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Canasta Basica
                 </Link>
@@ -94,7 +94,7 @@ const AdminNavBar = () => {
               <li>
                 <Link
                   to="/admin/myproducts"
-                  className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
+                  className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
                   Mis Productos
                 </Link>

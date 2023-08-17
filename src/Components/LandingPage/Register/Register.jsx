@@ -1,114 +1,179 @@
-import "./Register.css";
+import { useState } from "react";
+import { createUser } from "../../../services/user.service";
+import { useNavigate } from "react-router-dom";
 import FoodPhoto from "../../../images/FoodImage1.png";
 import GoogleLogo from "../../../images/GoogleLogo.png";
+import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    profilePicture: null,
+  });
+
+  const handleInputChange = e => {
+    const { id, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleFileChange = e => {
+    setFormData(prevData => ({
+      ...prevData,
+      profilePicture: e.target.files[0],
+    }));
+  };
+
+  const handleFormSubmit = async e => {
+    e.preventDefault();
+
+    const userData = new FormData();
+    userData.append("name", formData.name);
+    userData.append("lastName", formData.lastName);
+    userData.append("email", formData.email);
+    userData.append("password", formData.password);
+    userData.append("confirmPassword", formData.confirmPassword);
+
+    if (formData.profilePicture)
+      userData.append("profilePicture", formData.profilePicture);
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await createUser(userData);
+      if (response.status === 201) alert("User created successfully");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className=" mt-6">
       <div className=" grid grid-cols-2 grid-rows-1">
         <div className=" justify-self-center pt-[3.53rem]">
           <div className=" text-start">
-            <p className="text-black text-3xl font-medium">Registro</p>
+            <p className="text-3xl font-medium text-black">Registro</p>
             <div className=" pt-[1.37rem]">
-              <p className="w-[308px] text-black text-base font-normal">
+              <p className="w-[308px] text-base font-normal text-black">
                 Si ya tienes una cuenta
               </p>
               <a
                 href="#"
-                className="w-[308px] text-lime-600 text-base font-semibold"
+                className="w-[308px] text-base font-semibold text-lime-600"
               >
                 ¡Inicia Sesion Aqui!
               </a>
             </div>
           </div>
           <div className=" w-[429px] pt-[2.75rem]">
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <div className="mb-6">
                 <label
                   type="text"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Nombre
                 </label>
                 <input
                   type="text"
-                  id="text"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="name"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   placeholder="Ej. Juan"
                   required
+                  onChange={handleInputChange}
+                  value={formData.name}
                 />
               </div>
               <div className="mb-6">
                 <label
                   type="text"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Apellido
                 </label>
                 <input
                   type="text"
-                  id="text"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="lastName"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   placeholder="Ej. Perez"
                   required
+                  onChange={handleInputChange}
+                  value={formData.lastName}
                 />
               </div>
               <div className="mb-6">
                 <label
                   type="email"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Your email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   placeholder="name@flowbite.com"
                   required
+                  onChange={handleInputChange}
+                  value={formData.email}
                 />
               </div>
               <div className="mb-6">
                 <label
                   type="password"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Introduzca su contraseña
                 </label>
                 <input
                   type="password"
                   id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   required
+                  onChange={handleInputChange}
+                  value={formData.password}
                 />
               </div>
               <div className="mb-6">
                 <label
                   type="password"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Confirme su contraseña
                 </label>
                 <input
                   type="password"
-                  id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="confirmPassword"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   required
+                  onChange={handleInputChange}
+                  value={formData.confirmPassword}
                 />
               </div>
 
               <div>
-                <p className="block mb-2 text-sm font-medium text-gray-900">
+                <p className="mb-2 block text-sm font-medium text-gray-900">
                   Foto de Perfil
                 </p>
-                <div className="flex items-center justify-center w-full">
+                <div className="flex w-full items-center justify-center">
                   <label
                     type="dropzone-file"
-                    className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50"
+                    className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
                   >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <div className="flex flex-col items-center justify-center pb-6 pt-5">
                       <svg
-                        className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                        className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -123,26 +188,34 @@ const Register = () => {
                         />
                       </svg>
                       <p className="mb-2 text-sm text-gray-500">
-                        <span className="font-semibold">Click to upload</span>{" "}
-                        or drag and drop
+                        <span className="font-semibold">Click para subir</span>{" "}
+                        o arrastra y suelta una imagen
                       </p>
                       <p className="text-xs text-gray-500">
                         PNG o JPG (MAX. 1 MB)
                       </p>
                     </div>
-                    <input id="dropzone-file" type="file" className="hidden" />
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                    <div className="mt-2 text-sm text-gray-500">
+                      {formData.profilePicture
+                        ? formData.profilePicture.name
+                        : "Aún no se ha seleccionado un archivo"}
+                    </div>
                   </label>
                 </div>
               </div>
-
               <button
                 type="submit"
-                className="w-[429px] h-[53px] bg-lime-600 rounded-[32px] shadow text-white text-[17px] font-medium mt-[3.75rem] hover:bg-white hover:text-lime-600 hover:shadow-lg"
+                className="mt-[3.75rem] h-[53px] w-[429px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
               >
                 Registrar
               </button>
-
-              <p className="text-zinc-400 text-base font-medium text-center pt-[3.25rem]">
+              <p className="pt-[3.25rem] text-center text-base font-medium text-zinc-400">
                 o continua con
               </p>
               <div className=" grid justify-items-center pt-[1.13rem]">
@@ -153,10 +226,10 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div className="w-[1145px] h-[1003px] bg-lime-600 rounded-[15px] grid justify-items-center">
+        <div className="grid h-[1003px] w-[1145px] justify-items-center rounded-[15px] bg-lime-600">
           <img
             src={FoodPhoto}
-            className="w-[1028px] h-[599px] mt-[12.62rem]"
+            className="mt-[12.62rem] h-[599px] w-[1028px]"
             alt="Food Photo"
           />
         </div>
