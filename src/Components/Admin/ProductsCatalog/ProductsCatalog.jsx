@@ -1,17 +1,19 @@
-import "./ProductsCatalog.css";
 import { getProducts } from "../../../services/products.service";
 import { useState, useEffect } from "react";
 import SearchBar from "../../SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { useProductContext } from "../../../Contexts/ProductContext";
+import CategoryFilter from "../../CategoryFilter/CategoryFilter";
+import "./ProductsCatalog.css";
 
 const ProductsCatalog = () => {
   const { isProductIdSelected, addProductId } = useProductContext();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [category, setCategory] = useState(null);
 
-  const getAllProducts = page => {
-    return getProducts(page, 54);
+  const getAllProducts = (page, selectedCategory) => {
+    return getProducts(page, selectedCategory);
   };
 
   const handleNextPage = () => {
@@ -29,15 +31,20 @@ const ProductsCatalog = () => {
   };
 
   useEffect(() => {
-    getAllProducts(currentPage).then(response => {
+    getAllProducts(currentPage, category).then(response => {
       setProducts(response.data);
     });
-  }, [currentPage]);
+  }, [currentPage, category]);
 
   return (
     <div>
       <div className=" pl-[8.88rem] pt-[4.94rem]">
         <p className="text-3xl font-medium text-black">CATALOGO</p>
+      </div>
+
+      <div className=" pl-[8.88rem] pt-[4.94rem]">
+        <p className="text-3xl font-medium text-black">Categorías:</p>
+        <CategoryFilter switchCategory={setCategory} />
       </div>
 
       <div className=" ml-[4.88rem]">

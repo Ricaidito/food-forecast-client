@@ -1,4 +1,3 @@
-import "./MyProducts.css";
 import { useState, useEffect } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
 import BufferImage from "../../BufferImage/BufferImage";
@@ -8,6 +7,8 @@ import {
   deleteAllProducts,
   deleteProduct,
 } from "../../../services/userProducts.service";
+import CATEGORIES from "../../../categories/productCategories";
+import "./MyProducts.css";
 
 const MyProducts = () => {
   const productInitialState = {
@@ -19,11 +20,8 @@ const MyProducts = () => {
   };
 
   const [newProduct, setNewProduct] = useState(productInitialState);
-
   const [userProducts, setUserProducts] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
-
   const { userID } = useUserContext();
 
   const getProducts = () => {
@@ -182,10 +180,11 @@ const MyProducts = () => {
                 required
               >
                 <option defaultValue>Escoge la categoria</option>
-                <option value="carne">Carne</option>
-                <option value="pescado">Pescado</option>
-                <option value="mariscos">Mariscos</option>
-                <option value="frutas">Frutas</option>
+                {CATEGORIES.map(({ categoryValue, text }) => (
+                  <option key={categoryValue} value={categoryValue}>
+                    {text}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
