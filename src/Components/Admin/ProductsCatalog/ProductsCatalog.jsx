@@ -42,7 +42,7 @@ const ProductsCatalog = () => {
         <p className="text-3xl font-medium text-black">CATALOGO</p>
       </div>
 
-      <div className=" pl-[8.88rem] pt-[4.94rem]">
+      <div>
         <p className="text-3xl font-medium text-black">Categorías:</p>
         <CategoryFilter switchCategory={setCategory} />
       </div>
