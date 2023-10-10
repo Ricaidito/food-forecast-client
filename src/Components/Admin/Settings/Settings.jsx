@@ -1,11 +1,13 @@
 import "./Settings.css";
 import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
+import { getProductWatchlist } from "../../../services/watchlist.service";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState();
+  const [watchlist, setWatchlist] = useState([]);
   const { userID, name, lastName, email, logout } = useUserContext();
 
   const navigate = useNavigate();
@@ -16,6 +18,15 @@ const Settings = () => {
     navigate("/");
   };
 
+  const getWatchlist = () => {
+    getProductWatchlist(userID).then(
+      response => {
+        setWatchlist(response.data.watchList);
+      },
+      [userID]
+    );
+  };
+
   useEffect(() => {
     getUserImage(userID).then(
       response => {
@@ -23,6 +34,7 @@ const Settings = () => {
       },
       [userID]
     );
+    getWatchlist();
   });
 
   return (
@@ -58,31 +70,35 @@ const Settings = () => {
       </div>
       <div>
         <div className="relative overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-500">
+          <table className="w-[30%] text-left text-sm text-gray-500">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   Product name
                 </th>
                 <th scope="col" class="px-6 py-3"></th>
-                <th scope="col" class="px-6 py-3">
-                  Category
-                </th>
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b bg-white">
-                <th
-                  scope="row"
-                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
-                >
-                  Apple MacBook Pro 17"
-                </th>
-                <td className="px-6 py-4">Silver</td>
-                <td className="px-6 py-4">Laptop</td>
-                <td className="px-6 py-4">$2999</td>
-              </tr>
+              {watchlist.map(product => (
+                <tr className="border-b bg-white">
+                  <td className="px-6 py-4 text-gray-900">
+                    Apple MacBook Pro 17"
+                  </td>
+                  <td className="px-6 py-4 text-gray-900">
+                    <a>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 448 512"
+                      >
+                        <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" />
+                      </svg>
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
