@@ -56,6 +56,37 @@ const Settings = () => {
           </div>
         </div>
       </div>
+      <div>
+        <div className="relative overflow-x-auto">
+          <table className="w-full text-left text-sm text-gray-500">
+            <thead className="bg-gray-50 text-xs uppercase text-gray-700">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  Product name
+                </th>
+                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3">
+                  Category
+                </th>
+                <th scope="col" class="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b bg-white">
+                <th
+                  scope="row"
+                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
+                >
+                  Apple MacBook Pro 17"
+                </th>
+                <td className="px-6 py-4">Silver</td>
+                <td className="px-6 py-4">Laptop</td>
+                <td className="px-6 py-4">$2999</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

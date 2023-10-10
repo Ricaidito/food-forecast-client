@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import useUserContext from "../../../Contexts/useUserContext";
 import { getProductByIdWithPrice } from "../../../services/products.service";
+import {
+  getProductWatchlist,
+  addProductWatchlist,
+  deleteProductWatchlist,
+} from "../../../services/watchlist.service";
 import {
   LineChart,
   Line,
@@ -12,9 +18,11 @@ import {
 } from "recharts";
 import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
+import { is } from "date-fns/locale";
 
 const Product = () => {
   const { productId } = useParams();
+  const { userID } = useUserContext();
   const [productWithPrice, setProduct] = useState({
     product: {
       _id: "",
@@ -27,6 +35,8 @@ const Product = () => {
     },
     priceHistory: [],
   });
+
+  const [isChecked, setIsChecked] = useState(false);
 
   const formatDateToMMDDYYYY = dateString => {
     const date = parseISO(dateString);
@@ -43,8 +53,32 @@ const Product = () => {
     });
   };
 
+  const handleWatchlist = event => {
+    if (event.target.checked) {
+      console.log("hola!!");
+      addProductWatchlist(userID, productId).then(() => {
+        setIsChecked(true);
+      });
+    } else {
+      deleteProductWatchlist(userID, productId).then(() => {
+        setIsChecked(false);
+      });
+    }
+  };
+
+  const getWatchlist = () => {
+    getProductWatchlist(userID).then(response => {
+      const watchlist = response.data.watchList;
+      const product = watchlist.find(item => item === productId);
+      if (product) {
+        setIsChecked(true);
+      }
+    });
+  };
+
   useEffect(() => {
     getProduct();
+    getWatchlist();
   }, []);
 
   const CustomTooltip = ({ active, payload }) => {
@@ -104,6 +138,34 @@ const Product = () => {
                   Fecha de extracción:{" "}
                   {formatDate(productWithPrice.product.extractionDate)}
                 </p>
+              </div>
+              <div>
+                <div className=" mb-2">
+                  <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
+                    Notify when price changes?
+                  </p>
+                </div>
+                <label className="relative inline-flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    value=""
+                    className="peer sr-only"
+                    checked={isChecked}
+                    onChange={handleWatchlist}
+                  />
+                  <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
+                </label>
+              </div>
+              <div>
+                <div className=" mb-2">
+                  <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
+                    Get email notifications when price changes?
+                  </p>
+                </div>
+                <label className="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" value="" className="peer sr-only" />
+                  <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
+                </label>
               </div>
             </div>
           </div>
