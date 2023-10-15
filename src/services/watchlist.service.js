@@ -12,10 +12,21 @@ const addProductWatchlist = (userID, product) => {
   );
 };
 
+const getProductsInfo = products => {
+  return axios.post(`${url}/user-config/config/watch-list/info`, {
+    productsIds: products,
+  });
+};
+
 const deleteProductWatchlist = (userID, product) => {
   return axios.delete(
     `${url}/user-config/config/watch-list/${userID}/${product}`
   );
 };
 
-export { getProductWatchlist, addProductWatchlist, deleteProductWatchlist };
+export {
+  getProductWatchlist,
+  addProductWatchlist,
+  deleteProductWatchlist,
+  getProductsInfo,
+};

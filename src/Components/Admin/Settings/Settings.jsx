@@ -1,8 +1,13 @@
 import "./Settings.css";
 import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
-import { getProductWatchlist } from "../../../services/watchlist.service";
+import {
+  getProductWatchlist,
+  getProductsInfo,
+  deleteProductWatchlist,
+} from "../../../services/watchlist.service";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Settings = () => {
@@ -19,23 +24,25 @@ const Settings = () => {
   };
 
   const getWatchlist = () => {
-    getProductWatchlist(userID).then(
-      response => {
-        setWatchlist(response.data.watchList);
-      },
-      [userID]
-    );
+    getProductWatchlist(userID).then(response => {
+      getProductsInfo(response.data.watchList).then(product => {
+        setWatchlist(product.data);
+      });
+    });
+  };
+
+  const handleDelete = productID => {
+    deleteProductWatchlist(userID, productID).then(response => {
+      getWatchlist();
+    });
   };
 
   useEffect(() => {
-    getUserImage(userID).then(
-      response => {
-        setUserImage(response.data);
-      },
-      [userID]
-    );
+    getUserImage(userID).then(response => {
+      setUserImage(response.data);
+    }, []);
     getWatchlist();
-  });
+  }, []);
 
   return (
     <div className=" mt-20">
@@ -73,21 +80,27 @@ const Settings = () => {
           <table className="w-[30%] text-left text-sm text-gray-500">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
-                <th scope="col" class="px-6 py-3">
-                  Product name
+                <th scope="col" className="px-6 py-3">
+                  Nombre del Producto
                 </th>
-                <th scope="col" class="px-6 py-3"></th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3">
+                  Origen
+                </th>
+                <th scope="col" className="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody>
               {watchlist.map(product => (
-                <tr className="border-b bg-white">
+                <tr className="border-b bg-white" key={product._id}>
                   <td className="px-6 py-4 text-gray-900">
-                    Apple MacBook Pro 17"
+                    <Link to={`/admin/product/${product._id}`}>
+                      {product.productName}
+                    </Link>
+                    n
                   </td>
+                  <td className="px-6 py-4 text-gray-900">{product.origin}</td>
                   <td className="px-6 py-4 text-gray-900">
-                    <a>
+                    <button onClick={() => handleDelete(product._id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="1em"
@@ -95,7 +108,7 @@ const Settings = () => {
                       >
                         <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" />
                       </svg>
-                    </a>
+                    </button>
                   </td>
                 </tr>
               ))}
