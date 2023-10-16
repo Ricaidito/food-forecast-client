@@ -1,6 +1,6 @@
 import "./Settings.css";
 import useUserContext from "../../../Contexts/useUserContext";
-import { getUserImage } from "../../../services/user.service";
+import { getUserImage, upddateUser } from "../../../services/user.service";
 import {
   getProductWatchlist,
   getProductsInfo,
@@ -13,7 +13,9 @@ import { useState, useEffect } from "react";
 const Settings = () => {
   const [userImage, setUserImage] = useState();
   const [watchlist, setWatchlist] = useState([]);
-  const { userID, name, lastName, email, logout } = useUserContext();
+  const { userID, name, lastName, email, logout, update } = useUserContext();
+  const [updatedName, setUpdatedName] = useState(name);
+  const [updatedLastName, setUpdatedLastName] = useState(lastName);
 
   const navigate = useNavigate();
 
@@ -32,8 +34,17 @@ const Settings = () => {
   };
 
   const handleDelete = productID => {
-    deleteProductWatchlist(userID, productID).then(response => {
+    deleteProductWatchlist(userID, productID).then(() => {
       getWatchlist();
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    upddateUser(userID, updatedName, updatedLastName).then(() => {
+      setUpdatedName(updatedName);
+      setUpdatedLastName(updatedLastName);
+      update(updatedName, updatedLastName);
     });
   };
 
@@ -51,9 +62,48 @@ const Settings = () => {
           <div className=" mt-24">
             <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
               <div className="px-5 pb-5">
-                <h5 className="mb-6 text-base font-bold leading-tight tracking-tight text-gray-700">
-                  Nombre: {name} {lastName}
-                </h5>
+                <div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-6">
+                      <label
+                        htmlFor="email"
+                        className="mb-2 block text-sm font-medium text-gray-900"
+                      >
+                        Nombre:
+                      </label>
+                      <input
+                        type="text"
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder={updatedName}
+                        value={updatedName}
+                        onChange={e => setUpdatedName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="mb-6">
+                      <label
+                        htmlFor="lastName"
+                        className="mb-2 block text-sm font-medium text-gray-900"
+                      >
+                        Apellido:
+                      </label>
+                      <input
+                        type="text"
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder={updatedLastName}
+                        value={updatedLastName}
+                        onChange={e => setUpdatedLastName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    >
+                      Actualizar
+                    </button>
+                  </form>
+                </div>
                 <div className="mb-6 mt-2.5 flex items-center">
                   <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
                     Correo: {email}

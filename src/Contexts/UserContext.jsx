@@ -33,6 +33,12 @@ const userReducer = (state, action) => {
         email: null,
         isLogged: false,
       };
+    case "UPDATE":
+      return {
+        ...state,
+        name: action.payload.name,
+        lastName: action.payload.lastName,
+      };
     default:
       return state;
   }
@@ -51,7 +57,7 @@ export const UserProvider = ({ children }) => {
   }, [state]);
 
   // Actions
-  const login = (userData) => {
+  const login = userData => {
     dispatch({
       type: "LOGIN",
       payload: userData,
@@ -64,8 +70,15 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const update = (newName, newLastName) => {
+    dispatch({
+      type: "UPDATE",
+      payload: { name: newName, lastName: newLastName },
+    });
+  };
+
   return (
-    <UserContext.Provider value={{ ...state, login, logout }}>
+    <UserContext.Provider value={{ ...state, login, logout, update }}>
       {children}
     </UserContext.Provider>
   );

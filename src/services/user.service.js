@@ -18,4 +18,11 @@ const createUser = userData => {
   });
 };
 
-export { userLogin, getUserImage, createUser };
+const upddateUser = (id, updatedName, updatedLastName) => {
+  return axios.put(`${url}/users/update/${id}`, {
+    name: updatedName,
+    lastName: updatedLastName,
+  });
+};
+
+export { userLogin, getUserImage, createUser, upddateUser };
