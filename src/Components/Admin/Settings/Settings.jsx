@@ -1,6 +1,10 @@
 import "./Settings.css";
 import useUserContext from "../../../Contexts/useUserContext";
-import { getUserImage, upddateUser } from "../../../services/user.service";
+import {
+  getUserImage,
+  upddateUser,
+  updateUserImage,
+} from "../../../services/user.service";
 import {
   getProductWatchlist,
   getProductsInfo,
@@ -9,10 +13,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ca, tr } from "date-fns/locale";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState();
   const [watchlist, setWatchlist] = useState([]);
+  const [imageData, setImageData] = useState({
+    profilePicture: null,
+  });
   const { userID, name, lastName, email, logout, update } = useUserContext();
   const [updatedName, setUpdatedName] = useState(name);
   const [updatedLastName, setUpdatedLastName] = useState(lastName);
@@ -37,6 +45,33 @@ const Settings = () => {
     deleteProductWatchlist(userID, productID).then(() => {
       getWatchlist();
     });
+  };
+
+  const handleFileChange = e => {
+    setImageData(prevData => ({
+      ...prevData,
+      profilePicture: e.target.files[0],
+    }));
+  };
+
+  const handlePhotoChange = async e => {
+    e.preventDefault();
+
+    if (imageData.profilePicture) {
+      try {
+        const response = await updateUserImage(userID, {
+          profilePicture: imageData.profilePicture,
+        });
+        if (response.status === 201) alert("Imagen Actualizada Exitosamente!");
+        getUserImage(userID).then(response => {
+          setUserImage(response.data);
+        }, []);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    return;
   };
 
   const handleSubmit = e => {
@@ -122,6 +157,26 @@ const Settings = () => {
           </div>
           <div>
             <img src={`data:image/jpeg;base64,${userImage}`} alt="User Image" />
+            <form onSubmit={handlePhotoChange}>
+              <label
+                className="mb-2 block text-sm font-medium text-gray-900"
+                htmlFor="file_input"
+              >
+                Upload file
+              </label>
+              <input
+                className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
+                id="file_input"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <button
+                type="submit"
+                className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              >
+                Actualizar Foto
+              </button>
+            </form>
           </div>
         </div>
       </div>

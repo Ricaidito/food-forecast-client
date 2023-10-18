@@ -25,4 +25,12 @@ const upddateUser = (id, updatedName, updatedLastName) => {
   });
 };
 
-export { userLogin, getUserImage, createUser, upddateUser };
+const updateUserImage = (id, image) => {
+  return axios.put(`${url}/users/update-profile-pic/${id}`, image, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export { userLogin, getUserImage, createUser, upddateUser, updateUserImage };
