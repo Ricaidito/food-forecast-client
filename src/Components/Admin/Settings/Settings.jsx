@@ -1,4 +1,3 @@
-import "./Settings.css";
 import useUserContext from "../../../Contexts/useUserContext";
 import {
   getUserImage,
@@ -13,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ca, tr } from "date-fns/locale";
+import "./Settings.css";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState();
@@ -104,6 +103,31 @@ const Settings = () => {
                         htmlFor="email"
                         className="mb-2 block text-sm font-medium text-gray-900"
                       >
+                        Correo:
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          className="block w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-100 p-2.5 text-sm text-gray-600 opacity-75 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                          placeholder={email}
+                          value={email}
+                          disabled
+                        />
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                          <svg
+                            className="h-5 w-5 text-gray-400"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          ></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mb-6">
+                      <label
+                        htmlFor="email"
+                        className="mb-2 block text-sm font-medium text-gray-900"
+                      >
                         Nombre:
                       </label>
                       <input
@@ -131,6 +155,11 @@ const Settings = () => {
                         required
                       />
                     </div>
+                    <div className="mb-6">
+                      <p>
+                        <strong>Suscripción: </strong>N/A
+                      </p>
+                    </div>
                     <button
                       type="submit"
                       className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
@@ -138,11 +167,6 @@ const Settings = () => {
                       Actualizar
                     </button>
                   </form>
-                </div>
-                <div className="mb-6 mt-2.5 flex items-center">
-                  <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
-                    Correo: {email}
-                  </p>
                 </div>
                 <div className=" flex gap-x-2">
                   <button
