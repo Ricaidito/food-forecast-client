@@ -10,11 +10,11 @@ const addProduct = (userID, product) => {
   });
 };
 
-const getUserProducts = (userID) => {
+const getUserProducts = userID => {
   return axios.get(`${url}/user-products/${userID}/products`);
 };
 
-const deleteAllProducts = (userID) => {
+const deleteAllProducts = userID => {
   return axios.delete(`${url}/user-products/${userID}/products`);
 };
 
@@ -22,4 +22,14 @@ const deleteProduct = (userID, productID) => {
   return axios.delete(`${url}/user-products/${userID}/products/${productID}`);
 };
 
-export { addProduct, getUserProducts, deleteAllProducts, deleteProduct };
+const getDownloadURLForTemplate = () => {
+  return `${url}/user-products/download-template`;
+};
+
+export {
+  addProduct,
+  getUserProducts,
+  deleteAllProducts,
+  deleteProduct,
+  getDownloadURLForTemplate,
+};

@@ -6,10 +6,12 @@ import {
   getUserProducts,
   deleteAllProducts,
   deleteProduct,
+  getDownloadURLForTemplate,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
 import Modal from "../../Modal/Modal";
 import "./MyProducts.css";
+import DownloadButton from "../../DownloadButton/DownloadButton";
 
 const MyProducts = () => {
   const productInitialState = {
@@ -224,6 +226,12 @@ const MyProducts = () => {
                 Añadir productos desde un archivo
               </h2>
               <p>Aquí va la lógica para añadir productos desde un archivo</p>
+              <DownloadButton
+                downloadUrl={getDownloadURLForTemplate()}
+                fileName="productsTemplate.xlsx"
+              >
+                Descargar
+              </DownloadButton>
             </Modal>
           </div>
         </div>
