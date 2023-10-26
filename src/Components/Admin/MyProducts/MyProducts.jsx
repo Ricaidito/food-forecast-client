@@ -8,6 +8,7 @@ import {
   deleteProduct,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
+import Modal from "../../Modal/Modal";
 import "./MyProducts.css";
 
 const MyProducts = () => {
@@ -23,6 +24,7 @@ const MyProducts = () => {
   const [userProducts, setUserProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { userID } = useUserContext();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const getProducts = () => {
     getUserProducts(userID)
@@ -210,6 +212,20 @@ const MyProducts = () => {
               Añadir Producto
             </button>
           </form>
+          <div className="my-2 py-2">
+            <button
+              onClick={() => setModalOpen(true)}
+              className="transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
+            >
+              Añadir desde archivo
+            </button>
+            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+              <h2 className="mb-4 text-2xl font-bold">
+                Añadir productos desde un archivo
+              </h2>
+              <p>Aquí va la lógica para añadir productos desde un archivo</p>
+            </Modal>
+          </div>
         </div>
         <div className=" pt-5">
           <div className=" mb-6 pl-[3.88rem] pt-[4.94rem]">
