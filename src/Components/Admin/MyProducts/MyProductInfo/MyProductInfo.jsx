@@ -103,7 +103,7 @@ const MyProductInfo = () => {
         </div>
 
         <div>
-          <button className="rounded bg-blue-500 p-2 text-white hover:bg-blue-600">
+          <button className="rounded bg-lime-600 p-2 text-white hover:bg-lime-700">
             Guardar cambios
           </button>
         </div>
