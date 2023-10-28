@@ -18,7 +18,6 @@ import {
 } from "recharts";
 import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
-import { is } from "date-fns/locale";
 
 const Product = () => {
   const { productId } = useParams();

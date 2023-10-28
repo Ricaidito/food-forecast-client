@@ -12,6 +12,7 @@ import CATEGORIES from "../../../categories/productCategories";
 import Modal from "../../Modal/Modal";
 import "./MyProducts.css";
 import DownloadButton from "../../DownloadButton/DownloadButton";
+import { Link } from "react-router-dom";
 
 const MyProducts = () => {
   const productInitialState = {
@@ -301,33 +302,30 @@ const MyProducts = () => {
                 key={product._id}
                 className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow"
               >
-                <a href="#">
-                  <BufferImage
-                    bufferImage={product.productImage}
-                    className="rounded-t-lg p-8"
-                  />
-                </a>
                 <div className="px-5 pb-5">
-                  <a href="#">
-                    <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-                      {product.productName}
-                    </h5>
-                  </a>
-                  <div className="mb-3 mt-2.5 flex items-center">
-                    <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
-                      Categoria: {product.category}
-                    </p>
+                  <div>
+                    <Link to={`/admin/myproducts/${product._id}`}>
+                      <BufferImage
+                        bufferImage={product.productImage}
+                        className="rounded-t-lg p-8"
+                      />
+                      <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                        {product.productName}
+                      </h5>
+                      <div className="mb-3 mt-2.5 flex items-center">
+                        <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
+                          Categoria: {product.category}
+                        </p>
+                      </div>
+                      <span className="text-lg font-bold text-gray-700">
+                        Precio: RD${product.price}
+                      </span>
+                    </Link>
                   </div>
-                  <span className="text-lg font-bold text-gray-700">
-                    Precio: RD${product.price}
-                  </span>
                   <div className=" mt-4 flex gap-x-2">
-                    <a
-                      href="#"
-                      className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                    >
+                    <button className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
                       Comparar
-                    </a>
+                    </button>
                     <button
                       className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                       onClick={() => deleteOneUserProduct(product._id)}

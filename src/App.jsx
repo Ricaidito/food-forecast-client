@@ -12,6 +12,7 @@ import Basket from "./Components/Admin/Basket/Basket";
 import Product from "./Components/Admin/Product/Product";
 import CheckoutForm from "./Components/Admin/Payments/CheckoutForm";
 import "./App.css";
+import MyProductInfo from "./Components/Admin/MyProducts/MyProductInfo/MyProductInfo";
 
 const App = () => {
   return (
@@ -27,6 +28,10 @@ const App = () => {
           <Route path="/admin/products" element={<ProductsCatalog />} />
           <Route path="/admin/product/:productId" element={<Product />} />
           <Route path="/admin/myproducts" element={<MyProducts />} />
+          <Route
+            path="/admin/myproducts/:productId"
+            element={<MyProductInfo />}
+          />
           <Route path="/admin/micuenta" element={<Settings />} />
           <Route path="/admin/basket" element={<Basket />} />
           <Route path="/admin/subscriptions" element={<CheckoutForm />} />
