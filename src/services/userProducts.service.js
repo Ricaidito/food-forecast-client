@@ -26,10 +26,23 @@ const getDownloadURLForTemplate = () => {
   return `${url}/user-products/download-template`;
 };
 
+const uploadUserProductsTemplate = (userID, file) => {
+  return axios.post(
+    `${url}/user-products/${userID}/products/file`,
+    { productsFile: file },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+};
+
 export {
   addProduct,
   getUserProducts,
   deleteAllProducts,
   deleteProduct,
   getDownloadURLForTemplate,
+  uploadUserProductsTemplate,
 };
