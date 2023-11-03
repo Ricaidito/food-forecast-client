@@ -1,27 +1,31 @@
+import React, { useState } from "react";
 import CATEGORIES from "../../categories/productCategories";
 
 const CategoryFilter = ({ switchCategory }) => {
-  const handleClick = category => {
-    switchCategory(category);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleChange = event => {
+    setSelectedCategory(event.target.value);
+    switchCategory(event.target.value);
   };
 
   return (
     <div className="inline-flex w-2/4 rounded-md shadow-sm" role="group">
-      <button
-        className="rounded-l-lg border border-gray-200 bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-400 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
-        onClick={() => handleClick(null)}
+      <select
+        id="categories"
+        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        value={selectedCategory}
+        onChange={handleChange}
       >
-        Todos
-      </button>
-      {CATEGORIES.map(({ categoryValue, text }) => (
-        <button
-          key={categoryValue}
-          className="rounded-l-lg border border-gray-200 bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-400 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
-          onClick={() => handleClick(categoryValue)}
-        >
-          {text}
-        </button>
-      ))}
+        <option value="" selected>
+          All
+        </option>
+        {CATEGORIES.map(({ categoryValue, text }) => (
+          <option key={categoryValue} value={categoryValue}>
+            {text}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
