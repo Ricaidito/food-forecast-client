@@ -7,6 +7,7 @@ import {
   deleteAllProducts,
   deleteProduct,
   getDownloadURLForTemplate,
+  uploadUserProductsTemplate,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
 import Modal from "../../Modal/Modal";
@@ -28,6 +29,7 @@ const MyProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { userID } = useUserContext();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [file, setFile] = useState(null);
 
   const getProducts = () => {
     getUserProducts(userID)
@@ -108,6 +110,18 @@ const MyProducts = () => {
 
   const handleSearch = e => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleFileChange = event => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleFileUpload = () => {
+    uploadUserProductsTemplate(userID, file).then(() => {
+      getProducts();
+      alert("File uploaded successfully!");
+      setModalOpen(false);
+    });
   };
 
   return (
@@ -227,6 +241,28 @@ const MyProducts = () => {
                 Añadir productos desde un archivo
               </h2>
               <p>Aquí va la lógica para añadir productos desde un archivo</p>
+
+              <label
+                className="mb-2 block text-sm font-medium text-gray-900"
+                htmlFor="file_input"
+              >
+                Upload file
+              </label>
+              <input
+                className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
+                id="file_input"
+                type="file"
+                onChange={handleFileChange}
+              />
+
+              <button
+                type="button"
+                className="mb-2 mr-2 rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+                onClick={handleFileUpload}
+              >
+                Upload
+              </button>
+
               <DownloadButton
                 downloadUrl={getDownloadURLForTemplate()}
                 fileName="productsTemplate.xlsx"
