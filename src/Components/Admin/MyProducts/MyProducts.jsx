@@ -7,12 +7,14 @@ import {
   deleteAllProducts,
   deleteProduct,
   getDownloadURLForTemplate,
+  uploadUserProductsTemplate,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
 import Modal from "../../Modal/Modal";
 import "./MyProducts.css";
 import DownloadButton from "../../DownloadButton/DownloadButton";
 import { Link } from "react-router-dom";
+import TemplateImage from "../../../images/TemplateImage.png";
 
 const MyProducts = () => {
   const productInitialState = {
@@ -27,12 +29,13 @@ const MyProducts = () => {
   const [userProducts, setUserProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { userID } = useUserContext();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalArchiveOpen, setModalArchiveOpen] = useState(false);
+  const [isModalProductOpen, setModalProductOpen] = useState(false);
+  const [file, setFile] = useState(null);
 
   const getProducts = () => {
     getUserProducts(userID)
       .then(response => {
-        console.log(response.data);
         setUserProducts(response.data);
       })
       .catch(error => {
@@ -110,14 +113,30 @@ const MyProducts = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleFileChange = event => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleFileUpload = () => {
+    uploadUserProductsTemplate(userID, file).then(() => {
+      getProducts();
+      alert("File uploaded successfully!");
+      setModalOpen(false);
+    });
+  };
+
   return (
     <div className=" mt-6">
-      <div className=" grid grid-cols-1 grid-rows-2 pt-10">
-        <div className="w-[429px] pl-[5.88rem]">
-          <p className="mb-6 text-2xl font-medium text-black">
-            Añdir Productos
-          </p>
-          <form>
+      <div className="my-2 py-2">
+        <Modal
+          isOpen={isModalProductOpen}
+          onClose={() => setModalProductOpen(false)}
+          classProps={"z-10 m-auto max-w-2xl rounded-lg bg-white p-4"}
+        >
+          <form className="mt-8 w-96">
+            <p className="mb-6 text-2xl font-medium text-black">
+              Añdir Productos
+            </p>
             <div className="mb-6">
               <label
                 type="text"
@@ -209,35 +228,69 @@ const MyProducts = () => {
             </div>
             <button
               type="submit"
-              className="mt-[3.75rem] h-[53px] w-[229px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              className="mt-[1.75rem] h-[53px] w-[229px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
               onClick={event => handleAddProduct(event)}
             >
               Añadir Producto
             </button>
           </form>
-          <div className="my-2 py-2">
-            <button
-              onClick={() => setModalOpen(true)}
-              className="transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
-            >
-              Añadir desde archivo
-            </button>
-            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-              <h2 className="mb-4 text-2xl font-bold">
-                Añadir productos desde un archivo
-              </h2>
-              <p>Aquí va la lógica para añadir productos desde un archivo</p>
-              <DownloadButton
-                downloadUrl={getDownloadURLForTemplate()}
-                fileName="productsTemplate.xlsx"
-              >
-                Descargar
-              </DownloadButton>
-            </Modal>
+        </Modal>
+        <Modal
+          isOpen={isModalArchiveOpen}
+          onClose={() => setModalArchiveOpen(false)}
+          classProps={"z-10 m-auto max-w-md rounded-lg bg-white p-4"}
+        >
+          <h2 className="mb-4 text-2xl font-bold">
+            Pasos para añadir productos desde un archivo
+          </h2>
+
+          <h3 className="mb-4 text-lg font-bold">
+            Paso 1: Descargar el archivo de plantilla
+          </h3>
+
+          <DownloadButton
+            downloadUrl={getDownloadURLForTemplate()}
+            fileName="productsTemplate.xlsx"
+          >
+            Descargar
+          </DownloadButton>
+          <div className="mt-2">
+            <h3 className="mb-4 text-lg font-bold">
+              Paso 2: Añadir los productos al archivo recien descargado
+            </h3>
+
+            <img src={TemplateImage} alt="templateImage" />
           </div>
-        </div>
-        <div className=" pt-5">
-          <div className=" mb-6 pl-[3.88rem] pt-[4.94rem]">
+          <div className="mt-5">
+            <h3 className="mb-4 text-lg font-bold">
+              Paso 3: Subir el archivo con los productos añadidos
+            </h3>
+
+            <label
+              className="mb-2 block text-sm font-medium text-gray-900"
+              htmlFor="file_input"
+            >
+              Upload file
+            </label>
+            <input
+              className="block w-[75%] cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
+              id="file_input"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <div className=" mt-3 flex justify-center">
+              <button
+                type="button"
+                className="mb-2 mr-2 rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+                onClick={handleFileUpload}
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </Modal>
+        <div className=" pt-2">
+          <div className=" mb-6 pl-[3.88rem] pt-[1.94rem]">
             <p className="text-3xl font-medium text-black">Mis Productos</p>
           </div>
           <div className=" ml-[3.88rem] w-96">
@@ -275,6 +328,20 @@ const MyProducts = () => {
                 required
               />
             </div>
+          </div>
+          <div className="ml-[3.88rem] mt-6">
+            <button
+              onClick={() => setModalProductOpen(true)}
+              className=" mr-6 transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
+            >
+              Añadir Producto
+            </button>
+            <button
+              onClick={() => setModalArchiveOpen(true)}
+              className="transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
+            >
+              Añadir productos desde archivo
+            </button>
           </div>
           <button
             className="ml-[3.88rem] mt-6 inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"

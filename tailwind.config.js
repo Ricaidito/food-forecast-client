@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "tailwind.config.{js,cjs,mjs,ts}",
     "./node_modules/flowbite/**/*.js",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
