@@ -1,11 +1,11 @@
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, classProps, children }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
-      <div className="z-10 m-auto max-w-md rounded-lg bg-white p-4">
+      <div className={classProps}>
         <button onClick={onClose} className="float-right text-lg">
           ×
         </button>
