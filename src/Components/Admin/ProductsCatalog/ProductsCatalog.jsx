@@ -38,17 +38,16 @@ const ProductsCatalog = () => {
 
   return (
     <div>
-      <div className=" pl-[8.88rem] pt-[4.94rem]">
+      <div className=" pl-[8.88rem] pt-[2.94rem]">
         <p className="text-3xl font-medium text-black">CATALOGO</p>
       </div>
 
-      <div>
-        <p className="text-3xl font-medium text-black">Categorías:</p>
-        <CategoryFilter switchCategory={setCategory} />
+      <div className=" ml-[4.88rem] mt-5">
+        <SearchBar />
       </div>
 
-      <div className=" ml-[4.88rem]">
-        <SearchBar />
+      <div className=" ml-[4.88rem] mt-[2.71rem] w-96 ">
+        <CategoryFilter switchCategory={setCategory} />
       </div>
 
       <div className=" pt-[2.71rem]">
