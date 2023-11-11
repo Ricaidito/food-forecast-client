@@ -34,7 +34,7 @@ const CheckoutForm = () => {
 
       // Subscribe the customer to the plan
       const subscriptionResponse = await axios.post(
-        "http://localhost:8000/payments/create-subscription",
+        `http://localhost:8000/payments/create-subscription/${userID}`,
         {
           customerId,
           paymentMethodId: paymentMethod.id,
