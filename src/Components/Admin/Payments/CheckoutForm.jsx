@@ -1,13 +1,18 @@
+import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import useUserContext from "../../../Contexts/useUserContext";
 
 const CheckoutForm = () => {
+  const { userID } = useUserContext();
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async event => {
     event.preventDefault();
 
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) {
+      return;
+    }
 
     const cardElement = elements.getElement(CardElement);
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -15,61 +20,57 @@ const CheckoutForm = () => {
       card: cardElement,
     });
 
-    if (error) console.error(error);
-    else {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:8000/payments/create-payment-intent",
-          {
-            amount: 1000, // e.g., $10.00
-          }
-        );
+    if (error) {
+      console.error(error);
+      return;
+    }
 
-        const confirmResult = await stripe.confirmCardPayment(
-          data.clientSecret,
-          {
-            payment_method: paymentMethod.id,
-          }
-        );
+    try {
+      // Create customer
+      const customerResponse = await axios.get(
+        `http://localhost:8000/payments/create-customer/${userID}`
+      );
+      const customerId = customerResponse.data.customerId;
 
-        if (confirmResult.error) {
-          console.error(confirmResult.error);
-        } else {
-          console.log("Payment successful");
+      // Subscribe the customer to the plan
+      const subscriptionResponse = await axios.post(
+        "http://localhost:8000/payments/create-subscription",
+        {
+          customerId,
+          paymentMethodId: paymentMethod.id,
         }
-      } catch (err) {
-        console.error("Error making payment:", err);
+      );
+
+      // Handle subscription response
+      const { latest_invoice } = subscriptionResponse.data;
+      const { payment_intent } = latest_invoice;
+
+      if (payment_intent) {
+        const { client_secret, status } = payment_intent;
+
+        if (status === "requires_action") {
+          // Requires additional action (e.g., 3D Secure)
+          const { error: confirmError } = await stripe.confirmCardPayment(
+            client_secret
+          );
+          if (confirmError) {
+            console.error(confirmError);
+            return;
+          }
+        }
+
+        console.log("Subscription successful!");
       }
+    } catch (err) {
+      console.error("Error during subscription:", err);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto mt-10 max-w-lg rounded-md border p-8 shadow-md"
-    >
-      <div className="mb-4">
-        <CardElement
-          className="rounded-md border p-3 transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          style={{
-            base: {
-              fontSize: "16px",
-              color: "#32325d",
-              "::placeholder": {
-                color: "#aab7c4",
-              },
-            },
-          }}
-        />
-      </div>
-      <button
-        type="submit"
-        disabled={!stripe}
-        className={`rounded-md bg-blue-500 px-4 py-2 text-white transition duration-150 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-          !stripe ? "cursor-not-allowed opacity-50" : ""
-        }`}
-      >
-        Pagar
+    <form onSubmit={handleSubmit} className="subscription-form">
+      <CardElement />
+      <button type="submit" disabled={!stripe}>
+        Suscribirse
       </button>
     </form>
   );
