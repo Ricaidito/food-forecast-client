@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import "./Settings.css";
 
 const Settings = () => {
@@ -87,6 +88,16 @@ const Settings = () => {
       setUserImage(response.data);
     }, []);
     getWatchlist();
+    axios
+      .get(`http://localhost:8000/payments/get-subscription-details/${userID}`)
+      .then(response => {
+        const nextPaymentTimestamp =
+          response.data.subscription.current_period_end;
+        const nextPaymentDate = new Date(nextPaymentTimestamp * 1000);
+        console.log(
+          `The next payment is due on: ${nextPaymentDate.toLocaleDateString()}`
+        );
+      });
   }, []);
 
   return (

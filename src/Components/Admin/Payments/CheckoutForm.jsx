@@ -26,13 +26,11 @@ const CheckoutForm = () => {
     }
 
     try {
-      // Create customer
       const customerResponse = await axios.get(
-        `http://localhost:8000/payments/create-customer/${userID}`
+        `http://localhost:8000/payments/get-customer/${userID}`
       );
       const customerId = customerResponse.data.customerId;
 
-      // Subscribe the customer to the plan
       const subscriptionResponse = await axios.post(
         `http://localhost:8000/payments/create-subscription/${userID}`,
         {
@@ -41,7 +39,6 @@ const CheckoutForm = () => {
         }
       );
 
-      // Handle subscription response
       const { latest_invoice } = subscriptionResponse.data;
       const { payment_intent } = latest_invoice;
 
@@ -49,7 +46,6 @@ const CheckoutForm = () => {
         const { client_secret, status } = payment_intent;
 
         if (status === "requires_action") {
-          // Requires additional action (e.g., 3D Secure)
           const { error: confirmError } = await stripe.confirmCardPayment(
             client_secret
           );
@@ -66,13 +62,27 @@ const CheckoutForm = () => {
     }
   };
 
+  const cancelSubscription = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/payments/cancel-subscription/${userID}`
+      );
+      console.log(response.data.message);
+    } catch (error) {
+      console.error("Error cancelling subscription:", error);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="subscription-form">
-      <CardElement />
-      <button type="submit" disabled={!stripe}>
-        Suscribirse
-      </button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit} className="subscription-form">
+        <CardElement />
+        <button type="submit" disabled={!stripe}>
+          Suscribirse
+        </button>
+      </form>
+      <button onClick={cancelSubscription}>Cancelar suscripción</button>
+    </div>
   );
 };
 
