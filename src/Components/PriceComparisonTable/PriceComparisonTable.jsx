@@ -11,7 +11,10 @@ const PriceComparisonTable = ({ productIds }) => {
 
     product.priceHistory.forEach(priceHistoryItem => {
       const date = new Date(priceHistoryItem.date);
-      const month = date.getFullYear() + "-" + (date.getMonth() + 1);
+      const month = date.toLocaleDateString("es-ES", {
+        month: "long",
+        year: "numeric",
+      });
 
       if (averagePrices[month]) {
         averagePrices[month].total += priceHistoryItem.productPrice;
@@ -42,7 +45,9 @@ const PriceComparisonTable = ({ productIds }) => {
         calculateAveragePrices(product);
       });
 
-      setUniqueMonths(Array.from(uniqueMonthsSet).sort());
+      setUniqueMonths(
+        Array.from(uniqueMonthsSet).sort((a, b) => new Date(a) - new Date(b))
+      );
       setProducts(response.data.products);
     });
   };
@@ -52,26 +57,39 @@ const PriceComparisonTable = ({ productIds }) => {
   }, [productIds]);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          {uniqueMonths.map(month => (
-            <th key={month}>{month}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {products.map(product => (
-          <tr key={product._id}>
-            <td>{product.productName}</td>
+    <div class="relative w-[40%] overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+        <thead class="bg-gray-50 text-xs uppercase text-gray-700">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Nombre del Producto
+            </th>
             {uniqueMonths.map(month => (
-              <td key={month}>{product.averagePrices[month] || ""}</td>
+              <th key={month} scope="col" class="px-6 py-3">
+                {month}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {products.map(product => (
+            <tr key={product._id} class="border-b bg-white">
+              <th
+                scope="row"
+                class="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
+              >
+                {product.productName}
+              </th>
+              {uniqueMonths.map(month => (
+                <td key={month} class="px-6 py-4">
+                  {product.averagePrices[month] || ""}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
