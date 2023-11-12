@@ -11,5 +11,7 @@ export const getProducts = (page, selectedCategory, limit = 54) => {
 };
 
 export const getProductByIdWithPrice = productId => {
-  return axios.get(`${url}/products/with-price/${productId}`);
+  return axios.post(`${url}/products/with-price`, {
+    productIds: productId,
+  });
 };

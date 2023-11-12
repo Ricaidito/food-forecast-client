@@ -1,78 +1,77 @@
 import { useEffect, useState } from "react";
+import { getProductByIdWithPrice } from "../../services/products.service";
 
 const PriceComparisonTable = ({ productIds }) => {
-  const [productData, setProductData] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [uniqueMonths, setUniqueMonths] = useState([]);
+  let uniqueMonthsSet = new Set();
+
+  const calculateAveragePrices = product => {
+    const averagePrices = {};
+
+    product.priceHistory.forEach(priceHistoryItem => {
+      const date = new Date(priceHistoryItem.date);
+      const month = date.getFullYear() + "-" + (date.getMonth() + 1);
+
+      if (averagePrices[month]) {
+        averagePrices[month].total += priceHistoryItem.productPrice;
+        averagePrices[month].count += 1;
+      } else {
+        averagePrices[month] = {
+          total: priceHistoryItem.productPrice,
+          count: 1,
+        };
+      }
+
+      uniqueMonthsSet.add(month);
+    });
+
+    for (const month in averagePrices) {
+      averagePrices[month] =
+        averagePrices[month].total / averagePrices[month].count;
+    }
+
+    product.averagePrices = averagePrices;
+  };
+
+  const getProducts = productIds => {
+    uniqueMonthsSet = new Set();
+
+    getProductByIdWithPrice(productIds).then(response => {
+      response.data.products.forEach(product => {
+        calculateAveragePrices(product);
+      });
+
+      setUniqueMonths(Array.from(uniqueMonthsSet).sort());
+      setProducts(response.data.products);
+    });
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8000/prices/compare-products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productIds }), // Send productIds in the request body as an array
-    })
-      .then(response => response.json())
-      .then(data => setProductData(data))
-      .catch(error => console.error("Error fetching data:", error));
-  }, [productIds.join(",")]);
-
-  if (!productData) return <div>Cargando...</div>;
-
-  const calculatePriceDifferences = prices => {
-    const differences = [];
-    for (let i = 1; i < prices.length; i++) {
-      const priceDifference =
-        prices[i].productPrice - prices[i - 1].productPrice;
-      differences.push(priceDifference);
-    }
-    return differences;
-  };
-
-  const formatDate = dateString => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0];
-  };
-
-  const roundToTwoDigits = number => Math.round(number * 100) / 100;
+    getProducts(productIds);
+  }, [productIds]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="mb-4 text-xl font-bold">Comparación de precios</h2>
-      {productIds.map((productId, index) => {
-        const product = productData[`product${index + 1}`];
-        const prices = productData[`prices${index + 1}`];
-        const priceDifferences = calculatePriceDifferences(prices);
-
-        return (
-          <table key={productId} className="w-full table-auto">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Producto</th>
-                <th className="px-4 py-2">Precio</th>
-                <th className="px-4 py-2">Fecha</th>
-                <th className="px-4 py-2">Cambio de precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {prices.map((price, idx) => (
-                <tr key={price._id} className="border-b">
-                  <td className="px-4 py-2">{product.productName}</td>
-                  <td className="px-4 py-2">RD${price.productPrice}</td>
-                  <td className="px-4 py-2">{formatDate(price.date)}</td>
-                  <td
-                    className={`px-4 py-2 ${idx > 0 ? "text-yellow-500" : ""}`}
-                  >
-                    {idx > 0
-                      ? roundToTwoDigits(priceDifferences[idx - 1])
-                      : "-"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        );
-      })}
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          {uniqueMonths.map(month => (
+            <th key={month}>{month}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {products.map(product => (
+          <tr key={product._id}>
+            <td>{product.productName}</td>
+            {uniqueMonths.map(month => (
+              <td key={month}>{product.averagePrices[month] || ""}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
