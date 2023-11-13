@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 import PriceComparisonTable from "../../PriceComparisonTable/PriceComparisonTable";
+import PriceComparisonGraph from "../../PriceComparisonGraph/PriceComparisonGraph";
 import ProductInfoFrame from "../../ProductInfoFrame/ProductInfoFrame";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import { Link } from "react-router-dom";
@@ -27,6 +28,7 @@ const Dashboard = () => {
     <div className="m-2 p-2">
       <ProductInfoFrame productIds={selectedProductIds} />
       <PriceComparisonTable productIds={selectedProductIds} />
+      {/* <PriceComparisonGraph productIds={selectedProductIds} /> */}
       {/* <MyLineChart /> */}
     </div>
   );
