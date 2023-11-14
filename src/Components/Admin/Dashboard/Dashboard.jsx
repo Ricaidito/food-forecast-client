@@ -28,7 +28,7 @@ const Dashboard = () => {
     <div className="m-2 p-2">
       <ProductInfoFrame productIds={selectedProductIds} />
       <PriceComparisonTable productIds={selectedProductIds} />
-      {/* <PriceComparisonGraph productIds={selectedProductIds} /> */}
+      <PriceComparisonGraph productIds={selectedProductIds} />
       {/* <MyLineChart /> */}
     </div>
   );

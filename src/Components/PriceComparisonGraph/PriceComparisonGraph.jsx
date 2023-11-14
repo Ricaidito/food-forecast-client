@@ -7,6 +7,7 @@ const PriceComparisonGraph = ({ productIds }) => {
   const [chartInstance, setChartInstance] = useState(null);
   const chartRef = useRef(null);
 
+  // Correct function usage
   const getProducts = productIds => {
     getProductByIdWithPrice(productIds)
       .then(response => {
@@ -17,49 +18,72 @@ const PriceComparisonGraph = ({ productIds }) => {
       });
   };
 
+  // Function corrected to use 'productPrice' instead of 'price'
   const calculateAveragePricePerMonth = priceHistory => {
     const monthlyPrices = {};
 
-    priceHistory.forEach(({ date, price }) => {
-      const monthYear = new Date(date).toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-      });
+    // Group prices by month-year first
+    priceHistory.forEach(({ date, productPrice }) => {
+      const monthYear = new Date(date).toISOString().slice(0, 7); // YYYY-MM format
 
       if (!monthlyPrices[monthYear]) {
-        monthlyPrices[monthYear] = { total: price, count: 1 };
+        monthlyPrices[monthYear] = { total: productPrice, count: 1 };
       } else {
-        monthlyPrices[monthYear].total += price;
+        monthlyPrices[monthYear].total += productPrice;
         monthlyPrices[monthYear].count += 1;
       }
     });
 
-    for (const monthYear in monthlyPrices) {
-      monthlyPrices[monthYear] =
-        monthlyPrices[monthYear].total / monthlyPrices[monthYear].count;
-    }
+    // Calculate averages and convert keys to Spanish month-year format
+    const averages = {};
+    Object.keys(monthlyPrices)
+      .sort()
+      .forEach(monthYear => {
+        const [year, month] = monthYear.split("-");
+        const date = new Date(year, month - 1);
+        const label = date.toLocaleDateString("es-ES", {
+          month: "long",
+          year: "numeric",
+        });
+        averages[label] =
+          monthlyPrices[monthYear].total / monthlyPrices[monthYear].count;
+      });
 
-    return monthlyPrices;
+    return averages;
   };
 
+  // Corrected to use 'productName'
   const generateChartData = products => {
+    // Calculate all possible labels from all products first to get the full range of dates
+    let allDates = [];
+    products.forEach(product => {
+      const monthlyPrices = calculateAveragePricePerMonth(product.priceHistory);
+      allDates = allDates.concat(Object.keys(monthlyPrices));
+    });
+
+    // Remove duplicates and sort
+    const uniqueDates = [...new Set(allDates)].sort(
+      (a, b) => new Date(a) - new Date(b)
+    );
+
+    // Generate dataset for each product
     const datasets = products.map(product => {
       const monthlyPrices = calculateAveragePricePerMonth(product.priceHistory);
+      const data = uniqueDates.map(date => monthlyPrices[date] || null);
+      // Ensure color string length is 6
+      const randomColor = (
+        "000000" + Math.floor(Math.random() * 16777215).toString(16)
+      ).slice(-6);
 
       return {
-        label: product.name,
-        data: Object.values(monthlyPrices),
+        label: product.productName,
+        data,
         fill: false,
-        borderColor: "#" + Math.floor(Math.random() * 16777215).toString(16), // Random color
+        borderColor: "#" + randomColor,
       };
     });
 
-    return {
-      labels: Object.keys(
-        calculateAveragePricePerMonth(products[0].priceHistory)
-      ),
-      datasets,
-    };
+    return { labels: uniqueDates, datasets };
   };
 
   useEffect(() => {
@@ -70,12 +94,10 @@ const PriceComparisonGraph = ({ productIds }) => {
     if (products.length > 0) {
       const chartData = generateChartData(products);
 
-      // If there's an existing chart instance, destroy it
       if (chartInstance) {
         chartInstance.destroy();
       }
 
-      // Create a new chart instance and save it in the state
       const newChartInstance = new Chart(chartRef.current, {
         type: "line",
         data: chartData,
@@ -93,8 +115,9 @@ const PriceComparisonGraph = ({ productIds }) => {
               display: true,
               title: {
                 display: true,
-                text: "Price",
+                text: "Average Price",
               },
+              beginAtZero: true,
             },
           },
         },
