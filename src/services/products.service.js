@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "https://food-forecast-server.azurewebsites.net";
 
 export const getProducts = (page, selectedCategory, limit = 54) => {
   if (selectedCategory)
@@ -11,5 +11,7 @@ export const getProducts = (page, selectedCategory, limit = 54) => {
 };
 
 export const getProductByIdWithPrice = productId => {
-  return axios.get(`${url}/products/with-price/${productId}`);
+  return axios.post(`${url}/products/with-price`, {
+    productIds: productId,
+  });
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "https://food-forecast-server.azurewebsites.net";
 
 const addProduct = (userID, product) => {
   return axios.post(`${url}/user-products/${userID}/products`, product, {
