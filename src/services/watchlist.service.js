@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "https://food-forecast-server.azurewebsites.net";
 
 const getProductWatchlist = userID => {
   return axios.get(`${url}/user-config/config/${userID}`);

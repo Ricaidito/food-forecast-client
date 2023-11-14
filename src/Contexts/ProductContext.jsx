@@ -1,18 +1,23 @@
 // ProductContext.js
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ProductContext = createContext();
 
 export function useProductContext() {
-  const context = useContext(ProductContext);
-  if (!context) {
-    throw new Error("useProductContext must be used within a ProductProvider");
-  }
-  return context;
+  return useContext(ProductContext);
 }
 
 export function ProductProvider({ children }) {
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const [selectedProductIds, setSelectedProductIds] = useState(
+    () => JSON.parse(window.localStorage.getItem("selectedProductIds")) || []
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "selectedProductIds",
+      JSON.stringify(selectedProductIds)
+    );
+  }, [selectedProductIds]);
 
   const addProductId = productId => {
     if (!selectedProductIds.includes(productId)) {

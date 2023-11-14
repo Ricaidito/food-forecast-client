@@ -18,7 +18,7 @@ const MyProductInfo = () => {
   useEffect(() => {
     const getProduct = async () => {
       const { data } = await axios.get(
-        `http://localhost:8000/user-products/${userID}/products/${productId}`
+        `https://food-forecast-server.azurewebsites.net/user-products/${userID}/products/${productId}`
       );
       setProduct(data);
     };

@@ -89,7 +89,9 @@ const Settings = () => {
     }, []);
     getWatchlist();
     axios
-      .get(`http://localhost:8000/payments/get-subscription-details/${userID}`)
+      .get(
+        `https://food-forecast-server.azurewebsites.net/payments/get-subscription-details/${userID}`
+      )
       .then(response => {
         const nextPaymentTimestamp =
           response.data.subscription.current_period_end;

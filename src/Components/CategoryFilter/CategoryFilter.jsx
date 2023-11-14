@@ -17,7 +17,7 @@ const CategoryFilter = ({ switchCategory }) => {
         value={selectedCategory}
         onChange={handleChange}
       >
-        <option value="" selected>
+        <option value="" defaultValue>
           Todas las Categorías
         </option>
         {CATEGORIES.map(({ categoryValue, text }) => (
