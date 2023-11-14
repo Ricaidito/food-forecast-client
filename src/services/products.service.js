@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "https://food-forecast-server.azurewebsites.net";
 
 export const getProducts = (page, selectedCategory, limit = 54) => {
   if (selectedCategory)

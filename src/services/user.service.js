@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "https://food-forecast-server.azurewebsites.net";
 
 const userLogin = (email, password) => {
   return axios.post(`${url}/users/login`, { email, password });

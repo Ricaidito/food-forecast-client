@@ -27,12 +27,12 @@ const CheckoutForm = () => {
 
     try {
       const customerResponse = await axios.get(
-        `http://localhost:8000/payments/get-customer/${userID}`
+        `https://food-forecast-server.azurewebsites.net/payments/get-customer/${userID}`
       );
       const customerId = customerResponse.data.customerId;
 
       const subscriptionResponse = await axios.post(
-        `http://localhost:8000/payments/create-subscription/${userID}`,
+        `https://food-forecast-server.azurewebsites.net/payments/create-subscription/${userID}`,
         {
           customerId,
           paymentMethodId: paymentMethod.id,
@@ -65,7 +65,7 @@ const CheckoutForm = () => {
   const cancelSubscription = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/payments/cancel-subscription/${userID}`
+        `https://food-forecast-server.azurewebsites.net/payments/cancel-subscription/${userID}`
       );
       console.log(response.data.message);
     } catch (error) {

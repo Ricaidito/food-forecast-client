@@ -9,7 +9,9 @@ const ProductInfo = ({ productId }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/products/product-info/${productId}`)
+      .get(
+        `https://food-forecast-server.azurewebsites.net/products/product-info/${productId}`
+      )
       .then(response => {
         setProduct(response.data);
       });
