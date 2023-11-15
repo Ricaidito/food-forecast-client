@@ -1,26 +1,26 @@
-import "./AboutUs.css";
-
 const AboutUs = () => {
   return (
-    <div className="h-[668px] w-auto bg-opacity-25 bg-lime-600">
-      <div className="pt-[11.06rem] grid justify-items-center">
-        <div className="">
-          <p className="text-center text-stone-950 text-xl font-bold">
-            Sobre nosotros
-          </p>
-        </div>
-        <div>
-          <p className="w-[532px] pt-2 text-center text-stone-950 text-sm font-normal leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque id risus sed augue porta bibendum. Phasellus erat ex,
-            feugiat tempus porttitor id, consectetur a erat. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Nam maximus, nunc eu auctor finibus, erat tortor
-            congue lorem, malesuada varius mi mauris ut lorem. Quisque aliquam,
-            ex quis pulvinar iaculis, dolor tortor ullamcorper ligula, sit amet
-            mollis lectus ipsum eget mauris. Maecenas vel eros fringilla,
-            ullamcorper tellus sed, consequat velit. Ut in lobortis erat.
-          </p>
+    <div className="h-[668px] w-auto bg-lime-500 bg-opacity-25">
+      <div className="grid justify-items-center pt-[11.06rem]">
+        <div className="rounded-[10px] bg-lime-500 bg-opacity-5 p-5 shadow-lg">
+          <div>
+            <p className="text-center text-2xl font-bold text-green-700">
+              Sobre nosotros...
+            </p>
+          </div>
+          <div>
+            <p className="w-[532px] pt-2 text-center text-lg font-normal leading-relaxed text-stone-950">
+              Food Forecast ofrece una visión revolucionaria del mercado
+              alimenticio. Nuestra plataforma permite a usuarios comparar
+              precios de alimentos actualizados y obtener reportes analíticos
+              rápidos. Con una base de datos que se nutre de fuentes fiables,
+              aseguramos a nuestros suscriptores la información más precisa para
+              una toma de decisiones inteligente. Nuestro servicio premium va un
+              paso más allá, permitiendo al usuario tener notificaciones
+              inmediatas de actualizaciones de precios. Mantente informado y
+              ahorra con Food Forecast.
+            </p>
+          </div>
         </div>
       </div>
     </div>
