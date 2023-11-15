@@ -10,9 +10,9 @@ import {
   uploadUserProductsTemplate,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
-import Modal from "../../Modal/Modal";
+import Modal from "../../Layouts/Modal/Modal";
 import "./MyProducts.css";
-import DownloadButton from "../../DownloadButton/DownloadButton";
+import DownloadButton from "../../Layouts/DownloadButton/DownloadButton";
 import { Link } from "react-router-dom";
 import TemplateImage from "../../../images/TemplateImage.png";
 

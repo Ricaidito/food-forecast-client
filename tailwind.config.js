@@ -26,6 +26,7 @@ export default {
       },
     },
     fontFamily: {
+      default: ["Arial", "sans-serif"],
       body: [
         "Inter",
         "ui-sans-serif",

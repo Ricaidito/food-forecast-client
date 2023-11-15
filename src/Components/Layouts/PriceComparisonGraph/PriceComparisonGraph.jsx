@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
-import { getProductByIdWithPrice } from "../../services/products.service";
+import { getProductsByIdWithPrice } from "../../../services/products.service";
 
 const PriceComparisonGraph = ({ productIds }) => {
   const [products, setProducts] = useState([]);
@@ -9,7 +9,7 @@ const PriceComparisonGraph = ({ productIds }) => {
 
   // Correct function usage
   const getProducts = productIds => {
-    getProductByIdWithPrice(productIds)
+    getProductsByIdWithPrice(productIds)
       .then(response => {
         setProducts(response.data.products);
       })
@@ -129,7 +129,6 @@ const PriceComparisonGraph = ({ productIds }) => {
 
   return (
     <div>
-      <h1>Price Comparison Graph</h1>
       <canvas ref={chartRef} />
     </div>
   );

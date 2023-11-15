@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
-import { getProductByIdWithPrice } from "../../../services/products.service";
+import { getProductsByIdWithPrice } from "../../../services/products.service";
 import {
   getProductWatchlist,
   addProductWatchlist,
@@ -43,7 +43,7 @@ const Product = () => {
   };
 
   const getProduct = () => {
-    getProductByIdWithPrice(productId).then(response => {
+    getProductsByIdWithPrice(productId).then(response => {
       const productData = response.data;
       productData.priceHistory = productData.priceHistory.map(item => {
         return { ...item, date: formatDateToMMDDYYYY(item.date) };
