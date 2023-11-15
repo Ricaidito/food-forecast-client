@@ -1,4 +1,3 @@
-import "./Footer.css";
 import FooterLogo from "../../../images/FoodForecastFooterImage.png";
 
 const Footer = () => {
@@ -11,17 +10,17 @@ const Footer = () => {
           </div>
         </div>
         <div className=" pt-[4.5rem]">
-          <p className="text-center text-white text-base font-medium">
+          <p className="text-center text-base font-medium text-white">
             ©2023 Food Forecast. Todos los derechos reservados.
           </p>
         </div>
         <div className=" grid justify-items-center pt-[3.87rem]">
           <div>
-            <p className=" text-white text-base font-medium">
-              Tel: 809-765-3212
+            <p className=" text-base font-medium text-white">
+              Teléfono: +1 829-904-8054
             </p>
-            <p className=" text-white text-base font-medium">
-              info@foodforecast.com
+            <p className=" text-base font-medium text-white">
+              Email: ricaiditodev@gmail.com
             </p>
           </div>
         </div>

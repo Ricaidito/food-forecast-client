@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { createUser } from "../../../services/user.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import FoodPhoto from "../../../images/FoodImage1.png";
-import GoogleLogo from "../../../images/GoogleLogo.png";
-import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -66,14 +64,13 @@ const Register = () => {
             <p className="text-3xl font-medium text-black">Registro</p>
             <div className=" pt-[1.37rem]">
               <p className="w-[308px] text-base font-normal text-black">
-                Si ya tienes una cuenta
+                Si ya tienes una cuenta...
               </p>
-              <a
-                href="#"
-                className="w-[308px] text-base font-semibold text-lime-600"
-              >
-                ¡Inicia Sesion Aqui!
-              </a>
+              <Link to="/login">
+                <p className="w-[308px] text-base font-semibold text-lime-600">
+                  ¡Inicia Sesion Aqui!
+                </p>
+              </Link>
             </div>
           </div>
           <div className=" w-[429px] pt-[2.75rem]">
@@ -117,13 +114,13 @@ const Register = () => {
                   type="email"
                   className="mb-2 block text-sm font-medium text-gray-900"
                 >
-                  Your email
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
                   id="email"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="name@flowbite.com"
+                  placeholder="juanperez@gmail.com"
                   required
                   onChange={handleInputChange}
                   value={formData.email}
@@ -143,6 +140,7 @@ const Register = () => {
                   required
                   onChange={handleInputChange}
                   value={formData.password}
+                  placeholder="********"
                 />
               </div>
               <div className="mb-6">
@@ -159,6 +157,7 @@ const Register = () => {
                   required
                   onChange={handleInputChange}
                   value={formData.confirmPassword}
+                  placeholder="********"
                 />
               </div>
 
@@ -191,9 +190,7 @@ const Register = () => {
                         <span className="font-semibold">Click para subir</span>{" "}
                         o arrastra y suelta una imagen
                       </p>
-                      <p className="text-xs text-gray-500">
-                        PNG o JPG (MAX. 1 MB)
-                      </p>
+                      <p className="text-xs text-gray-500">JPEG (MAX. 1 MB)</p>
                     </div>
                     <input
                       id="dropzone-file"
@@ -204,7 +201,7 @@ const Register = () => {
                     <div className="mt-2 text-sm text-gray-500">
                       {formData.profilePicture
                         ? formData.profilePicture.name
-                        : "Aún no se ha seleccionado un archivo"}
+                        : "Aún no se ha seleccionado un archivo..."}
                     </div>
                   </label>
                 </div>
@@ -213,16 +210,8 @@ const Register = () => {
                 type="submit"
                 className="mt-[3.75rem] h-[53px] w-[429px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
               >
-                Registrar
+                Registrarse
               </button>
-              <p className="pt-[3.25rem] text-center text-base font-medium text-zinc-400">
-                o continua con
-              </p>
-              <div className=" grid justify-items-center pt-[1.13rem]">
-                <a href="#">
-                  <img src={GoogleLogo} alt="GoogleImage" />
-                </a>
-              </div>
             </form>
           </div>
         </div>
