@@ -43,8 +43,8 @@ const Product = () => {
   };
 
   const getProduct = () => {
-    getProductsByIdWithPrice(productId).then(response => {
-      const productData = response.data;
+    getProductsByIdWithPrice([productId]).then(response => {
+      const productData = response.data.products[0];
       productData.priceHistory = productData.priceHistory.map(item => {
         return { ...item, date: formatDateToMMDDYYYY(item.date) };
       });
@@ -114,28 +114,28 @@ const Product = () => {
       <div className=" flex justify-center gap-56">
         <div>
           <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
-            <img src={productWithPrice.product.imageUrl} alt="" />
+            <img src={productWithPrice.imageUrl} alt="" />
             <div className="px-5 pb-5 pt-6">
               <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-                Nombre: {productWithPrice.product.productName}
+                Nombre: {productWithPrice.productName}
               </h5>
               <span className="text-lg font-bold text-gray-700">
                 Precio actual: RD${latestPrice}
               </span>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Categoria: {productWithPrice.product.category}
+                  Categoria: {productWithPrice.category}
                 </p>
               </div>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Lugar: {productWithPrice.product.origin}
+                  Lugar: {productWithPrice.origin}
                 </p>
               </div>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
                   Fecha de extracción:{" "}
-                  {formatDate(productWithPrice.product.extractionDate)}
+                  {formatDate(productWithPrice.extractionDate)}
                 </p>
               </div>
               <div>
