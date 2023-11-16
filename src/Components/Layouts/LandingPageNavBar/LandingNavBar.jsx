@@ -6,23 +6,23 @@ import { useLocation } from "react-router-dom";
 const LandingNavbar = () => {
   const location = useLocation();
 
-  const handleClick = (id) => {
+  const handleClick = id => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div>
-      <nav className="bg-white w-full border-b border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <nav className="w-full border-b border-gray-200 bg-white">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
           <Link to="/" className="flex items-center">
-            <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />
+            <img src={logo} className="mr-3 h-8" alt="Flowbite Logo" />
           </Link>
           <div className="flex md:order-2">
             <Link to="/login">
               <button
                 type="button"
-                className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                className="mr-3 rounded-lg border border-green-700 bg-white px-4 py-2 text-center text-sm font-medium text-green-700 hover:bg-green-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 md:mr-0"
               >
                 Iniciar sesión
               </button>
@@ -30,23 +30,23 @@ const LandingNavbar = () => {
             <Link to="/register">
               <button
                 type="button"
-                className="text-green-700 bg-white border border-green-700 hover:text-white hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-3 mr-3 md:mr-0"
+                className="ml-3 mr-3 rounded-lg border border-green-700 bg-white px-4 py-2 text-center text-sm font-medium text-green-700 hover:bg-green-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 md:mr-0"
               >
                 Registrarse
               </button>
             </Link>
           </div>
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
             id="navbar-sticky"
           >
             {location.pathname === "/" && (
-              <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+              <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0">
                 <li>
                   <Link
                     to="/#home"
                     onClick={() => handleClick("home")}
-                    className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                    className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                   >
                     Inicio
                   </Link>
@@ -55,27 +55,27 @@ const LandingNavbar = () => {
                   <Link
                     to="/#about-us"
                     onClick={() => handleClick("about-us")}
-                    className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                    className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                   >
-                    Sobre Nosotros
+                    Sobre nosotros
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/#subscription"
                     onClick={() => handleClick("subscription")}
-                    className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                    className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                   >
-                    Subscripcion
+                    Planes y precios
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/#faq"
                     onClick={() => handleClick("faq")}
-                    className="block py-2 pl-3 pr-4 text-neutral-800 bg-blue-700 rounded bg-transparent hover:text-green-700 p-0"
+                    className="block rounded bg-blue-700 bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                   >
-                    FAQ
+                    Preguntas frecuentes
                   </Link>
                 </li>
               </ul>
@@ -83,7 +83,6 @@ const LandingNavbar = () => {
           </div>
         </div>
       </nav>
-
       <Outlet />
     </div>
   );

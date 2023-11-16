@@ -1,10 +1,8 @@
-import "./Login.css";
 import FoodPhoto from "../../../images/FoodImage1.png";
-import GoogleLogo from "../../../images/GoogleLogo.png";
 import { useState } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
 import { userLogin } from "../../../services/user.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -41,17 +39,16 @@ const Login = () => {
       <div className=" grid grid-cols-2 grid-rows-1">
         <div className=" justify-self-center pt-[5.53rem]">
           <div className=" text-start">
-            <p className="text-3xl font-medium text-black">Iniciar Sesion</p>
+            <p className="text-3xl font-medium text-black">Iniciar sesión</p>
             <div className=" pt-[1.37rem]">
               <p className="w-[308px] text-base font-normal text-black">
-                Si no tienes una cuenta aun
+                Si no tienes una cuenta aún...
               </p>
-              <a
-                href="#"
-                className="w-[308px] text-base font-semibold text-lime-600"
-              >
-                ¡Registrate aqui!
-              </a>
+              <Link to="/register">
+                <p className="w-[308px] text-base font-semibold text-lime-600">
+                  ¡Registrate aqui!
+                </p>
+              </Link>
             </div>
           </div>
           <div className=" w-[429px] pt-[3.25rem]">
@@ -61,14 +58,14 @@ const Login = () => {
                   type="email"
                   className="mb-2 block text-sm font-medium text-gray-900"
                 >
-                  Your email
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="name@flowbite.com"
+                  placeholder="juanperez@gmail.com"
                   required
                   value={user.email}
                   onChange={handleChange}
@@ -79,7 +76,7 @@ const Login = () => {
                   type="password"
                   className="mb-2 block text-sm font-medium text-gray-900"
                 >
-                  Your password
+                  Contraseña
                 </label>
                 <input
                   type="password"
@@ -89,11 +86,12 @@ const Login = () => {
                   value={user.password}
                   onChange={handleChange}
                   required
+                  placeholder="*********"
                 />
               </div>
               <div className=" grid justify-items-end">
                 <a href="#" className="text-xs font-light text-neutral-600">
-                  ¿Olvido su contraseña?
+                  ¿Olvidó su contraseña?
                 </a>
               </div>
               <button
@@ -101,17 +99,8 @@ const Login = () => {
                 className="mt-[3.75rem] h-[53px] w-[429px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
                 onClick={event => handleLogin(event)}
               >
-                Login
+                Iniciar sesión
               </button>
-
-              <p className="pt-[3.25rem] text-center text-base font-medium text-zinc-400">
-                o continua con
-              </p>
-              <div className=" grid justify-items-center pt-[1.13rem]">
-                <a href="#">
-                  <img src={GoogleLogo} alt="GoogleImage" />
-                </a>
-              </div>
             </form>
           </div>
         </div>
