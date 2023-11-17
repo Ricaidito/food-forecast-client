@@ -14,6 +14,10 @@ const getUserProducts = userID => {
   return axios.get(`${url}/user-products/${userID}/products`);
 };
 
+const getUserProductById = (userID, productId) => {
+  return axios.get(`${url}/user-products/${userID}/products/${productId}`);
+};
+
 const deleteAllProducts = userID => {
   return axios.delete(`${url}/user-products/${userID}/products`);
 };
@@ -37,6 +41,17 @@ const uploadUserProductsTemplate = (userID, file) => {
     }
   );
 };
+const updateUserProductsPrice = (userID, productID, price, date) => {
+  return axios.put(
+    `${url}/user-products/${userID}/products/${productID}/price`,
+    { price: price, date: date },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
 
 export {
   addProduct,
@@ -45,4 +60,6 @@ export {
   deleteProduct,
   getDownloadURLForTemplate,
   uploadUserProductsTemplate,
+  updateUserProductsPrice,
+  getUserProductById,
 };

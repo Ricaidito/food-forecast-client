@@ -13,6 +13,7 @@ import {
 } from "../../../services/watchlist.service";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Settings.css";
 
 const Settings = () => {
@@ -46,6 +47,7 @@ const Settings = () => {
   const getWatchlist = () => {
     getProductWatchlist(userID).then(response => {
       getProductsInfo(response.data.watchList).then(product => {
+        console.log(product.data);
         setWatchlist(product.data);
       });
     });
@@ -293,10 +295,11 @@ const Settings = () => {
               </p>
             </div>
           ) : (
-            <div className=" overflow-y-auto">
-              <table className="w-[30%] text-left text-sm text-gray-500">
+            <div className=" flex h-[12rem] justify-center overflow-y-auto">
+              <table className=" text-left text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700">
                   <tr>
+                    <th scope="col" className="px-6 py-3"></th>
                     <th scope="col" className="px-6 py-3">
                       Nombre del Producto
                     </th>
@@ -309,7 +312,14 @@ const Settings = () => {
                 <tbody>
                   {watchlist.map(product => (
                     <tr className="border-b bg-white" key={product._id}>
-                      <td className="px-6 py-4 text-gray-900">
+                      <td>
+                        <img
+                          className="h-20 w-20 rounded-full"
+                          src={product.imageUrl}
+                          alt="productImage"
+                        />
+                      </td>
+                      <td className="w-90 px-6 py-4 text-gray-900">
                         <Link to={`/admin/product/${product._id}`}>
                           {product.productName}
                         </Link>
