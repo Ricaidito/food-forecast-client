@@ -10,6 +10,7 @@ import "./AdminNavBar.css";
 const AdminNavBar = () => {
   const { userID, name, lastName, email, logout } = useUserContext();
   const [userImage, setUserImage] = useState();
+  const [imageKey, setImageKey] = useState(Date.now());
   const navigate = useNavigate();
 
   useEffect(() => {

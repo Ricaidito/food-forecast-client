@@ -10,10 +10,11 @@ import {
   uploadUserProductsTemplate,
 } from "../../../services/userProducts.service";
 import CATEGORIES from "../../../categories/productCategories";
-import Modal from "../../Modal/Modal";
+import Modal from "../../Layouts/Modal/Modal";
 import "./MyProducts.css";
-import DownloadButton from "../../DownloadButton/DownloadButton";
+import DownloadButton from "../../Layouts/DownloadButton/DownloadButton";
 import { Link } from "react-router-dom";
+import { useUserProductContext } from "../../../Contexts/UserProductContext";
 import TemplateImage from "../../../images/TemplateImage.png";
 
 const MyProducts = () => {
@@ -32,6 +33,7 @@ const MyProducts = () => {
   const [isModalArchiveOpen, setModalArchiveOpen] = useState(false);
   const [isModalProductOpen, setModalProductOpen] = useState(false);
   const [file, setFile] = useState(null);
+  // const { addUserProductId, isUserProductIdSelected } = useUserProductContext();
 
   const getProducts = () => {
     getUserProducts(userID)
@@ -393,6 +395,7 @@ const MyProducts = () => {
                     <button className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
                       Comparar
                     </button>
+
                     <button
                       className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                       onClick={() => deleteOneUserProduct(product._id)}
