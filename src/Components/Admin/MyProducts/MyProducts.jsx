@@ -137,7 +137,7 @@ const MyProducts = () => {
         >
           <form className="mt-8 w-96">
             <p className="mb-6 text-2xl font-medium text-black">
-              Añdir Productos
+              Añadir Productos
             </p>
             <div className="mb-6">
               <label
@@ -272,7 +272,7 @@ const MyProducts = () => {
               className="mb-2 block text-sm font-medium text-gray-900"
               htmlFor="file_input"
             >
-              Upload file
+              Subir Archivo
             </label>
             <input
               className="block w-[75%] cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
@@ -286,7 +286,7 @@ const MyProducts = () => {
                 className="mb-2 mr-2 rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
                 onClick={handleFileUpload}
               >
-                Upload
+                Subir Archivo
               </button>
             </div>
           </div>
@@ -300,7 +300,7 @@ const MyProducts = () => {
               htmlFor="default-search"
               className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Search
+              Buscar
             </label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -414,7 +414,7 @@ const MyProducts = () => {
                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                         />
                       </svg>
-                      Delete
+                      Eliminar
                     </button>
                   </div>
                 </div>

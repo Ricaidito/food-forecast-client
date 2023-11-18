@@ -194,7 +194,7 @@ const Product = () => {
                   <Legend />
                   <Line
                     type="monotone"
-                    dataKey="productPrice"
+                    dataKey="Precio de Producto"
                     stroke="#8884d8"
                     activeDot={{ r: 8 }}
                   />
