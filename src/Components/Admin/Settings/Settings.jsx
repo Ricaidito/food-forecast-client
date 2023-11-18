@@ -243,7 +243,7 @@ const Settings = () => {
                       className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                       htmlFor="file_input"
                     >
-                      Upload file
+                      Subir Archivo
                     </label>
                     <input
                       ref={fileInputRef}
@@ -258,7 +258,7 @@ const Settings = () => {
                       className="mt-1 text-sm text-gray-500 dark:text-gray-300"
                       id="file_input_help"
                     >
-                      PNG O JPG (MAX. 800x400px).
+                      PNG O JPG
                     </p>
                   </div>
 
