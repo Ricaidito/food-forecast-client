@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProductByIdWithPrice } from "../../services/products.service";
+import { getProductsByIdWithPrice } from "../../../services/products.service";
 
 const PriceComparisonTable = ({ productIds }) => {
   const [products, setProducts] = useState([]);
@@ -40,7 +40,7 @@ const PriceComparisonTable = ({ productIds }) => {
   const getProducts = productIds => {
     uniqueMonthsSet = new Set();
 
-    getProductByIdWithPrice(productIds).then(response => {
+    getProductsByIdWithPrice(productIds).then(response => {
       response.data.products.forEach(product => {
         calculateAveragePrices(product);
       });
@@ -57,15 +57,15 @@ const PriceComparisonTable = ({ productIds }) => {
   }, [productIds]);
 
   return (
-    <div class="relative w-[40%] overflow-x-auto">
-      <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-        <thead class="bg-gray-50 text-xs uppercase text-gray-700">
+    <div>
+      <table className="w-full text-left text-sm text-gray-500 rtl:text-right">
+        <thead className="bg-gray-50 text-xs uppercase text-gray-700">
           <tr>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" className="px-6 py-3">
               Nombre del Producto
             </th>
             {uniqueMonths.map(month => (
-              <th key={month} scope="col" class="px-6 py-3">
+              <th key={month} scope="col" className="px-6 py-3">
                 {month}
               </th>
             ))}
@@ -73,15 +73,15 @@ const PriceComparisonTable = ({ productIds }) => {
         </thead>
         <tbody>
           {products.map(product => (
-            <tr key={product._id} class="border-b bg-white">
+            <tr key={product._id} className="border-b bg-white">
               <th
                 scope="row"
-                class="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
+                className="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
               >
                 {product.productName}
               </th>
               {uniqueMonths.map(month => (
-                <td key={month} class="px-6 py-4">
+                <td key={month} className="px-6 py-4">
                   {product.averagePrices[month] || ""}
                 </td>
               ))}

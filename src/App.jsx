@@ -3,7 +3,7 @@ import LandingNavbar from "./Components/Layouts/LandingPageNavBar/LandingNavBar"
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Login from "./Components/LandingPage/Login/Login";
 import Register from "./Components/LandingPage/Register/Register";
-import AdminNavBar from "./Components/Layouts/AdminNavBar/AdminNavBar";
+import AdminNavBar from "./Components/Admin/AdminNavBar/AdminNavBar";
 import ProductsCatalog from "./Components/Admin/ProductsCatalog/ProductsCatalog";
 import MyProducts from "./Components/Admin/MyProducts/MyProducts";
 import Settings from "./Components/Admin/Settings/Settings";

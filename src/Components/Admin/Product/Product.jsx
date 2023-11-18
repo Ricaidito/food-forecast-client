@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useUserContext from "../../../Contexts/useUserContext";
-import { getProductByIdWithPrice } from "../../../services/products.service";
+import { getProductsByIdWithPrice } from "../../../services/products.service";
 import {
   getProductWatchlist,
   addProductWatchlist,
@@ -43,8 +43,8 @@ const Product = () => {
   };
 
   const getProduct = () => {
-    getProductByIdWithPrice(productId).then(response => {
-      const productData = response.data;
+    getProductsByIdWithPrice([productId]).then(response => {
+      const productData = response.data.products[0];
       productData.priceHistory = productData.priceHistory.map(item => {
         return { ...item, date: formatDateToMMDDYYYY(item.date) };
       });
@@ -114,34 +114,34 @@ const Product = () => {
       <div className=" flex justify-center gap-56">
         <div>
           <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
-            <img src={productWithPrice.product.imageUrl} alt="" />
+            <img src={productWithPrice.imageUrl} alt="" />
             <div className="px-5 pb-5 pt-6">
               <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-                Nombre: {productWithPrice.product.productName}
+                Nombre: {productWithPrice.productName}
               </h5>
               <span className="text-lg font-bold text-gray-700">
                 Precio actual: RD${latestPrice}
               </span>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Categoria: {productWithPrice.product.category}
+                  Categoria: {productWithPrice.category}
                 </p>
               </div>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Lugar: {productWithPrice.product.origin}
+                  Lugar: {productWithPrice.origin}
                 </p>
               </div>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
                   Fecha de extracción:{" "}
-                  {formatDate(productWithPrice.product.extractionDate)}
+                  {formatDate(productWithPrice.extractionDate)}
                 </p>
               </div>
               <div>
                 <div className=" mb-2">
                   <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
-                    Notify when price changes?
+                    ¿Recibir notificaciones de este producto al correo?
                   </p>
                 </div>
                 <label className="relative inline-flex cursor-pointer items-center">
@@ -152,17 +152,6 @@ const Product = () => {
                     checked={isChecked}
                     onChange={handleWatchlist}
                   />
-                  <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
-                </label>
-              </div>
-              <div>
-                <div className=" mb-2">
-                  <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
-                    Get email notifications when price changes?
-                  </p>
-                </div>
-                <label className="relative inline-flex cursor-pointer items-center">
-                  <input type="checkbox" value="" className="peer sr-only" />
                   <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
                 </label>
               </div>

@@ -1,9 +1,9 @@
 import { getProducts } from "../../../services/products.service";
 import { useState, useEffect } from "react";
-import SearchBar from "../../SearchBar/SearchBar";
+import SearchBar from "../../Layouts/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { useProductContext } from "../../../Contexts/ProductContext";
-import CategoryFilter from "../../CategoryFilter/CategoryFilter";
+import CategoryFilter from "../../Layouts/CategoryFilter/CategoryFilter";
 import "./ProductsCatalog.css";
 
 const ProductsCatalog = () => {
