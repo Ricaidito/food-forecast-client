@@ -5,13 +5,23 @@ import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { userUserConfigContext } from "../../../Contexts/UserConfigContext";
+import Modal from "../../Layouts/Modal/Modal";
 import "./AdminNavBar.css";
 
 const AdminNavBar = () => {
   const { userID, name, lastName, email, logout } = useUserContext();
+  const { hasSubscription, removeUserConfig } = userUserConfigContext();
   const [userImage, setUserImage] = useState();
-  const [imageKey, setImageKey] = useState(Date.now());
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  const premiumFeatures = [
+    "Todas las características de la versión gratuita",
+    "+ Acceso a reportes avanzados y análisis detallados",
+    "+ Notificaciones personalizadas de cambios de precios",
+    "+ Soporte prioritario al cliente",
+  ];
 
   useEffect(() => {
     getUserImage(userID).then(response => {
@@ -20,9 +30,15 @@ const AdminNavBar = () => {
   }, [userID]);
 
   const handleLogout = () => {
+    removeUserConfig();
     logout();
     sessionStorage.removeItem("session");
     navigate("/");
+  };
+
+  const handleSubscriptionClick = () => {
+    setShowModal(false);
+    navigate("/admin/subscriptions");
   };
 
   return (
@@ -100,11 +116,42 @@ const AdminNavBar = () => {
                   Mis Productos
                 </Link>
               </li>
+              {!hasSubscription && (
+                <>
+                  <li
+                    className="block rounded bg-lime-600 p-0 py-2 pl-3 pr-4 font-bold text-white hover:bg-green-700"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Premium 👑
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
       </nav>
-
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        classProps="z-10 m-auto max-w-md rounded-lg bg-white p-4"
+      >
+        <h2 className="m-3 text-2xl font-bold">
+          ¡Hazte Premium y disfruta de todos los beneficios!
+        </h2>
+        <ul className="mb-6">
+          {premiumFeatures.map((feature, i) => (
+            <li key={i} className="mb-4 text-base text-gray-700">
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <button
+          className="mt-[3.75rem] h-[53px] w-[412px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-green-700 hover:shadow-lg"
+          onClick={handleSubscriptionClick}
+        >
+          Suscribirse
+        </button>
+      </Modal>
       <Outlet />
     </div>
   );

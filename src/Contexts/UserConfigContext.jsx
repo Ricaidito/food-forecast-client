@@ -16,6 +16,7 @@ export const UserConfigContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserConfig = async () => {
       try {
+        if (!userID) return;
         const response = await fetch(
           `https://food-forecast-server.azurewebsites.net/user-config/config/${userID}`
         );
