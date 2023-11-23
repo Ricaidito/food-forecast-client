@@ -1,4 +1,5 @@
 import logo from "../../../images/LogoFoodForecast.png";
+import logoP from "../../../images/LogoFoodForecastP.png";
 import { Link, Outlet } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import useUserContext from "../../../Contexts/useUserContext";
@@ -46,7 +47,11 @@ const AdminNavBar = () => {
       <nav className="w-full border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
           <Link to="/admin" className="flex items-center">
-            <img src={logo} className="mr-3 h-8" alt="Flowbite Logo" />
+            {hasSubscription ? (
+              <img src={logoP} className="mr-3 h-8" alt="Logo Premium" />
+            ) : (
+              <img src={logo} className="mr-3 h-8" alt="Logo" />
+            )}
           </Link>
           <div className="flex md:order-2">
             <Dropdown

@@ -11,8 +11,8 @@ import Dashboard from "./Components/Admin/Dashboard/Dashboard";
 import Basket from "./Components/Admin/Basket/Basket";
 import Product from "./Components/Admin/Product/Product";
 import CheckoutForm from "./Components/Admin/Payments/CheckoutForm";
-import "./App.css";
 import MyProductInfo from "./Components/Admin/MyProducts/MyProductInfo/MyProductInfo";
+import "./App.css";
 
 const App = () => {
   return (
