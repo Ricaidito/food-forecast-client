@@ -12,6 +12,8 @@ import Basket from "./Components/Admin/Basket/Basket";
 import Product from "./Components/Admin/Product/Product";
 import CheckoutForm from "./Components/Admin/Payments/CheckoutForm";
 import MyProductInfo from "./Components/Admin/MyProducts/MyProductInfo/MyProductInfo";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
 const App = () => {
@@ -37,6 +39,7 @@ const App = () => {
           <Route path="/admin/subscriptions" element={<CheckoutForm />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 };
