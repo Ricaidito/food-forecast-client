@@ -1,5 +1,5 @@
 import useUserContext from "../../../Contexts/useUserContext";
-import { userUserConfigContext } from "../../../Contexts/UserConfigContext";
+import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 import React, { useRef } from "react";
 import {
   getUserImage,
@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Settings.css";
 
 const Settings = () => {
@@ -23,18 +24,14 @@ const Settings = () => {
     profilePicture: null,
   });
   const { userID, name, lastName, email, logout, update } = useUserContext();
-  const { hasSubscription, removeUserConfig } = userUserConfigContext();
+  const { hasSubscription, refetchUserConfig } = useUserConfigContext();
   const [updatedName, setUpdatedName] = useState(name);
   const [updatedLastName, setUpdatedLastName] = useState(lastName);
 
   const navigate = useNavigate();
   const fileInputRef = useRef();
 
-  const handleLogout = () => {
-    logout();
-    sessionStorage.removeItem("session");
-    navigate("/");
-  };
+  const [paymentDate, setPaymentDate] = useState("");
 
   const resetForm = () => {
     formRef.current.reset();
@@ -47,7 +44,6 @@ const Settings = () => {
   const getWatchlist = () => {
     getProductWatchlist(userID).then(response => {
       getProductsInfo(response.data.watchList).then(product => {
-        console.log(product.data);
         setWatchlist(product.data);
       });
     });
@@ -64,6 +60,10 @@ const Settings = () => {
       ...prevData,
       profilePicture: e.target.files[0],
     }));
+  };
+
+  const handleSuscribe = () => {
+    navigate("/admin/subscriptions");
   };
 
   const handlePhotoChange = async e => {
@@ -96,24 +96,39 @@ const Settings = () => {
     });
   };
 
+  const getPaymentInfo = () => {
+    if (!hasSubscription) return;
+    axios
+      .get(
+        `https://food-forecast-server.azurewebsites.net/payments/get-subscription-details/${userID}`
+      )
+      .then(response => {
+        const nextPaymentTimestamp =
+          response.data.subscription.current_period_end;
+        const nextPaymentDate = new Date(nextPaymentTimestamp * 1000);
+        setPaymentDate(nextPaymentDate.toLocaleDateString());
+      });
+  };
+
   useEffect(() => {
     getUserImage(userID).then(response => {
       setUserImage(response.data);
     }, []);
     getWatchlist();
-    // axios
-    //   .get(
-    //     `https://food-forecast-server.azurewebsites.net/payments/get-subscription-details/${userID}`
-    //   )
-    //   .then(response => {
-    //     const nextPaymentTimestamp =
-    //       response.data.subscription.current_period_end;
-    //     const nextPaymentDate = new Date(nextPaymentTimestamp * 1000);
-    //     console.log(
-    //       `The next payment is due on: ${nextPaymentDate.toLocaleDateString()}`
-    //     );
-    //   });
+    getPaymentInfo();
   }, []);
+
+  const cancelSubscription = async () => {
+    try {
+      const response = await axios.get(
+        `https://food-forecast-server.azurewebsites.net/payments/cancel-subscription/${userID}`
+      );
+      console.log(response.data.message);
+      refetchUserConfig();
+    } catch (error) {
+      console.error("Error cancelling subscription:", error);
+    }
+  };
 
   return (
     <div>
@@ -351,24 +366,49 @@ const Settings = () => {
             <p className=" text-center text-xl font-medium uppercase">
               Manejo de Suscripciones
             </p>
-            <p className=" mt-6 font-medium">
-              Aqui podras manejar tus suscripciones, cancelarlas o cambiarlas
-            </p>
             <div className=" mt-4">
               {hasSubscription ? (
-                <p>
-                  <span className=" font-bold">Suscripcion Actual:</span>
-                  Premium
-                </p>
+                <>
+                  <p>
+                    <span className="font-bold">Suscripcion Actual: </span>
+                    <span className="font-bold text-yellow-300">
+                      Plan Premium 👑
+                    </span>
+                  </p>
+                  <p>
+                    <span className=" font-bold">Próxima fecha de Pago: </span>
+                    {paymentDate}
+                  </p>
+                </>
               ) : (
-                <p>Suscripcion Actual: Basico</p>
+                <>
+                  <p>
+                    <span className="font-bold">Suscripcion Actual: </span>
+                    Plan Gratuito
+                  </p>
+                  <p className="pt-6">
+                    ¿Quieres disfrutar de los beneficios de ser premium?
+                  </p>
+                </>
               )}
             </div>
 
             <div className=" mt-10 flex justify-center">
-              <button className=" h-9 w-[7rem]  rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg">
-                Configurar
-              </button>
+              {hasSubscription ? (
+                <button
+                  className="h-14 w-[7rem]  rounded-md bg-red-600 font-medium text-white shadow hover:bg-white hover:text-red-600 hover:shadow-lg"
+                  onClick={cancelSubscription}
+                >
+                  Cancelar Suscripcion
+                </button>
+              ) : (
+                <button
+                  className=" mt-4 h-9 w-[7rem]  rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+                  onClick={handleSuscribe}
+                >
+                  ¡Suscribete!
+                </button>
+              )}
             </div>
           </div>
         </div>
