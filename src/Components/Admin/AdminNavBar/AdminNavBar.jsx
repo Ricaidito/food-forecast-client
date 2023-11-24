@@ -6,13 +6,13 @@ import useUserContext from "../../../Contexts/useUserContext";
 import { getUserImage } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { userUserConfigContext } from "../../../Contexts/UserConfigContext";
+import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 import Modal from "../../Layouts/Modal/Modal";
 import "./AdminNavBar.css";
 
 const AdminNavBar = () => {
   const { userID, name, lastName, email, logout } = useUserContext();
-  const { hasSubscription, removeUserConfig } = userUserConfigContext();
+  const { hasSubscription, removeUserConfig } = useUserConfigContext();
   const [userImage, setUserImage] = useState();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);

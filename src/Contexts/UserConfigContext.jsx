@@ -3,7 +3,7 @@ import useUserContext from "./useUserContext";
 
 const UserConfigContext = createContext();
 
-export const userUserConfigContext = () => useContext(UserConfigContext);
+export const useUserConfigContext = () => useContext(UserConfigContext);
 
 export const UserConfigContextProvider = ({ children }) => {
   const [userConfig, setUserConfig] = useState(() => {
@@ -13,20 +13,20 @@ export const UserConfigContextProvider = ({ children }) => {
 
   const { userID } = useUserContext();
 
-  useEffect(() => {
-    const fetchUserConfig = async () => {
-      try {
-        if (!userID) return;
-        const response = await fetch(
-          `https://food-forecast-server.azurewebsites.net/user-config/config/${userID}`
-        );
-        const data = await response.json();
-        setUserConfig(data);
-      } catch (error) {
-        console.error("Error fetching user config:", error);
-      }
-    };
+  const fetchUserConfig = async () => {
+    try {
+      if (!userID) return;
+      const response = await fetch(
+        `https://food-forecast-server.azurewebsites.net/user-config/config/${userID}`
+      );
+      const data = await response.json();
+      setUserConfig(data);
+    } catch (error) {
+      console.error("Error fetching user config:", error);
+    }
+  };
 
+  useEffect(() => {
     if (userID) {
       fetchUserConfig();
     }
@@ -43,8 +43,14 @@ export const UserConfigContextProvider = ({ children }) => {
     localStorage.removeItem("userConfig");
   };
 
+  const refetchUserConfig = () => {
+    fetchUserConfig();
+  };
+
   return (
-    <UserConfigContext.Provider value={{ ...userConfig, removeUserConfig }}>
+    <UserConfigContext.Provider
+      value={{ ...userConfig, removeUserConfig, refetchUserConfig }}
+    >
       {children}
     </UserConfigContext.Provider>
   );

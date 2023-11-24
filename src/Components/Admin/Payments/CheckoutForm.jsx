@@ -1,11 +1,13 @@
 import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useUserContext from "../../../Contexts/useUserContext";
+import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 
 const CheckoutForm = () => {
   const { userID } = useUserContext();
   const stripe = useStripe();
   const elements = useElements();
+  const { refetchUserConfig } = useUserConfigContext();
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -56,20 +58,10 @@ const CheckoutForm = () => {
         }
 
         console.log("Subscription successful!");
+        refetchUserConfig();
       }
     } catch (err) {
       console.error("Error during subscription:", err);
-    }
-  };
-
-  const cancelSubscription = async () => {
-    try {
-      const response = await axios.get(
-        `https://food-forecast-server.azurewebsites.net/payments/cancel-subscription/${userID}`
-      );
-      console.log(response.data.message);
-    } catch (error) {
-      console.error("Error cancelling subscription:", error);
     }
   };
 
@@ -81,7 +73,6 @@ const CheckoutForm = () => {
           Suscribirse
         </button>
       </form>
-      <button onClick={cancelSubscription}>Cancelar suscripción</button>
     </div>
   );
 };
