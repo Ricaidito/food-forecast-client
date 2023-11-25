@@ -2,9 +2,12 @@ import { useState } from "react";
 import { createUser } from "../../../services/user.service";
 import { useNavigate, Link } from "react-router-dom";
 import FoodPhoto from "../../../images/FoodImage1.png";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Register = () => {
   const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
