@@ -2,7 +2,7 @@ const AboutUs = () => {
   return (
     <div className="h-[668px] w-auto bg-lime-500 bg-opacity-25">
       <div className="grid justify-items-center pt-[11.06rem]">
-        <div className="rounded-[10px] bg-lime-500 bg-opacity-5 p-5 shadow-lg">
+        <div className="rounded-[10px] bg-gray-100 p-5 shadow-lg">
           <div>
             <p className="text-center text-2xl font-bold text-green-700">
               Sobre nosotros...
