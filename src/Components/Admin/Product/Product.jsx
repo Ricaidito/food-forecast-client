@@ -7,15 +7,7 @@ import {
   addProductWatchlist,
   deleteProductWatchlist,
 } from "../../../services/watchlist.service";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import SinglePriceComparisonGraph from "../../Layouts/SinglePriceComparisonGraph/SinglePriceComparisonGraph";
 import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
 
@@ -114,7 +106,10 @@ const Product = () => {
       <div className=" flex justify-center gap-56">
         <div>
           <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
-            <img src={productWithPrice.imageUrl} alt="" />
+            <div>
+              <img src={productWithPrice.imageUrl} alt="" />
+            </div>
+
             <div className="px-5 pb-5 pt-6">
               <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
                 Nombre: {productWithPrice.productName}
@@ -181,24 +176,7 @@ const Product = () => {
             </div>
             <div>
               <div>
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={productWithPrice.priceHistory}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis dataKey="productPrice" />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="Precio de Producto"
-                    stroke="#8884d8"
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
+                <SinglePriceComparisonGraph productIds={productId} />
               </div>
             </div>
           </div>

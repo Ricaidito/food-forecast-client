@@ -3,7 +3,6 @@ import useUserContext from "../../../../Contexts/useUserContext";
 import { useParams } from "react-router-dom";
 import BufferImage from "../../../BufferImage/BufferImage";
 import { Datepicker } from "flowbite-react";
-import { useUserProductContext } from "../../../../Contexts/UserProductContext";
 import {
   updateUserProductsPrice,
   getUserProductById,
@@ -11,7 +10,6 @@ import {
 
 const MyProductInfo = () => {
   const { userID } = useUserContext();
-  const { userSelectedProductIds } = useUserProductContext();
   const { productId } = useParams();
   const [product, setProduct] = useState({
     productName: "",

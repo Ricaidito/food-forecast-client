@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
 import { getProductsByIdWithPrice } from "../../../services/products.service";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
 
 const SinglePriceComparisonGraph = ({ productIds, userProductIds }) => {
   const [products, setProducts] = useState([]);
@@ -9,8 +10,8 @@ const SinglePriceComparisonGraph = ({ productIds, userProductIds }) => {
 
   // Correct function usage
   const getProducts = productIds => {
-    if (productIds.length > 0) {
-      getProductsByIdWithPrice(productIds)
+    if (userProductIds === null) {
+      getUserProductsWithPriceHistory([userProductIds])
         .then(response => {
           setProducts(response.data.products);
         })
@@ -18,7 +19,13 @@ const SinglePriceComparisonGraph = ({ productIds, userProductIds }) => {
           console.error("Error fetching products:", error);
         });
     } else {
-      console.log(userProductIds);
+      getProductsByIdWithPrice([productIds])
+        .then(response => {
+          setProducts(response.data.products);
+        })
+        .catch(error => {
+          console.error("Error fetching products:", error);
+        });
     }
   };
 
