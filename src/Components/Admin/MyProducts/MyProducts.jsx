@@ -33,7 +33,8 @@ const MyProducts = () => {
   const [isModalArchiveOpen, setModalArchiveOpen] = useState(false);
   const [isModalProductOpen, setModalProductOpen] = useState(false);
   const [file, setFile] = useState(null);
-  // const { addUserProductId, isUserProductIdSelected } = useUserProductContext();
+  const { addUserProductId, removeUserProductId, isUserProductIdSelected } =
+    useUserProductContext();
 
   const getProducts = () => {
     getUserProducts(userID)
@@ -66,10 +67,6 @@ const MyProducts = () => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   const handleAddProduct = event => {
     event.preventDefault();
@@ -126,6 +123,10 @@ const MyProducts = () => {
       setModalOpen(false);
     });
   };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className=" mt-6">
@@ -392,9 +393,21 @@ const MyProducts = () => {
                     </Link>
                   </div>
                   <div className=" mt-4 flex gap-x-2">
-                    <button className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                      Comparar
-                    </button>
+                    {isUserProductIdSelected(product._id) ? (
+                      <button
+                        onClick={removeUserProductId(product._id)}
+                        className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                      >
+                        Eliminar de Comparación
+                      </button>
+                    ) : (
+                      <button
+                        onClick={addUserProductId(product._id)}
+                        className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                      >
+                        Comparar
+                      </button>
+                    )}
 
                     <button
                       className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"

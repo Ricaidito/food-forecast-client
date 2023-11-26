@@ -3,6 +3,7 @@ import useUserContext from "../../../../Contexts/useUserContext";
 import { useParams } from "react-router-dom";
 import BufferImage from "../../../BufferImage/BufferImage";
 import { Datepicker } from "flowbite-react";
+import { useUserProductContext } from "../../../../Contexts/UserProductContext";
 import {
   updateUserProductsPrice,
   getUserProductById,
@@ -10,6 +11,7 @@ import {
 
 const MyProductInfo = () => {
   const { userID } = useUserContext();
+  const { userSelectedProductIds } = useUserProductContext();
   const { productId } = useParams();
   const [product, setProduct] = useState({
     productName: "",
@@ -43,6 +45,7 @@ const MyProductInfo = () => {
 
   useEffect(() => {
     getProduct();
+    console.log(userSelectedProductIds);
   }, []);
 
   const handleUpdatePrice = () => {
@@ -55,9 +58,9 @@ const MyProductInfo = () => {
 
   return (
     <div>
-      <div className=" flex justify-center space-x-[50rem]">
-        <div className=" w-[30rem] bg-gray-100 p-6">
-          <div className="mx-auto w-full max-w-2xl rounded bg-white p-6 shadow-md">
+      <div className=" mt-6 flex justify-center space-x-[20rem]">
+        <div className="bg-gray-100 p-6">
+          <div className="mx-auto w-full rounded bg-white p-6 shadow-md">
             <h1 className="mb-4 text-2xl font-semibold">
               Detalles del producto
             </h1>

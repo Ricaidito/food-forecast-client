@@ -26,16 +26,16 @@ const Dashboard = () => {
             selecciones. Para comenzar, selecciona los productos que deseas
             comparar en el
           </p>
-          <div className="flex justify-center mb-20">
+          <div className="mb-20 flex justify-center">
             <Link to="/admin/products">
               <a className="rounded-full bg-green-600 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-green-700">
                 CATALOGO
               </a>
             </Link>
           </div>
-          <p className="text-lg pt-10 text-gray-400 dark:text-gray-400">
-          Todavía no tienes productos a comparar.
-        </p>
+          <p className="pt-10 text-lg text-gray-400 dark:text-gray-400">
+            Todavía no tienes productos a comparar.
+          </p>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className=" mt-10 flex justify-center">
-        <div className=" mr-14 h-[40rem] w-[70rem] overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+        <div className=" mr-14 h-[30rem] w-[70rem] overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
           <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
             Grafica de Comparacion
           </p>
@@ -75,7 +75,7 @@ const Dashboard = () => {
             <PriceComparisonGraph productIds={selectedProductIds} />
           </div>
         </div>
-        <div className=" h-[40rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+        <div className=" h-[30rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
           <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
             Tabla de Comparacion
           </p>
