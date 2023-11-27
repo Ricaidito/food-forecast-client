@@ -110,14 +110,14 @@ const SingleUserPriceComparisonGraph = ({ productIds }) => {
               display: true,
               title: {
                 display: true,
-                text: "Month",
+                text: "Mes",
               },
             },
             y: {
               display: true,
               title: {
                 display: true,
-                text: "Average Price",
+                text: "Precio Promedio",
               },
               beginAtZero: true,
             },

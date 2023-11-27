@@ -68,7 +68,7 @@ const MyProductInfo = () => {
   };
 
   return (
-    <div>
+    <div className=" mb-12">
       <div className=" mt-6 flex justify-center space-x-[20rem]">
         <div className="bg-gray-100 p-6">
           <div className="mx-auto w-full rounded bg-white p-6 shadow-md">
@@ -204,8 +204,15 @@ const MyProductInfo = () => {
           </div>
         </div>
       </div>
-      <div>
-        <SingleUserPriceComparisonGraph productIds={productId} />
+      <div className=" mt-5">
+        <p className="mb-2 block text-center font-semibold text-gray-600">
+          Grafica De Comportamiento
+        </p>
+        <div className=" mt-4 flex justify-center">
+          <div className=" w-[60rem] ">
+            <SingleUserPriceComparisonGraph productIds={productId} />
+          </div>
+        </div>
       </div>
     </div>
   );
