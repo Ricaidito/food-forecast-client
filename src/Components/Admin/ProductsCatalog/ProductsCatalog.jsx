@@ -38,18 +38,22 @@ const ProductsCatalog = () => {
 
   return (
     <div>
-      <div className=" pl-[8.88rem] pt-[2.94rem]">
-        <p className="text-3xl font-medium text-black">CATALOGO</p>
+      <div className="m-0 p-0 pt-5 text-center">
+        <div className="container mx-auto px-6 py-20 text-center">
+          <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+            Catálogo de <span className="text-green-600">Productos</span>
+          </h1>
+          <p className="mb-8 text-base text-gray-600 md:text-lg">
+            Aqui podrás ver los productos que tenemos disponibles para comparar.
+          </p>
+        </div>
       </div>
-
       <div className=" ml-[4.88rem] mt-5">
         <SearchBar />
       </div>
-
       <div className=" ml-[4.88rem] mt-[2.71rem] w-96 ">
         <CategoryFilter switchCategory={setCategory} />
       </div>
-
       <div className=" pt-[2.71rem]">
         <div className=" grid grid-cols-6 justify-items-center gap-y-6">
           {products.map(p => (
@@ -98,7 +102,7 @@ const ProductsCatalog = () => {
       <div className="flex flex-col items-center">
         <span className="text-sm text-gray-700">
           <span className="font-semibold text-gray-900">
-            Page {currentPage}
+            Página {currentPage}
           </span>
         </span>
         <div className="xs:mt-0 mt-2 inline-flex">
@@ -121,13 +125,13 @@ const ProductsCatalog = () => {
                 d="M13 5H1m0 0 4 4M1 5l4-4"
               />
             </svg>
-            Prev
+            Anterior
           </button>
           <button
             onClick={() => handleNextPage()}
             className="flex h-10 items-center justify-center rounded-r border-0 border-l border-gray-700 bg-green-700 px-4 text-base font-medium text-white hover:bg-green-900"
           >
-            Next
+            Siguiente
             <svg
               className="ml-2 h-3.5 w-3.5"
               aria-hidden="true"

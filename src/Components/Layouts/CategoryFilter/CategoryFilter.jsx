@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CATEGORIES from "../../../categories/productCategories";
 
 const CategoryFilter = ({ switchCategory }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleChange = event => {
     setSelectedCategory(event.target.value);

@@ -18,6 +18,7 @@ import {
 } from "recharts";
 import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
+import { toast } from "react-toastify";
 
 const Product = () => {
   const { productId } = useParams();
@@ -57,10 +58,30 @@ const Product = () => {
       console.log("hola!!");
       addProductWatchlist(userID, productId).then(() => {
         setIsChecked(true);
+        toast.success("Producto añadido a tu lista de seguimiento.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        });
       });
     } else {
       deleteProductWatchlist(userID, productId).then(() => {
         setIsChecked(false);
+        toast.error("Producto eliminado de tu lista de seguimiento.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        });
       });
     }
   };
