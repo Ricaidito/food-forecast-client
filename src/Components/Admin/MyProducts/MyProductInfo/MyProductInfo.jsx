@@ -38,6 +38,7 @@ const MyProductInfo = () => {
   const getProduct = () => {
     getUserProductById(userID, productId).then(response => {
       const data = response.data;
+      console.log(data);
       if (data && data.priceHistory) {
         data.priceHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
         data.priceHistory = data.priceHistory.map(history => {
@@ -183,7 +184,7 @@ const MyProductInfo = () => {
           </div>
           <div className=" mt-6 w-[30rem] bg-gray-100 p-6">
             <div className="mx-auto w-full max-w-2xl rounded bg-white p-6 shadow-md">
-              {product.priceHistory && product.priceHistory.length > 1 && (
+              {product.priceHistory && product.priceHistory.length > 0 && (
                 <Table>
                   <Table.Head>
                     <Table.HeadCell>Fecha</Table.HeadCell>

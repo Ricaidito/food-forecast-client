@@ -10,10 +10,10 @@ import Settings from "./Components/Admin/Settings/Settings";
 import Dashboard from "./Components/Admin/Dashboard/Dashboard";
 import Basket from "./Components/Admin/Basket/Basket";
 import Product from "./Components/Admin/Product/Product";
-import CheckoutForm from "./Components/Admin/Payments/CheckoutForm";
+import PremiumSubscription from "./Components/Admin/Payments/PremiumSubscription";
 import MyProductInfo from "./Components/Admin/MyProducts/MyProductInfo/MyProductInfo";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 const App = () => {
@@ -36,7 +36,10 @@ const App = () => {
           />
           <Route path="/admin/micuenta" element={<Settings />} />
           <Route path="/admin/basket" element={<Basket />} />
-          <Route path="/admin/subscriptions" element={<CheckoutForm />} />
+          <Route
+            path="/admin/subscriptions"
+            element={<PremiumSubscription />}
+          />
         </Route>
       </Routes>
       <ToastContainer />
