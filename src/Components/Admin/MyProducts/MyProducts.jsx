@@ -297,9 +297,16 @@ const MyProducts = () => {
             </div>
           </div>
         </Modal>
-        <div className=" pt-2">
-          <div className=" mb-6 pl-[3.88rem] pt-[1.94rem]">
-            <p className="text-3xl font-medium text-black">Mis Productos</p>
+        <div>
+          <div className="m-0 p-0 pt-5 text-center">
+            <div className="container mx-auto px-6 py-20 text-center">
+              <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+                Mis <span className="text-green-600">Productos</span>
+              </h1>
+              <p className="mb-8 text-base text-gray-600 md:text-lg">
+                Aqui podrás administrar tus productos.
+              </p>
+            </div>
           </div>
           <div className=" ml-[3.88rem] w-96">
             <label

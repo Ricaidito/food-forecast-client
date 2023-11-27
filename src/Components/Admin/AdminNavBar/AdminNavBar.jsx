@@ -102,7 +102,7 @@ const AdminNavBar = () => {
                   to="/admin/products"
                   className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
-                  Catalogo
+                  Catálogo
                 </Link>
               </li>
               <li>

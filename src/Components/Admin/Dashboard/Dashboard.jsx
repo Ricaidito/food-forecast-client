@@ -3,7 +3,6 @@ import PriceComparisonGraph from "../../Layouts/PriceComparisonGraph/PriceCompar
 import ProductInfoFrame from "../../Layouts/ProductInfoFrame/ProductInfoFrame";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import useUserContext from "../../../Contexts/useUserContext";
-
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -16,7 +15,6 @@ const Dashboard = () => {
   if (selectedProductIds.length === 0) {
     return (
       <div className="m-0 p-0 pt-5 text-center">
-        <title>Food Forecast</title>
         <div className="container mx-auto px-6 py-20 text-center">
           <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
             ¡Bienvenido a <span className="text-green-600">Food Forecast!</span>
@@ -24,13 +22,13 @@ const Dashboard = () => {
           <p className="mb-8 text-base text-gray-600 md:text-lg">
             Aqui podrás ver y comparar los precios de los productos que
             selecciones. Para comenzar, selecciona los productos que deseas
-            comparar en el
+            comparar en el cátalogo.
           </p>
           <div className="mb-20 flex justify-center">
             <Link to="/admin/products">
-              <a className="rounded-full bg-green-600 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-green-700">
-                CATALOGO
-              </a>
+              <p className="rounded-full bg-green-600 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-green-700">
+                ¡Ir al catálogo!
+              </p>
             </Link>
           </div>
           <p className="pt-10 text-lg text-gray-400 dark:text-gray-400">
