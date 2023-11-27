@@ -54,11 +54,11 @@ const Login = () => {
       .then(response => {
         toast.success(`Bienvenido ${response.data.name}!!`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-          draggable: true,
+          draggable: false,
           progress: undefined,
           theme: "light",
         });
@@ -99,9 +99,7 @@ const Login = () => {
           </p>
           <form>
             <div className="mb-4">
-              <label
-                className="block text-sm font-medium text-gray-900"
-              >
+              <label className="block text-sm font-medium text-gray-900">
                 Correo electrónico
               </label>
               <input
@@ -116,9 +114,7 @@ const Login = () => {
               />
             </div>
             <div className="mb-6">
-              <label
-                className="block text-sm font-medium text-gray-900"
-              >
+              <label className="block text-sm font-medium text-gray-900">
                 Contraseña
               </label>
               <input
@@ -144,7 +140,7 @@ const Login = () => {
               type="submit"
               className={`w-full rounded-lg p-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
                 isLoading
-                  ? "cursor-not-allowed bg-gray-300 text-white-500"
+                  ? "text-white-500 cursor-not-allowed bg-gray-300"
                   : "bg-lime-600 text-white hover:bg-white hover:text-lime-600 hover:shadow-lg"
               } text-[17px] font-medium shadow transition duration-150 ease-in-out`}
               onClick={handleLogin}
@@ -152,7 +148,10 @@ const Login = () => {
             >
               {isLoading ? (
                 <>
-                  <Spinner className="fill-green-500" aria-label="Submitting..." />
+                  <Spinner
+                    className="fill-green-500"
+                    aria-label="Submitting..."
+                  />
                   <span className="ml-2">Cargando...</span>
                 </>
               ) : (
@@ -162,11 +161,12 @@ const Login = () => {
           </form>
           <p className="mt-6 text-center text-sm text-gray-600">
             ¿No tienes una cuenta?{" "}
-            <Link to="/register"
+            <Link
+              to="/register"
               className="font-medium text-lime-600 hover:text-blue-500"
             >
               ¡Registrate aqui!
-              </Link>
+            </Link>
           </p>
         </div>
       </div>
