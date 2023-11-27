@@ -102,10 +102,10 @@ const Product = () => {
       ?.productPrice | 0;
 
   return (
-    <div className="m-10">
-      <div className=" flex justify-center gap-56">
+    <div className=" mb-12 mt-10 flex justify-center ">
+      <div className=" grid grid-cols-1">
         <div>
-          <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
+          <div className=" grid w-full grid-cols-2 rounded-lg border border-gray-200 bg-white shadow">
             <div>
               <img src={productWithPrice.imageUrl} alt="" />
             </div>
@@ -153,31 +153,31 @@ const Product = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6">
-          <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-            Historial de Precios
-          </h3>
-          <div className="  flex justify-start gap-x-6">
+        <div className=" mt-10">
+          <div className=" flex w-full justify-center gap-x-32">
             <div>
-              <Table>
-                <Table.Head>
-                  <Table.HeadCell>Fecha</Table.HeadCell>
-                  <Table.HeadCell>Precio</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  {productWithPrice.priceHistory.map(item => (
-                    <Table.Row key={item._id}>
-                      <Table.Cell>{item.date}</Table.Cell>
-                      <Table.Cell>{item.productPrice}</Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table>
-            </div>
-            <div>
-              <div>
-                <SinglePriceComparisonGraph productIds={productId} />
+              <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                Historial de Precios
+              </h3>
+              <div className=" h-[20rem] w-[20rem] overflow-y-auto">
+                <Table>
+                  <Table.Head>
+                    <Table.HeadCell>Fecha</Table.HeadCell>
+                    <Table.HeadCell>Precio</Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body>
+                    {productWithPrice.priceHistory.map(item => (
+                      <Table.Row key={item._id}>
+                        <Table.Cell>{item.date}</Table.Cell>
+                        <Table.Cell>{item.productPrice}</Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
               </div>
+            </div>
+            <div className=" h-[20rem] w-[40rem]">
+              <SinglePriceComparisonGraph productIds={productId} />
             </div>
           </div>
         </div>

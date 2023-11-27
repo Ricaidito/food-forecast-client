@@ -1,17 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
-import { getProductsByIdWithPrice } from "../../../services/products.service";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
+import useUserContext from "../../../Contexts/useUserContext";
 
-const SinglePriceComparisonGraph = ({ productIds }) => {
+const SingleUserPriceComparisonGraph = ({ productIds }) => {
   const [products, setProducts] = useState([]);
   const [chartInstance, setChartInstance] = useState(null);
+  const { userID } = useUserContext();
   const chartRef = useRef(null);
 
-  // Correct function usage
   const getProducts = productIds => {
-    getProductsByIdWithPrice([productIds])
+    getUserProductsWithPriceHistory(userID, [productIds])
       .then(response => {
-        setProducts(response.data.products);
+        console.log(response);
+        setProducts(response.data);
       })
       .catch(error => {
         console.error("Error fetching products:", error);
@@ -134,4 +136,4 @@ const SinglePriceComparisonGraph = ({ productIds }) => {
   );
 };
 
-export default SinglePriceComparisonGraph;
+export default SingleUserPriceComparisonGraph;

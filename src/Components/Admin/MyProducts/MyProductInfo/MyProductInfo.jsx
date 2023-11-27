@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import useUserContext from "../../../../Contexts/useUserContext";
 import { useParams } from "react-router-dom";
 import BufferImage from "../../../BufferImage/BufferImage";
-import { Datepicker } from "flowbite-react";
+import { Datepicker, Table } from "flowbite-react";
+import SingleUserPriceComparisonGraph from "../../../Layouts/SingleUserPriceComparisonGraph/SingleUserPriceComparisonGraph";
 import {
   updateUserProductsPrice,
   getUserProductById,
 } from "../../../../services/userProducts.service";
+import { upperCase } from "lodash";
 
 const MyProductInfo = () => {
   const { userID } = useUserContext();
@@ -28,11 +30,22 @@ const MyProductInfo = () => {
     return date.toISOString();
   };
 
+  const changeDateFormat = date => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Intl.DateTimeFormat("es-ES", options).format(date);
+  };
+
   const getProduct = () => {
     getUserProductById(userID, productId).then(response => {
       const data = response.data;
       if (data && data.priceHistory) {
         data.priceHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+        data.priceHistory = data.priceHistory.map(history => {
+          return {
+            ...history,
+            date: upperCase(changeDateFormat(new Date(history.date))),
+          };
+        });
       }
       setProduct(data);
     });
@@ -43,7 +56,6 @@ const MyProductInfo = () => {
 
   useEffect(() => {
     getProduct();
-    console.log(userSelectedProductIds);
   }, []);
 
   const handleUpdatePrice = () => {
@@ -86,21 +98,6 @@ const MyProductInfo = () => {
                 disabled
               />
             </div>
-
-            {product.priceHistory && product.priceHistory.length > 1 && (
-              <div className="mb-4">
-                <label className="mb-2 block text-gray-600">
-                  Historial de precios:
-                </label>
-                <ul>
-                  {product.priceHistory.map((history, index) => (
-                    <li key={index} className="mb-1">
-                      Date: {history.date}, Price: ${history.price}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
             <div className="mb-4">
               <label className="mb-2 block text-gray-600">Categoría:</label>
@@ -184,7 +181,30 @@ const MyProductInfo = () => {
               </div>
             </div>
           </div>
+          <div className=" mt-6 w-[30rem] bg-gray-100 p-6">
+            <div className="mx-auto w-full max-w-2xl rounded bg-white p-6 shadow-md">
+              {product.priceHistory && product.priceHistory.length > 1 && (
+                <Table>
+                  <Table.Head>
+                    <Table.HeadCell>Fecha</Table.HeadCell>
+                    <Table.HeadCell>Precio</Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body>
+                    {product.priceHistory.map((history, index) => (
+                      <Table.Row key={index}>
+                        <Table.Cell>{history.date}</Table.Cell>
+                        <Table.Cell>{history.price}</Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              )}
+            </div>
+          </div>
         </div>
+      </div>
+      <div>
+        <SingleUserPriceComparisonGraph productIds={productId} />
       </div>
     </div>
   );
