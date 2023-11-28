@@ -14,7 +14,7 @@ import Modal from "../../Layouts/Modal/Modal";
 import "./MyProducts.css";
 import DownloadButton from "../../Layouts/DownloadButton/DownloadButton";
 import { Link } from "react-router-dom";
-import { useUserProductContext } from "../../../Contexts/UserProductContext";
+import { useProductContext } from "../../../Contexts/ProductContext";
 import TemplateImage from "../../../images/TemplateImage.png";
 
 const MyProducts = () => {
@@ -33,7 +33,13 @@ const MyProducts = () => {
   const [isModalArchiveOpen, setModalArchiveOpen] = useState(false);
   const [isModalProductOpen, setModalProductOpen] = useState(false);
   const [file, setFile] = useState(null);
-  // const { addUserProductId, isUserProductIdSelected } = useUserProductContext();
+  const {
+    selectedUserProductIds,
+    addUserProductId,
+    removeUserProductId,
+    isUserProductIdSelected,
+    clearUserProductIds,
+  } = useProductContext();
 
   const getProducts = () => {
     getUserProducts(userID)
@@ -66,10 +72,6 @@ const MyProducts = () => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   const handleAddProduct = event => {
     event.preventDefault();
@@ -127,8 +129,12 @@ const MyProducts = () => {
     });
   };
 
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
-    <div className=" mt-6">
+    <div className=" mb-10 mt-4">
       <div className="my-2 py-2">
         <Modal
           isOpen={isModalProductOpen}
@@ -372,11 +378,11 @@ const MyProducts = () => {
             </svg>
             Delete All
           </button>
-          <div className=" grid grid-cols-6 justify-items-center gap-y-6 pt-10">
+          <div className=" grid grid-cols-6 justify-items-center gap-6 pl-[3.88rem] pt-10">
             {productsFiltered.map(product => (
               <div
                 key={product._id}
-                className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow"
+                className="w-full rounded-lg border border-gray-200 bg-white shadow"
               >
                 <div className="px-5 pb-5">
                   <div>
@@ -398,11 +404,22 @@ const MyProducts = () => {
                       </span>
                     </Link>
                   </div>
-                  <div className=" mt-4 flex gap-x-2">
-                    <button className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                      Comparar
-                    </button>
-
+                  <div className=" mt-4">
+                    {isUserProductIdSelected(product._id) ? (
+                      <button
+                        onClick={() => removeUserProductId(product._id)}
+                        className="mb-3 rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                      >
+                        Eliminar de Comparación
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addUserProductId(product._id)}
+                        className=" mb-3 rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                      >
+                        Comparar
+                      </button>
+                    )}
                     <button
                       className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                       onClick={() => deleteOneUserProduct(product._id)}

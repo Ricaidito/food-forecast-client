@@ -1,17 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
-import { getProductsByIdWithPrice } from "../../../services/products.service";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
+import useUserContext from "../../../Contexts/useUserContext";
 
-const SinglePriceComparisonGraph = ({ productIds }) => {
+const SingleUserPriceComparisonGraph = ({ productIds }) => {
   const [products, setProducts] = useState([]);
   const [chartInstance, setChartInstance] = useState(null);
+  const { userID } = useUserContext();
   const chartRef = useRef(null);
 
-  // Correct function usage
   const getProducts = productIds => {
-    getProductsByIdWithPrice([productIds])
+    getUserProductsWithPriceHistory(userID, [productIds])
       .then(response => {
-        setProducts(response.data.products);
+        console.log(response.data);
+        setProducts(response.data);
       })
       .catch(error => {
         console.error("Error fetching products:", error);
@@ -23,13 +25,13 @@ const SinglePriceComparisonGraph = ({ productIds }) => {
     const monthlyPrices = {};
 
     // Group prices by month-year first
-    priceHistory.forEach(({ date, productPrice }) => {
+    priceHistory.forEach(({ date, price }) => {
       const monthYear = new Date(date).toISOString().slice(0, 7); // YYYY-MM format
 
       if (!monthlyPrices[monthYear]) {
-        monthlyPrices[monthYear] = { total: productPrice, count: 1 };
+        monthlyPrices[monthYear] = { total: price, count: 1 };
       } else {
-        monthlyPrices[monthYear].total += productPrice;
+        monthlyPrices[monthYear].total += price;
         monthlyPrices[monthYear].count += 1;
       }
     });
@@ -108,14 +110,14 @@ const SinglePriceComparisonGraph = ({ productIds }) => {
               display: true,
               title: {
                 display: true,
-                text: "Month",
+                text: "Mes",
               },
             },
             y: {
               display: true,
               title: {
                 display: true,
-                text: "Average Price",
+                text: "Precio Promedio",
               },
               beginAtZero: true,
             },
@@ -134,4 +136,4 @@ const SinglePriceComparisonGraph = ({ productIds }) => {
   );
 };
 
-export default SinglePriceComparisonGraph;
+export default SingleUserPriceComparisonGraph;

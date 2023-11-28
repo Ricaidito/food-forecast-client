@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Settings.css";
+import { has } from "lodash";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState();
@@ -299,68 +300,100 @@ const Settings = () => {
         </div>
       </div>
       <div className=" flex justify-center space-x-[20rem]">
-        <div className="overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-          <p className="mb-2 text-center text-xl font-medium uppercase">
-            Lista de Seguimiento
-          </p>
-          {watchlist.length === 0 ? (
-            <div>
-              <p className="text-md text-center font-medium uppercase">
-                No tienes productos en tu lista de seguimiento
-              </p>
-            </div>
-          ) : (
-            <div className=" flex h-[12rem] justify-center overflow-y-auto">
-              <table className=" text-left text-sm text-gray-500">
-                <thead className="bg-gray-50 text-xs uppercase text-gray-700">
-                  <tr>
-                    <th scope="col" className="px-6 py-3"></th>
-                    <th scope="col" className="px-6 py-3">
-                      Nombre del Producto
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Origen
-                    </th>
-                    <th scope="col" className="px-6 py-3"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {watchlist.map(product => (
-                    <tr className="border-b bg-white" key={product._id}>
-                      <td>
-                        <img
-                          className="h-20 w-20 rounded-full"
-                          src={product.imageUrl}
-                          alt="productImage"
-                        />
-                      </td>
-                      <td className="w-90 px-6 py-4 text-gray-900">
-                        <Link to={`/admin/product/${product._id}`}>
-                          {product.productName}
-                        </Link>
-                        n
-                      </td>
-                      <td className="px-6 py-4 text-gray-900">
-                        {product.origin}
-                      </td>
-                      <td className="px-6 py-4 text-gray-900">
-                        <button onClick={() => handleDelete(product._id)}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1em"
-                            viewBox="0 0 448 512"
-                          >
-                            <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" />
-                          </svg>
-                        </button>
-                      </td>
+        {hasSubscription ? (
+          <div className="overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+            <p className="mb-2 text-center text-xl font-medium uppercase">
+              Lista de Productos Seguidos
+            </p>
+            {watchlist.length === 0 ? (
+              <div>
+                <p className="text-md text-center font-medium uppercase">
+                  No tienes productos en tu lista de seguimiento
+                </p>
+              </div>
+            ) : (
+              <div className=" flex h-[12rem] justify-center overflow-y-auto">
+                <table className=" text-left text-sm text-gray-500">
+                  <thead className="bg-gray-50 text-xs uppercase text-gray-700">
+                    <tr>
+                      <th scope="col" className="px-6 py-3"></th>
+                      <th scope="col" className="px-6 py-3">
+                        Nombre del Producto
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Origen
+                      </th>
+                      <th scope="col" className="px-6 py-3"></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {watchlist.map(product => (
+                      <tr className="border-b bg-white" key={product._id}>
+                        <td>
+                          <img
+                            className="h-20 w-20 rounded-full"
+                            src={product.imageUrl}
+                            alt="productImage"
+                          />
+                        </td>
+                        <td className="w-90 px-6 py-4 text-gray-900">
+                          <Link to={`/admin/product/${product._id}`}>
+                            {product.productName}
+                          </Link>
+                          n
+                        </td>
+                        <td className="px-6 py-4 text-gray-900">
+                          {product.origin}
+                        </td>
+                        <td className="px-6 py-4 text-gray-900">
+                          <button onClick={() => handleDelete(product._id)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="1em"
+                              viewBox="0 0 448 512"
+                            >
+                              <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+            <p className="mb-2 text-center text-xl font-medium uppercase">
+              Para ver tu lista de productos seguidos debes ser premium
+            </p>
+            <div className=" mt-6 flex justify-center">
+              <svg
+                fill="#000000"
+                height="90px"
+                width="90px"
+                version="1.1"
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 330 330"
+                xml:space="preserve"
+              >
+                <g id="XMLID_509_">
+                  <path
+                    id="XMLID_510_"
+                    d="M65,330h200c8.284,0,15-6.716,15-15V145c0-8.284-6.716-15-15-15h-15V85c0-46.869-38.131-85-85-85
+		S80,38.131,80,85v45H65c-8.284,0-15,6.716-15,15v170C50,323.284,56.716,330,65,330z M180,234.986V255c0,8.284-6.716,15-15,15
+		s-15-6.716-15-15v-20.014c-6.068-4.565-10-11.824-10-19.986c0-13.785,11.215-25,25-25s25,11.215,25,25
+		C190,223.162,186.068,230.421,180,234.986z M110,85c0-30.327,24.673-55,55-55s55,24.673,55,55v45H110V85z"
+                  />
+                </g>
+              </svg>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
         <div>
           <div className=" overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
             <p className=" text-center text-xl font-medium uppercase">
