@@ -3,6 +3,10 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useUserContext from "../../../Contexts/useUserContext";
 import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "flowbite-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { is, tr } from "date-fns/locale";
 
 const CheckoutForm = () => {
   const { userID } = useUserContext();
@@ -10,9 +14,37 @@ const CheckoutForm = () => {
   const elements = useElements();
   const { refetchUserConfig } = useUserConfigContext();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const subscriptionSuccess = () => {
+    return toast.success("Suscripción Realizada Exitosamente!!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const subscriptionError = () => {
+    toast.error("Error Procesando Suscripción", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
+    setIsLoading(true);
 
     if (!stripe || !elements) {
       return;
@@ -61,10 +93,13 @@ const CheckoutForm = () => {
 
         console.log("Subscription successful!");
         refetchUserConfig();
+        setIsLoading(false);
+        subscriptionSuccess();
         navigate("/admin");
       }
     } catch (err) {
       console.error("Error during subscription:", err);
+      setIsLoading(false);
     }
   };
 
@@ -79,11 +114,25 @@ const CheckoutForm = () => {
         </div>
         <div className=" mt-3 flex justify-center">
           <button
-            className=" mt-4 h-9 w-[7rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+            className={
+              isLoading
+                ? "text-white-500 mt-4 h-9 w-[12rem] cursor-not-allowed rounded-md bg-gray-300 font-medium text-white shadow"
+                : "mt-4 h-9 w-[7rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+            }
             type="submit"
-            disabled={!stripe}
+            disabled={!stripe || isLoading}
           >
-            Suscribirse
+            {isLoading ? (
+              <>
+                <Spinner
+                  className="fill-green-500"
+                  aria-label="Submitting..."
+                />
+                <span className="ml-2">Cargando...</span>
+              </>
+            ) : (
+              "Suscribirse"
+            )}
           </button>
         </div>
       </form>

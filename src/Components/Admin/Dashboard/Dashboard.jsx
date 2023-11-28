@@ -3,14 +3,66 @@ import PriceComparisonGraph from "../../Layouts/PriceComparisonGraph/PriceCompar
 import ProductInfoFrame from "../../Layouts/ProductInfoFrame/ProductInfoFrame";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import useUserContext from "../../../Contexts/useUserContext";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
+import { generateReport } from "../../../services/report.service";
+import axios from "axios";
 
 const Dashboard = () => {
   const date = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("es-ES", options);
   const { selectedProductIds } = useProductContext();
-  const { name } = useUserContext();
+  const { userID, name } = useUserContext();
+  const { hasSubscription } = useUserConfigContext();
+
+  const downloadReport = async () => {
+    try {
+      const response = await axios.get(
+        `https://food-forecast-server.azurewebsites.net/reports/${userID}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+
+      const downloadUrl = window.URL.createObjectURL(pdfBlob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `foodForecastReport ${formattedDate}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      toast.success("Descarga Exitosa!!!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error downloading the file", error);
+    }
+  };
+
+  const subscriptionError = () => {
+    toast.warn("Necesita la Suscripción Premium!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   if (selectedProductIds.length === 0) {
     return (
@@ -56,6 +108,21 @@ const Dashboard = () => {
             <span className=" font-semibold">FECHA: </span>
             {formattedDate}
           </p>
+          {hasSubscription ? (
+            <button
+              className="mt-4 h-9 w-[11rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              onClick={downloadReport}
+            >
+              Descargar Reporte
+            </button>
+          ) : (
+            <button
+              className="text-white-500 mt-4 h-9 w-[11rem] cursor-not-allowed rounded-md bg-gray-300 font-medium text-white shadow"
+              onClick={() => subscriptionError()}
+            >
+              Descargar Reporte
+            </button>
+          )}
         </div>
         <div className=" h-[20rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
           <p className=" text-l mb-2 text-center font-medium uppercase text-black">
