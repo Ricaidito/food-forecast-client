@@ -44,7 +44,7 @@ const uploadUserProductsTemplate = (userID, file) => {
 
 const getUserProductsWithPriceHistory = (userID, productsIds) => {
   return axios.post(
-    `${url}/user-products/${userID}/products/by-ids`,
+    `${url}/user-products/${userID}/products/by-ids2`,
     {
       userProductsIds: productsIds,
     },
