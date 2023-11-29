@@ -39,7 +39,7 @@ const ProductsCatalog = () => {
   return (
     <div>
       <div className="m-0 p-0 pt-5 text-center">
-        <div className="container mx-auto px-6 py-20 text-center">
+        <div className="container mx-auto px-6 py-5 text-center">
           <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
             Catálogo de <span className="text-green-600">Productos</span>
           </h1>
