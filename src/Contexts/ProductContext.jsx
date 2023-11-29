@@ -8,10 +8,18 @@ export function useProductContext() {
 }
 
 export function ProductProvider({ children }) {
+  // State for product IDs
   const [selectedProductIds, setSelectedProductIds] = useState(
     () => JSON.parse(window.localStorage.getItem("selectedProductIds")) || []
   );
 
+  // State for user product IDs
+  const [selectedUserProductIds, setSelectedUserProductIds] = useState(
+    () =>
+      JSON.parse(window.localStorage.getItem("selectedUserProductIds")) || []
+  );
+
+  // Effect for persisting product IDs
   useEffect(() => {
     window.localStorage.setItem(
       "selectedProductIds",
@@ -19,6 +27,15 @@ export function ProductProvider({ children }) {
     );
   }, [selectedProductIds]);
 
+  // Effect for persisting user product IDs
+  useEffect(() => {
+    window.localStorage.setItem(
+      "selectedUserProductIds",
+      JSON.stringify(selectedUserProductIds)
+    );
+  }, [selectedUserProductIds]);
+
+  // Product ID management
   const addProductId = productId => {
     if (!selectedProductIds.includes(productId)) {
       setSelectedProductIds(prevIds => [...prevIds, productId]);
@@ -37,6 +54,27 @@ export function ProductProvider({ children }) {
     return selectedProductIds.includes(productId);
   };
 
+  // User Product ID management
+  const addUserProductId = userProductId => {
+    if (!selectedUserProductIds.includes(userProductId)) {
+      setSelectedUserProductIds(prevIds => [...prevIds, userProductId]);
+    }
+  };
+
+  const removeUserProductId = userProductId => {
+    setSelectedUserProductIds(prevIds =>
+      prevIds.filter(id => id !== userProductId)
+    );
+  };
+
+  const clearUserProductIds = () => {
+    setSelectedUserProductIds([]);
+  };
+
+  const isUserProductIdSelected = userProductId => {
+    return selectedUserProductIds.includes(userProductId);
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -45,6 +83,11 @@ export function ProductProvider({ children }) {
         removeProductId,
         clearProductIds,
         isProductIdSelected,
+        selectedUserProductIds,
+        addUserProductId,
+        removeUserProductId,
+        clearUserProductIds,
+        isUserProductIdSelected,
       }}
     >
       {children}

@@ -48,12 +48,15 @@ const ProductsCatalog = () => {
           </p>
         </div>
       </div>
-      <div className=" ml-[4.88rem] mt-5">
+      <div className="mt-5 flex justify-center">
         <SearchBar />
       </div>
-      <div className=" ml-[4.88rem] mt-[2.71rem] w-96 ">
-        <CategoryFilter switchCategory={setCategory} />
+      <div className=" flex justify-center">
+        <div className=" mt-[2.71rem] flex w-96 justify-center">
+          <CategoryFilter switchCategory={setCategory} />
+        </div>
       </div>
+
       <div className=" pt-[2.71rem]">
         <div className=" grid grid-cols-6 justify-items-center gap-y-6">
           {products.map(p => (

@@ -7,22 +7,16 @@ import {
   addProductWatchlist,
   deleteProductWatchlist,
 } from "../../../services/watchlist.service";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import SinglePriceComparisonGraph from "../../Layouts/SinglePriceComparisonGraph/SinglePriceComparisonGraph";
 import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-toastify";
+import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 
 const Product = () => {
   const { productId } = useParams();
   const { userID } = useUserContext();
+  const { hasSubscription } = useUserConfigContext();
   const [productWithPrice, setProduct] = useState({
     product: {
       _id: "",
@@ -131,11 +125,14 @@ const Product = () => {
       ?.productPrice | 0;
 
   return (
-    <div className="m-10">
-      <div className=" flex justify-center gap-56">
+    <div className=" mb-12 mt-10 flex justify-center ">
+      <div className=" grid grid-cols-1">
         <div>
-          <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow">
-            <img src={productWithPrice.imageUrl} alt="" />
+          <div className=" grid w-full grid-cols-2 rounded-lg border border-gray-200 bg-white shadow">
+            <div>
+              <img src={productWithPrice.imageUrl} alt="" />
+            </div>
+
             <div className="px-5 pb-5 pt-6">
               <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
                 Nombre: {productWithPrice.productName}
@@ -153,74 +150,53 @@ const Product = () => {
                   Lugar: {productWithPrice.origin}
                 </p>
               </div>
-              <div className="mb-3 mt-2.5 flex items-center">
-                <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Fecha de extracción:{" "}
-                  {formatDate(productWithPrice.extractionDate)}
-                </p>
-              </div>
-              <div>
-                <div className=" mb-2">
-                  <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
-                    ¿Recibir notificaciones de este producto al correo?
-                  </p>
+              {hasSubscription && (
+                <div>
+                  <div className=" mb-2">
+                    <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
+                      ¿Recibir notificaciones de este producto al correo?
+                    </p>
+                  </div>
+                  <label className="relative inline-flex cursor-pointer items-center">
+                    <input
+                      type="checkbox"
+                      value=""
+                      className="peer sr-only"
+                      checked={isChecked}
+                      onChange={handleWatchlist}
+                    />
+                    <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
+                  </label>
                 </div>
-                <label className="relative inline-flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    value=""
-                    className="peer sr-only"
-                    checked={isChecked}
-                    onChange={handleWatchlist}
-                  />
-                  <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
-                </label>
-              </div>
+              )}
             </div>
           </div>
         </div>
-        <div className="mt-6">
-          <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-            Historial de Precios
-          </h3>
-          <div className="  flex justify-start gap-x-6">
+        <div className=" mt-10">
+          <div className=" flex w-full justify-center gap-x-32">
             <div>
-              <Table>
-                <Table.Head>
-                  <Table.HeadCell>Fecha</Table.HeadCell>
-                  <Table.HeadCell>Precio</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  {productWithPrice.priceHistory.map(item => (
-                    <Table.Row key={item._id}>
-                      <Table.Cell>{item.date}</Table.Cell>
-                      <Table.Cell>{item.productPrice}</Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table>
-            </div>
-            <div>
-              <div>
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={productWithPrice.priceHistory}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis dataKey="productPrice" />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="Precio de Producto"
-                    stroke="#8884d8"
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
+              <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                Historial de Precios
+              </h3>
+              <div className=" h-[20rem] w-[20rem] overflow-y-auto">
+                <Table>
+                  <Table.Head>
+                    <Table.HeadCell>Fecha</Table.HeadCell>
+                    <Table.HeadCell>Precio</Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body>
+                    {productWithPrice.priceHistory.map(item => (
+                      <Table.Row key={item._id}>
+                        <Table.Cell>{item.date}</Table.Cell>
+                        <Table.Cell>{item.productPrice}</Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
               </div>
+            </div>
+            <div className=" h-[20rem] w-[40rem]">
+              <SinglePriceComparisonGraph productIds={productId} />
             </div>
           </div>
         </div>

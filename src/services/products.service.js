@@ -11,7 +11,15 @@ export const getProducts = (page, selectedCategory, limit = 54) => {
 };
 
 export const getProductsByIdWithPrice = productId => {
-  return axios.post(`${url}/products/with-price`, {
-    productIds: productId,
-  });
+  return axios.post(
+    `${url}/products/with-price`,
+    {
+      productIds: productId,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
