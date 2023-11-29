@@ -1,40 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
-import { getProductsByIdWithPrice } from "../../../services/products.service";
-import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
-import { useMemo } from "react";
-import useUserContext from "../../../Contexts/useUserContext";
-
-const useFetchUserProducts = (userID, productIds) => {
-  const [userProducts, setUserProducts] = useState([]);
-
-  useEffect(() => {
-    getUserProductsWithPriceHistory(userID, productIds)
-      .then(response => {
-        setUserProducts(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching user products:", error);
-      });
-  }, [userID, productIds]);
-
-  return userProducts;
-};
-const useFetchCatalogProducts = catalogProductIds => {
-  const [catalogProducts, setCatalogProducts] = useState([]);
-
-  useEffect(() => {
-    getProductsByIdWithPrice(catalogProductIds)
-      .then(response => {
-        setCatalogProducts(response.data.products);
-      })
-      .catch(error => {
-        console.error("Error fetching products:", error);
-      });
-  });
-
-  return catalogProducts;
-};
 
 const shouldUpdateChart = (newProducts, prevProducts) => {
   const newProductsString = JSON.stringify(
@@ -51,16 +16,10 @@ const shouldUpdateChart = (newProducts, prevProducts) => {
   return newProductsString !== prevProductsString;
 };
 
-const PriceComparisonGraph = ({ productIds, userProductsIds }) => {
+const PriceComparisonGraph = ({ allProducts }) => {
   const [chartInstance, setChartInstance] = useState(null);
-  const [prevProducts, setPrevProducts] = useState([]);
   const chartRef = useRef(null);
-  const { userID } = useUserContext();
-  const userProducts = useFetchUserProducts(userID, userProductsIds);
-  const catalogProducts = useFetchCatalogProducts(productIds);
-  const allProducts = useMemo(() => {
-    return [...userProducts, ...catalogProducts];
-  }, [userProducts, catalogProducts]);
+  const [prevProducts, setPrevProducts] = useState([]);
 
   const calculateAveragePricePerMonth = priceHistory => {
     const monthlyPrices = {};
@@ -158,9 +117,9 @@ const PriceComparisonGraph = ({ productIds, userProductsIds }) => {
         },
       });
 
-      setChartInstance(newChartInstance);
-
       setPrevProducts(allProducts);
+
+      setChartInstance(newChartInstance);
     }
   }, [allProducts]);
 

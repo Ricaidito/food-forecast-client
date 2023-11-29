@@ -1,58 +1,12 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
-import { getProductsByIdWithPrice } from "../../../services/products.service";
-import useUserContext from "../../../Contexts/useUserContext";
-import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
 import { useProductContext } from "../../../Contexts/ProductContext";
 
-const useFetchUserProducts = (userID, productIds) => {
-  const [userProducts, setUserProducts] = useState([]);
-
-  useEffect(() => {
-    getUserProductsWithPriceHistory(userID, productIds)
-      .then(response => {
-        setUserProducts(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching user products:", error);
-      });
-  }, [userID, productIds]);
-
-  return userProducts;
-};
-const useFetchCatalogProducts = catalogProductIds => {
-  const [catalogProducts, setCatalogProducts] = useState([]);
-
-  useEffect(() => {
-    getProductsByIdWithPrice(catalogProductIds)
-      .then(response => {
-        setCatalogProducts(response.data.products);
-      })
-      .catch(error => {
-        console.error("Error fetching products:", error);
-      });
-  });
-
-  return catalogProducts;
-};
-
-const ProductInfoFrame = ({ productIds, userProductsIds }) => {
-  const { removeProductId, removeUserProductId, isProductIdSelected } =
-    useProductContext();
-  const { userID } = useUserContext();
-  const userProducts = useFetchUserProducts(userID, userProductsIds);
-  const catalogProducts = useFetchCatalogProducts(productIds);
-  const allProducts = [...userProducts, ...catalogProducts];
-
+const ProductInfoFrame = ({ allProducts, onRemoveProduct }) => {
   const handleRemoveProduct = productId => {
-    if (isProductIdSelected(productId)) {
-      removeProductId(productId);
-    } else {
-      removeUserProductId(productId);
-    }
+    onRemoveProduct(productId);
   };
 
-  useEffect(() => {}, [removeProductId, removeUserProductId]);
+  useEffect(() => {}, [allProducts]);
 
   return (
     <div>
