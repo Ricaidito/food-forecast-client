@@ -25,13 +25,13 @@ const SingleUserPriceComparisonGraph = ({ productIds }) => {
     const monthlyPrices = {};
 
     // Group prices by month-year first
-    priceHistory.forEach(({ date, price }) => {
+    priceHistory.forEach(({ date, productPrice }) => {
       const monthYear = new Date(date).toISOString().slice(0, 7); // YYYY-MM format
 
       if (!monthlyPrices[monthYear]) {
-        monthlyPrices[monthYear] = { total: price, count: 1 };
+        monthlyPrices[monthYear] = { total: productPrice, count: 1 };
       } else {
-        monthlyPrices[monthYear].total += price;
+        monthlyPrices[monthYear].total += productPrice;
         monthlyPrices[monthYear].count += 1;
       }
     });

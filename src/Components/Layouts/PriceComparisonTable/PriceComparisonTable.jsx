@@ -1,13 +1,51 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { getProductsByIdWithPrice } from "../../../services/products.service";
+import useUserContext from "../../../Contexts/useUserContext";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
 
-const PriceComparisonTable = ({ productIds }) => {
-  const [products, setProducts] = useState([]);
+const useFetchUserProducts = (userID, productIds) => {
+  const [userProducts, setUserProducts] = useState([]);
+
+  useEffect(() => {
+    getUserProductsWithPriceHistory(userID, productIds)
+      .then(response => {
+        setUserProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching user products:", error);
+      });
+  }, [userID, productIds]);
+
+  return userProducts;
+};
+const useFetchCatalogProducts = catalogProductIds => {
+  const [catalogProducts, setCatalogProducts] = useState([]);
+
+  useEffect(() => {
+    getProductsByIdWithPrice(catalogProductIds)
+      .then(response => {
+        setCatalogProducts(response.data.products);
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+      });
+  });
+
+  return catalogProducts;
+};
+const PriceComparisonTable = ({ productIds, userProductIds }) => {
   const [uniqueMonths, setUniqueMonths] = useState([]);
-  let uniqueMonthsSet = new Set();
+  const { userID } = useUserContext();
+  const userProducts = useFetchUserProducts(userID, userProductIds);
+  const catalogProducts = useFetchCatalogProducts(productIds);
+  const allProducts = useMemo(
+    () => [...userProducts, ...catalogProducts],
+    [userProducts, catalogProducts]
+  );
 
-  const calculateAveragePrices = product => {
+  const calculateAveragePrices = useCallback(product => {
     const averagePrices = {};
+    let months = new Set();
 
     product.priceHistory.forEach(priceHistoryItem => {
       const date = new Date(priceHistoryItem.date);
@@ -16,45 +54,38 @@ const PriceComparisonTable = ({ productIds }) => {
         year: "numeric",
       });
 
-      if (averagePrices[month]) {
-        averagePrices[month].total += priceHistoryItem.productPrice;
-        averagePrices[month].count += 1;
-      } else {
-        averagePrices[month] = {
-          total: priceHistoryItem.productPrice,
-          count: 1,
-        };
-      }
+      months.add(month);
 
-      uniqueMonthsSet.add(month);
+      if (!averagePrices[month]) {
+        averagePrices[month] = { total: 0, count: 0 };
+      }
+      averagePrices[month].total += priceHistoryItem.productPrice;
+      averagePrices[month].count += 1;
     });
 
     for (const month in averagePrices) {
-      averagePrices[month] =
-        averagePrices[month].total / averagePrices[month].count;
+      const average = averagePrices[month].total / averagePrices[month].count;
+      averagePrices[month] = parseFloat(average.toFixed(2));
     }
 
     product.averagePrices = averagePrices;
-  };
+    return Array.from(months);
+  }, []);
 
-  const getProducts = productIds => {
-    uniqueMonthsSet = new Set();
-
-    getProductsByIdWithPrice(productIds).then(response => {
-      response.data.products.forEach(product => {
-        calculateAveragePrices(product);
-      });
-
-      setUniqueMonths(
-        Array.from(uniqueMonthsSet).sort((a, b) => new Date(a) - new Date(b))
-      );
-      setProducts(response.data.products);
+  const sortedUniqueMonths = useMemo(() => {
+    let tempUniqueMonthsSet = new Set();
+    allProducts.forEach(product => {
+      const productMonths = calculateAveragePrices(product);
+      productMonths.forEach(month => tempUniqueMonthsSet.add(month));
     });
-  };
+    return Array.from(tempUniqueMonthsSet).sort(
+      (a, b) => new Date(a) - new Date(b)
+    );
+  }, [allProducts, calculateAveragePrices]);
 
   useEffect(() => {
-    getProducts(productIds);
-  }, [productIds]);
+    setUniqueMonths(sortedUniqueMonths);
+  }, [sortedUniqueMonths]);
 
   return (
     <div>
@@ -72,7 +103,7 @@ const PriceComparisonTable = ({ productIds }) => {
           </tr>
         </thead>
         <tbody>
-          {products.map(product => (
+          {allProducts.map(product => (
             <tr key={product._id} className="border-b bg-white">
               <th
                 scope="row"
@@ -82,7 +113,9 @@ const PriceComparisonTable = ({ productIds }) => {
               </th>
               {uniqueMonths.map(month => (
                 <td key={month} className="px-6 py-4">
-                  {product.averagePrices[month] || ""}
+                  {product.averagePrices && product.averagePrices[month]
+                    ? product.averagePrices[month].toFixed(2)
+                    : ""}
                 </td>
               ))}
             </tr>

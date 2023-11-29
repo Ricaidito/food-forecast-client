@@ -6,14 +6,13 @@ import useUserContext from "../../../Contexts/useUserContext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
-import { generateReport } from "../../../services/report.service";
 import axios from "axios";
 
 const Dashboard = () => {
   const date = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("es-ES", options);
-  const { selectedProductIds } = useProductContext();
+  const { selectedProductIds, selectedUserProductIds } = useProductContext();
   const { userID, name } = useUserContext();
   const { hasSubscription } = useUserConfigContext();
 
@@ -128,7 +127,10 @@ const Dashboard = () => {
           <p className=" text-l mb-2 text-center font-medium uppercase text-black">
             Productos Seleccionados
           </p>
-          <ProductInfoFrame productIds={selectedProductIds} />
+          <ProductInfoFrame
+            productIds={selectedProductIds}
+            userProductsIds={selectedUserProductIds}
+          />
         </div>
       </div>
       <div className=" flex justify-center ">
@@ -138,14 +140,20 @@ const Dashboard = () => {
               Grafica de Comparacion
             </p>
             <div>
-              <PriceComparisonGraph productIds={selectedProductIds} />
+              <PriceComparisonGraph
+                productIds={selectedProductIds}
+                userProductsIds={selectedUserProductIds}
+              />
             </div>
           </div>
           <div className=" h-[30rem] w-[50rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
             <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
               Tabla de Comparacion
             </p>
-            <PriceComparisonTable productIds={selectedProductIds} />
+            <PriceComparisonTable
+              productIds={selectedProductIds}
+              userProductIds={selectedUserProductIds}
+            />
           </div>
         </div>
       </div>
