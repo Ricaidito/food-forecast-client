@@ -29,31 +29,71 @@ const Basket = () => {
 
   return (
     <div>
-      <div className=" pl-[8.88rem]">
-        <p className="text-3xl font-medium text-black">Canasta Basica</p>
-        <p className="text-2xl font-medium text-black">
-          Fecha Extraida: {convertDateFormat(basket.extractionDate)}
-        </p>
-        <p className="text-1xl font-medium text-black">
-          Precio total de la canasta: RD${basket.totalAmount}
-        </p>
+      <div className="m-0 p-0 pt-5 text-center">
+        <div className="container mx-auto px-6 py-5 text-center">
+          <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+            Canasta <span className="text-green-600">Básica</span>
+          </h1>
+          <p className="mb-2 text-base text-gray-600 md:text-lg">
+            Aquí podrás encontrar los productos de la canasta básica familiar y
+            podrás compararla con la canasta anterior.
+          </p>
+        </div>
       </div>
-      <div className=" pl-[8.88rem]">
-        <p className="text-3xl font-medium text-black">
-          Comparación con canasta anterior
-        </p>
-        <p className="text-2xl font-medium text-black">
-          Diferencia: RD${basketInfo.difference}
-        </p>
-        <p className="text-1xl font-medium text-black">
-          Precio total de la canasta anterior: RD${basketInfo.previousPrice}
-        </p>
-        <p className="text-1xl font-medium text-black">
-          Fecha Extraida: {convertDateFormat(basketInfo.previousExtractionDate)}
-        </p>
+
+      <div className="container mx-auto px-6 py-0">
+        <div className="mb-6 text-center">
+          <div className="mb-8 mt-4"></div>
+          <p className="text-black-600 text-xl font-medium">
+            Diferencia: {""}
+            <span
+              className={`text-xl font-bold ${
+                basketInfo.difference === 0 ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {basketInfo.difference === 0
+                ? "El precio se mantiene"
+                : `RD$${basketInfo.difference}`}
+            </span>
+          </p>
+        </div>
+        <hr className="border-gray-300" />{" "}
+        <div className="container mx-auto px-6">
+          <div className="-mx-3 flex flex-wrap">
+            <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
+              <div className="rounded-md bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl">
+                <span className="mb-2 mr-2 inline-block rounded bg-green-200 px-2.5 py-0.5 text-sm font-semibold text-green-800 dark:bg-green-800 dark:text-green-200">
+                  Canasta Actual
+                </span>
+                <p className="text-2xl font-medium text-black">
+                  Fecha Extraída: {convertDateFormat(basket.extractionDate)}
+                </p>
+                <p className="text-xl font-medium text-black">
+                  Precio total de la canasta: RD${basket.totalAmount}
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full px-3 md:w-1/2">
+              <div className="rounded-md bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl">
+                <span className="mb-2 mr-2 inline-block rounded bg-red-200 px-2.5 py-0.5 text-sm font-semibold text-red-800 dark:bg-red-800 dark:text-red-200">
+                  Canasta Anterior
+                </span>
+                <p className="text-xl font-medium text-black">
+                  Fecha Extraída:{" "}
+                  {convertDateFormat(basketInfo.previousExtractionDate)}
+                </p>
+                <p className="text-xl font-medium text-black">
+                  Precio total de la canasta: RD$
+                  {basketInfo.previousPrice}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className=" mt-8">
-        <Table>
+      <div className="mt-8">
+        <Table hoverable>
           <Table.Head>
             <Table.HeadCell>Imagen</Table.HeadCell>
             <Table.HeadCell>Nombre</Table.HeadCell>
