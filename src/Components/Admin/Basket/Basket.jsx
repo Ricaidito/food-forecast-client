@@ -90,9 +90,9 @@ const Basket = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <Table hoverable>
-          <Table.Head>
+      <div className="m-12">
+        <Table striped>
+          <Table.Head className="text-lg font-bold text-black">
             <Table.HeadCell>Imagen</Table.HeadCell>
             <Table.HeadCell>Nombre</Table.HeadCell>
             <Table.HeadCell>Precio</Table.HeadCell>
@@ -103,12 +103,16 @@ const Basket = () => {
                 <Table.Cell>
                   <img
                     src={item.imageUrl}
-                    className=" h-40 w-40 rounded-t-lg"
-                    alt="Foto producto"
+                    className="h-40 w-40 rounded-t-lg"
+                    alt={item.productName}
                   />
                 </Table.Cell>
-                <Table.Cell>{item.productName}</Table.Cell>
-                <Table.Cell>RD${item.productPrice}</Table.Cell>
+                <Table.Cell className="text-md font-bold text-green-600">
+                  {item.productName}
+                </Table.Cell>
+                <Table.Cell className="text-md font-bold text-black">
+                  RD${item.productPrice}
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
