@@ -147,7 +147,7 @@ const Settings = () => {
           <div className="h-[35rem] w-[30rem]">
             <div className="border-stroke shadow-default rounded-sm border bg-white">
               <div className="border-stroke dark:border-strokedark border-b px-7 py-4">
-                <h3 className="font-medium text-black dark:text-white">
+                <h3 className="text-xl font-bold text-gray-800">
                   Informacion Personal
                 </h3>
               </div>
@@ -237,9 +237,7 @@ const Settings = () => {
           <div className=" col-span-2 w-[35rem]">
             <div className="border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white">
               <div className="border-stroke dark:border-strokedark border-b px-7 py-4">
-                <h3 className="font-medium text-black dark:text-white">
-                  Tu Foto
-                </h3>
+                <h3 className="text-xl font-bold text-gray-800">Tu Foto</h3>
               </div>
               <div className="p-7">
                 <form onSubmit={handlePhotoChange}>
@@ -308,12 +306,12 @@ const Settings = () => {
       <div className=" flex justify-center space-x-[20rem]">
         {hasSubscription ? (
           <div className="overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className="mb-2 text-center text-xl font-medium uppercase">
-              Lista de Productos Seguidos
+            <p className="mb-2 text-center text-xl font-bold">
+              Lista de productos seguidos
             </p>
             {watchlist.length === 0 ? (
               <div>
-                <p className="text-md text-center font-medium uppercase">
+                <p className="text-center text-lg font-semibold">
                   No tienes productos en tu lista de seguimiento
                 </p>
               </div>
@@ -371,7 +369,7 @@ const Settings = () => {
           </div>
         ) : (
           <div className="overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className="mb-2 text-center text-xl font-medium uppercase">
+            <p className="mb-2 text-center text-xl font-bold">
               Para ver tu lista de productos seguidos debes ser premium
             </p>
             <div className=" mt-6 flex justify-center">
@@ -402,28 +400,36 @@ const Settings = () => {
 
         <div>
           <div className=" overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className=" text-center text-xl font-medium uppercase">
+            <p className=" text-center text-xl font-bold text-gray-800">
               Manejo de Suscripciones
             </p>
             <div className=" mt-4">
               {hasSubscription ? (
                 <>
                   <p>
-                    <span className="font-bold">Suscripcion Actual: </span>
-                    <span className="font-bold text-yellow-300">
+                    <span className="text-lg font-semibold text-gray-800">
+                      Suscripcion Actual:{" "}
+                    </span>
+                    <span className="mb-2 mr-2 inline-block rounded bg-yellow-200 px-2.5 py-0.5 text-sm font-semibold text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
                       Plan Premium 👑
                     </span>
                   </p>
                   <p>
-                    <span className=" font-bold">Próxima fecha de Pago: </span>
-                    {paymentDate}
+                    <span className="text-lg font-semibold text-gray-800">
+                      Próxima fecha de Pago:{" "}
+                    </span>
+                    <span className="font-semibold text-green-600">
+                      {paymentDate}
+                    </span>
                   </p>
                 </>
               ) : (
                 <>
                   <p>
                     <span className="font-bold">Suscripcion Actual: </span>
-                    Plan Gratuito
+                    <span className="mb-2 mr-2 inline-block rounded bg-green-200 px-2.5 py-0.5 text-sm font-semibold text-green-800 dark:bg-green-800 dark:text-green-200">
+                      Plan Gratuito
+                    </span>
                   </p>
                   <p className="pt-6">
                     ¿Quieres disfrutar de los beneficios de ser premium?
