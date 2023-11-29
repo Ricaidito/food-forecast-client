@@ -1,26 +1,58 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { getProductsByIdWithPrice } from "../../../services/products.service";
+import useUserContext from "../../../Contexts/useUserContext";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
 import { useProductContext } from "../../../Contexts/ProductContext";
 
-const ProductInfoFrame = ({ productIds }) => {
-  const { removeProductId } = useProductContext();
+const useFetchUserProducts = (userID, productIds) => {
+  const [userProducts, setUserProducts] = useState([]);
 
-  const [products, setProducts] = useState([]);
-
-  const getProducts = productsId => {
-    getProductsByIdWithPrice(productsId)
+  useEffect(() => {
+    getUserProductsWithPriceHistory(userID, productIds)
       .then(response => {
-        setProducts(response.data.products);
+        setUserProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching user products:", error);
+      });
+  }, [userID, productIds]);
+
+  return userProducts;
+};
+const useFetchCatalogProducts = catalogProductIds => {
+  const [catalogProducts, setCatalogProducts] = useState([]);
+
+  useEffect(() => {
+    getProductsByIdWithPrice(catalogProductIds)
+      .then(response => {
+        setCatalogProducts(response.data.products);
       })
       .catch(error => {
         console.error("Error fetching products:", error);
       });
+  });
+
+  return catalogProducts;
+};
+
+const ProductInfoFrame = ({ productIds, userProductsIds }) => {
+  const { removeProductId, removeUserProductId, isProductIdSelected } =
+    useProductContext();
+  const { userID } = useUserContext();
+  const userProducts = useFetchUserProducts(userID, userProductsIds);
+  const catalogProducts = useFetchCatalogProducts(productIds);
+  const allProducts = [...userProducts, ...catalogProducts];
+
+  const handleRemoveProduct = productId => {
+    if (isProductIdSelected(productId)) {
+      removeProductId(productId);
+    } else {
+      removeUserProductId(productId);
+    }
   };
 
-  useEffect(() => {
-    getProducts(productIds);
-  }, [productIds]);
+  useEffect(() => {}, [removeProductId, removeUserProductId]);
 
   return (
     <div>
@@ -41,7 +73,7 @@ const ProductInfoFrame = ({ productIds }) => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
+            {allProducts.map(product => (
               <tr
                 key={product._id}
                 className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -56,7 +88,7 @@ const ProductInfoFrame = ({ productIds }) => {
                 <td className="px-6 py-4 uppercase">{product.origin}</td>
                 <td className="px-6 py-4">
                   <button
-                    onClick={() => removeProductId(product._id)}
+                    onClick={() => handleRemoveProduct(product._id)}
                     className="rounded-md px-4 py-2 font-semibold"
                   >
                     <svg

@@ -1,30 +1,72 @@
 import { useEffect, useState, useRef } from "react";
 import { Chart } from "chart.js/auto";
 import { getProductsByIdWithPrice } from "../../../services/products.service";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
+import { useMemo } from "react";
+import useUserContext from "../../../Contexts/useUserContext";
 
-const PriceComparisonGraph = ({ productIds }) => {
-  const [products, setProducts] = useState([]);
-  const [chartInstance, setChartInstance] = useState(null);
-  const chartRef = useRef(null);
+const useFetchUserProducts = (userID, productIds) => {
+  const [userProducts, setUserProducts] = useState([]);
 
-  // Correct function usage
-  const getProducts = productIds => {
-    getProductsByIdWithPrice(productIds)
+  useEffect(() => {
+    getUserProductsWithPriceHistory(userID, productIds)
       .then(response => {
-        setProducts(response.data.products);
+        setUserProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching user products:", error);
+      });
+  }, [userID, productIds]);
+
+  return userProducts;
+};
+const useFetchCatalogProducts = catalogProductIds => {
+  const [catalogProducts, setCatalogProducts] = useState([]);
+
+  useEffect(() => {
+    getProductsByIdWithPrice(catalogProductIds)
+      .then(response => {
+        setCatalogProducts(response.data.products);
       })
       .catch(error => {
         console.error("Error fetching products:", error);
       });
-  };
+  });
 
-  // Function corrected to use 'productPrice' instead of 'price'
+  return catalogProducts;
+};
+
+const shouldUpdateChart = (newProducts, prevProducts) => {
+  const newProductsString = JSON.stringify(
+    newProducts.map(product => {
+      return { id: product._id, lastUpdate: product.lastUpdate };
+    })
+  );
+  const prevProductsString = JSON.stringify(
+    prevProducts.map(product => {
+      return { id: product._id, lastUpdate: product.lastUpdate };
+    })
+  );
+
+  return newProductsString !== prevProductsString;
+};
+
+const PriceComparisonGraph = ({ productIds, userProductsIds }) => {
+  const [chartInstance, setChartInstance] = useState(null);
+  const [prevProducts, setPrevProducts] = useState([]);
+  const chartRef = useRef(null);
+  const { userID } = useUserContext();
+  const userProducts = useFetchUserProducts(userID, userProductsIds);
+  const catalogProducts = useFetchCatalogProducts(productIds);
+  const allProducts = useMemo(() => {
+    return [...userProducts, ...catalogProducts];
+  }, [userProducts, catalogProducts]);
+
   const calculateAveragePricePerMonth = priceHistory => {
     const monthlyPrices = {};
 
-    // Group prices by month-year first
     priceHistory.forEach(({ date, productPrice }) => {
-      const monthYear = new Date(date).toISOString().slice(0, 7); // YYYY-MM format
+      const monthYear = new Date(date).toISOString().slice(0, 7);
 
       if (!monthlyPrices[monthYear]) {
         monthlyPrices[monthYear] = { total: productPrice, count: 1 };
@@ -34,7 +76,6 @@ const PriceComparisonGraph = ({ productIds }) => {
       }
     });
 
-    // Calculate averages and convert keys to Spanish month-year format
     const averages = {};
     Object.keys(monthlyPrices)
       .sort()
@@ -52,25 +93,20 @@ const PriceComparisonGraph = ({ productIds }) => {
     return averages;
   };
 
-  // Corrected to use 'productName'
   const generateChartData = products => {
-    // Calculate all possible labels from all products first to get the full range of dates
     let allDates = [];
     products.forEach(product => {
       const monthlyPrices = calculateAveragePricePerMonth(product.priceHistory);
       allDates = allDates.concat(Object.keys(monthlyPrices));
     });
 
-    // Remove duplicates and sort
     const uniqueDates = [...new Set(allDates)].sort(
       (a, b) => new Date(a) - new Date(b)
     );
 
-    // Generate dataset for each product
     const datasets = products.map(product => {
       const monthlyPrices = calculateAveragePricePerMonth(product.priceHistory);
       const data = uniqueDates.map(date => monthlyPrices[date] || null);
-      // Ensure color string length is 6
       const randomColor = (
         "000000" + Math.floor(Math.random() * 16777215).toString(16)
       ).slice(-6);
@@ -87,12 +123,11 @@ const PriceComparisonGraph = ({ productIds }) => {
   };
 
   useEffect(() => {
-    getProducts(productIds);
-  }, [productIds]);
-
-  useEffect(() => {
-    if (products.length > 0) {
-      const chartData = generateChartData(products);
+    if (
+      allProducts.length > 0 &&
+      shouldUpdateChart(allProducts, prevProducts)
+    ) {
+      const chartData = generateChartData(allProducts);
 
       if (chartInstance) {
         chartInstance.destroy();
@@ -124,8 +159,10 @@ const PriceComparisonGraph = ({ productIds }) => {
       });
 
       setChartInstance(newChartInstance);
+
+      setPrevProducts(allProducts);
     }
-  }, [products]);
+  }, [allProducts]);
 
   return (
     <div>
