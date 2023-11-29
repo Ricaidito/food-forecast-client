@@ -133,9 +133,16 @@ const Settings = () => {
 
   return (
     <div>
-      <p className=" my-7 text-center text-3xl font-bold uppercase text-black">
-        Configuracion
-      </p>
+      <div className="m-0 p-0 pt-5 text-center">
+        <div className="container mx-auto px-6 py-20 text-center">
+          <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+            Configuración de <span className="text-green-600">Usuario</span>
+          </h1>
+          <p className="mb-8 text-base text-gray-600 md:text-lg">
+            Espacio dedicado a la configuración de tu cuenta.
+          </p>
+        </div>
+      </div>
       <div>
         <div className=" flex justify-center space-x-[20rem]">
           <div className="h-[35rem] w-[30rem]">
@@ -153,7 +160,7 @@ const Settings = () => {
                         className="mb-1 block text-sm font-medium text-black dark:text-white"
                         htmlFor="fullName"
                       >
-                        Primer Nombre
+                        Nombre
                       </label>
                       <div>
                         <input
@@ -376,9 +383,9 @@ const Settings = () => {
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 330 330"
-                xml:space="preserve"
+                xmlSpace="preserve"
               >
                 <g id="XMLID_509_">
                   <path
