@@ -3,18 +3,74 @@ import PriceComparisonGraph from "../../Layouts/PriceComparisonGraph/PriceCompar
 import ProductInfoFrame from "../../Layouts/ProductInfoFrame/ProductInfoFrame";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import useUserContext from "../../../Contexts/useUserContext";
+import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
+import { getProductsByIdWithPrice } from "../../../services/products.service";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 import axios from "axios";
+
+const useFetchUserProducts = (userID, productIds) => {
+  const [userProducts, setUserProducts] = useState([]);
+
+  useEffect(() => {
+    if (productIds && productIds.length >= 0) {
+      getUserProductsWithPriceHistory(userID, productIds)
+        .then(response => {
+          setUserProducts(response.data);
+        })
+        .catch(error => {
+          console.error("Error fetching user products:", error);
+        });
+    }
+  }, [userID, productIds]);
+
+  return userProducts;
+};
+
+const useFetchCatalogProducts = catalogProductIds => {
+  const [catalogProducts, setCatalogProducts] = useState([]);
+
+  useEffect(() => {
+    if (catalogProductIds && catalogProductIds.length >= 0) {
+      getProductsByIdWithPrice(catalogProductIds)
+        .then(response => {
+          setCatalogProducts(response.data.products);
+        })
+        .catch(error => {
+          console.error("Error fetching products:", error);
+        });
+    }
+  }, [catalogProductIds]);
+
+  return catalogProducts;
+};
 
 const Dashboard = () => {
   const date = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("es-ES", options);
-  const { selectedProductIds, selectedUserProductIds } = useProductContext();
   const { userID, name } = useUserContext();
   const { hasSubscription } = useUserConfigContext();
+  const {
+    selectedProductIds,
+    selectedUserProductIds,
+    removeProductId,
+    removeUserProductId,
+    isProductIdSelected,
+  } = useProductContext();
+  const catalogProductIds = useFetchCatalogProducts(selectedProductIds);
+  const userProducts = useFetchUserProducts(userID, selectedUserProductIds);
+  const allProducts = [...catalogProductIds, ...userProducts];
+
+  const handleRemoveProduct = productId => {
+    if (isProductIdSelected(productId)) {
+      removeProductId(productId);
+    } else {
+      removeUserProductId(productId);
+    }
+  };
 
   const downloadReport = async () => {
     try {
@@ -138,8 +194,8 @@ const Dashboard = () => {
             Productos Seleccionados
           </p>
           <ProductInfoFrame
-            productIds={selectedProductIds}
-            userProductsIds={selectedUserProductIds}
+            allProducts={allProducts}
+            onRemoveProduct={handleRemoveProduct}
           />
         </div>
       </div>
@@ -150,20 +206,14 @@ const Dashboard = () => {
               Grafica de Comparacion
             </p>
             <div>
-              <PriceComparisonGraph
-                productIds={selectedProductIds}
-                userProductsIds={selectedUserProductIds}
-              />
+              <PriceComparisonGraph allProducts={allProducts} />
             </div>
           </div>
           <div className=" h-[30rem] w-[50rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
             <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
               Tabla de Comparacion
             </p>
-            <PriceComparisonTable
-              productIds={selectedProductIds}
-              userProductIds={selectedUserProductIds}
-            />
+            <PriceComparisonTable allProducts={allProducts} />
           </div>
         </div>
       </div>

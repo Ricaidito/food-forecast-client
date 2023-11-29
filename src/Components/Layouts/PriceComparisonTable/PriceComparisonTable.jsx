@@ -1,47 +1,7 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
-import { getProductsByIdWithPrice } from "../../../services/products.service";
-import useUserContext from "../../../Contexts/useUserContext";
-import { getUserProductsWithPriceHistory } from "../../../services/userProducts.service";
+import { useEffect, useState, useMemo, useCallback } from "react";
 
-const useFetchUserProducts = (userID, productIds) => {
-  const [userProducts, setUserProducts] = useState([]);
-
-  useEffect(() => {
-    getUserProductsWithPriceHistory(userID, productIds)
-      .then(response => {
-        setUserProducts(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching user products:", error);
-      });
-  }, [userID, productIds]);
-
-  return userProducts;
-};
-const useFetchCatalogProducts = catalogProductIds => {
-  const [catalogProducts, setCatalogProducts] = useState([]);
-
-  useEffect(() => {
-    getProductsByIdWithPrice(catalogProductIds)
-      .then(response => {
-        setCatalogProducts(response.data.products);
-      })
-      .catch(error => {
-        console.error("Error fetching products:", error);
-      });
-  });
-
-  return catalogProducts;
-};
-const PriceComparisonTable = ({ productIds, userProductIds }) => {
+const PriceComparisonTable = ({ allProducts }) => {
   const [uniqueMonths, setUniqueMonths] = useState([]);
-  const { userID } = useUserContext();
-  const userProducts = useFetchUserProducts(userID, userProductIds);
-  const catalogProducts = useFetchCatalogProducts(productIds);
-  const allProducts = useMemo(
-    () => [...userProducts, ...catalogProducts],
-    [userProducts, catalogProducts]
-  );
 
   const calculateAveragePrices = useCallback(product => {
     const averagePrices = {};
