@@ -110,7 +110,7 @@ const AdminNavBar = () => {
                   to="/admin/basket"
                   className="block rounded bg-transparent p-0 py-2 pl-3 pr-4 text-neutral-800 hover:text-green-700"
                 >
-                  Canasta Basica
+                  Canasta Básica
                 </Link>
               </li>
               <li>
@@ -124,7 +124,7 @@ const AdminNavBar = () => {
               {!hasSubscription && (
                 <>
                   <li
-                    className="block rounded bg-lime-600 p-0 py-2 pl-3 pr-4 font-bold text-white hover:bg-green-700"
+                    className="block rounded bg-green-600 p-0 py-2 pl-3 pr-4 font-bold text-white hover:bg-lime-600"
                     onClick={() => setShowModal(true)}
                   >
                     Premium 👑
@@ -151,7 +151,7 @@ const AdminNavBar = () => {
           ))}
         </ul>
         <button
-          className="mt-[3.75rem] h-[53px] w-[412px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-green-700 hover:shadow-lg"
+          className="mt-[3.75rem] h-[53px] w-[412px] rounded-[32px] bg-green-700 text-[17px] font-medium text-white shadow hover:bg-lime-600 hover:shadow-lg"
           onClick={handleSubscriptionClick}
         >
           Suscribirse

@@ -34,16 +34,15 @@ const Basket = () => {
           <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
             Canasta <span className="text-green-600">Básica</span>
           </h1>
-          <p className="mb-2 text-base text-gray-600 md:text-lg">
+          <p className="mb-1 text-base text-gray-600 md:text-lg">
             Aquí podrás encontrar los productos de la canasta básica familiar y
             podrás compararla con la canasta anterior.
           </p>
         </div>
       </div>
-
       <div className="container mx-auto px-6 py-0">
         <div className="mb-6 text-center">
-          <div className="mb-8 mt-4"></div>
+          <div className="mb-8 mt-2"></div>
           <p className="text-black-600 text-xl font-medium">
             Diferencia: {""}
             <span
@@ -52,7 +51,7 @@ const Basket = () => {
               }`}
             >
               {basketInfo.difference === 0
-                ? "El precio se mantiene"
+                ? "El precio se mantiene igual"
                 : `RD$${basketInfo.difference}`}
             </span>
           </p>
@@ -66,7 +65,7 @@ const Basket = () => {
                   Canasta Actual
                 </span>
                 <p className="text-2xl font-medium text-black">
-                  Fecha Extraída: {convertDateFormat(basket.extractionDate)}
+                  Fecha: {convertDateFormat(basket.extractionDate)}
                 </p>
                 <p className="text-xl font-medium text-black">
                   Precio total de la canasta: RD${basket.totalAmount}
@@ -79,9 +78,8 @@ const Basket = () => {
                 <span className="mb-2 mr-2 inline-block rounded bg-red-200 px-2.5 py-0.5 text-sm font-semibold text-red-800 dark:bg-red-800 dark:text-red-200">
                   Canasta Anterior
                 </span>
-                <p className="text-xl font-medium text-black">
-                  Fecha Extraída:{" "}
-                  {convertDateFormat(basketInfo.previousExtractionDate)}
+                <p className="text-2xl font-medium text-black">
+                  Fecha: {convertDateFormat(basketInfo.previousExtractionDate)}
                 </p>
                 <p className="text-xl font-medium text-black">
                   Precio total de la canasta: RD$

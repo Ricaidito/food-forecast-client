@@ -347,13 +347,13 @@ const MyProducts = () => {
           <div className="ml-[3.88rem] mt-6">
             <button
               onClick={() => setModalProductOpen(true)}
-              className=" mr-6 transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              className=" mr-6 transform rounded bg-green-700 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
             >
               Añadir Producto
             </button>
             <button
               onClick={() => setModalArchiveOpen(true)}
-              className="transform rounded bg-lime-600 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              className="transform rounded bg-green-700 px-4 py-2 font-medium text-white shadow transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-lime-600 hover:shadow-lg"
             >
               Añadir productos desde archivo
             </button>
@@ -376,7 +376,7 @@ const MyProducts = () => {
                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
               />
             </svg>
-            Delete All
+            Borrar todos los productos
           </button>
           <div className=" grid grid-cols-6 justify-items-center gap-6 pl-[3.88rem] pt-10">
             {productsFiltered.map(product => (
