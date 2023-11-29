@@ -35,7 +35,7 @@ const Dashboard = () => {
       link.click();
       link.remove();
 
-      toast.success("Descarga Exitosa!!!", {
+      toast.success("Descarga Exitosa!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -47,6 +47,16 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error("Error downloading the file", error);
+      toast.error("Ha ocurrido un error con la desgarga.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
