@@ -32,15 +32,15 @@ const PremiumSubscription = () => {
   ];
 
   return (
-    <div className=" mt-8">
-      <div className="m-0 p-0 pt-4 text-center">
+    <div className=" mt-1">
+      <div className="m-0 p-0 pt-2 text-center">
         <div className="container mx-auto px-6 py-20 text-center">
           <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
-            Adquiere tu plan
-            <span className="text-yellow-300"> Premium 👑</span>
+            ¡Adquiere tu plan
+            <span className="text-yellow-300"> Premium!</span>
           </h1>
           <p className="text-base text-gray-600 md:text-lg">
-            ¡Y accede a funciones adicionales en nuestra platafoma!
+            Accede a funciones adicionales en nuestra platafoma.
           </p>
         </div>
       </div>
@@ -71,7 +71,7 @@ const PremiumSubscription = () => {
 
         <div className="m-4 w-max">
           <p className="mb-3 text-center text-base font-bold text-gray-700">
-            ¡Notificaciones de cambio de precio!
+            Adquirir suscripción
           </p>
           <img
             src={stripeLogo}
@@ -81,6 +81,11 @@ const PremiumSubscription = () => {
               width: "48rem",
             }}
           />
+          <p>
+            Adquiere tu suscripción realizando el pago digital con Stripe, de
+            manera segura y sin transacciones fantamas. Cancela en cualquier
+            momento.
+          </p>
           <CheckoutForm />
         </div>
       </div>

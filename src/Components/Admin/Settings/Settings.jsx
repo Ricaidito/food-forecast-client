@@ -16,7 +16,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Settings.css";
-import { has } from "lodash";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState();
