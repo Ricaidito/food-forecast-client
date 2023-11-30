@@ -59,15 +59,16 @@ const ProductsCatalog = () => {
       </div>
 
       <div className=" pt-[2.71rem]">
-        <div className=" grid grid-cols-4 justify-items-center gap-y-12">
+        <div className=" m-4 flex flex-wrap justify-center">
           {products.map(p => (
             <div
               key={p._id}
-              className="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow"
+              className=" m-3 w-1/6 max-w-sm flex-shrink flex-grow rounded-lg border border-gray-200 bg-gray-100 shadow"
             >
+              <div className=" h-4 w-full rounded-t-lg bg-green-600"></div>
               <Link to={`/admin/product/${p._id}`}>
                 <img
-                  className="rounded-t-lg p-8"
+                  className=" rounded-t-lg  p-8"
                   src={p.imageUrl}
                   alt="product image"
                 />
@@ -130,7 +131,7 @@ const ProductsCatalog = () => {
             Página {currentPage}
           </span>
         </span>
-        <div className="xs:mt-0 mt-2 inline-flex">
+        <div className="xs:mt-0 mb-4 mt-2 inline-flex">
           <button
             onClick={() => handlePreviousPage()}
             className="flex h-10 items-center justify-center rounded-l bg-green-700 px-4 text-base font-medium text-white hover:bg-green-900"
