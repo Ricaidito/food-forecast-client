@@ -451,7 +451,7 @@ const MyProducts = () => {
                       </div>
                     )}
                     <button
-                      onClick={() => deleteProduct(userID, product._id)}
+                      onClick={() => deleteOneUserProduct(product._id)}
                       className=" text-red-500 hover:text-red-600"
                     >
                       <TrashIcon className="h-5 w-5" />
