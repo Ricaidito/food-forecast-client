@@ -75,7 +75,7 @@ const ProductsCatalog = () => {
               </Link>
               <div className="px-5 pb-5">
                 <a href="#">
-                  <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                  <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-green-600">
                     {p.productName}
                   </h5>
                 </a>

@@ -387,12 +387,13 @@ const MyProducts = () => {
               </div>
             </div>
           </div>
-          <div className=" grid grid-cols-6 justify-items-center gap-6 pl-[3.88rem] pt-10">
+          <div className=" m-6 flex flex-wrap justify-center">
             {productsFiltered.map(product => (
               <div
                 key={product._id}
-                className="w-full rounded-lg border border-gray-200 bg-white shadow"
+                className="bg-grey-100 m-3 w-1/6 max-w-sm flex-shrink flex-grow rounded-lg border border-gray-200 shadow-lg"
               >
+                <div className=" h-4 w-full rounded-t-lg bg-green-600"></div>
                 <div className="px-5 pb-5">
                   <div>
                     <Link to={`/admin/myproducts/${product._id}`}>
@@ -400,7 +401,7 @@ const MyProducts = () => {
                         bufferImage={product.productImage}
                         className="rounded-t-lg p-8"
                       />
-                      <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                      <h5 className="w-[141.11px] text-2xl font-bold leading-tight tracking-tight text-green-600">
                         {product.productName}
                       </h5>
                       <div className="mb-3 mt-2.5 flex items-center">
