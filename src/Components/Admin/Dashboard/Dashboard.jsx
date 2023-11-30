@@ -184,23 +184,21 @@ const Dashboard = () => {
 
   return (
     <div className="m-2 p-2">
-      <div className=" mb-12 mt-2">
-        <p className="text-center text-3xl font-bold text-black">DASHBOARD</p>
+      <div className="container mx-auto px-6 py-20 text-center">
+        <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+          ¡Bienvenid@, <span className=" text-green-600">{name}!</span>
+        </h1>
       </div>
-      <div className=" flex justify-between">
-        <div className=" overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
-          <p className=" text-xl font-medium uppercase">
-            Bienvenido a Food Forecast, {name}!
-          </p>
-          <p>
-            Aqui podras ver la comparacion de los productos que seleccionaste
-          </p>
-          <p className=" uppercase">
-            <span className=" font-semibold">FECHA: </span>
-            {formattedDate}
-          </p>
+      <div className=" flex flex-wrap ">
+        <div className=" w-1/10 m-3 flex-shrink flex-grow overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
           {hasSubscription ? (
             <>
+              <p className=" mb-3 text-xl font-bold">Reporteria</p>
+              <p className=" uppercase">
+                <span className=" font-semibold">FECHA: </span>
+                {formattedDate}
+              </p>
+
               <button
                 className="mt-4 h-9 w-[11rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
                 onClick={downloadReport}
@@ -213,39 +211,70 @@ const Dashboard = () => {
               />
             </>
           ) : (
-            <button
-              className="text-white-500 mt-4 h-9 w-[11rem] cursor-not-allowed rounded-md bg-gray-300 font-medium text-white shadow"
-              onClick={() => subscriptionError()}
-            >
-              Descargar Reporte
-            </button>
+            <div className="container mx-auto px-6 py-20 text-center">
+              <div>
+                <p className="text-center text-2xl font-bold">
+                  Para generar reportes debes ser{" "}
+                  <Link to="/admin/subscriptions">
+                    <span className=" cursor-pointer text-yellow-300">
+                      Premium
+                    </span>
+                  </Link>
+                </p>
+                <div className=" mt-10 flex justify-center">
+                  <svg
+                    fill="#000000"
+                    height="60px"
+                    width="60px"
+                    version="1.1"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 330 330"
+                    xmlSpace="preserve"
+                  >
+                    <g id="XMLID_509_">
+                      <path
+                        id="XMLID_510_"
+                        d="M65,330h200c8.284,0,15-6.716,15-15V145c0-8.284-6.716-15-15-15h-15V85c0-46.869-38.131-85-85-85
+		S80,38.131,80,85v45H65c-8.284,0-15,6.716-15,15v170C50,323.284,56.716,330,65,330z M180,234.986V255c0,8.284-6.716,15-15,15
+		s-15-6.716-15-15v-20.014c-6.068-4.565-10-11.824-10-19.986c0-13.785,11.215-25,25-25s25,11.215,25,25
+		C190,223.162,186.068,230.421,180,234.986z M110,85c0-30.327,24.673-55,55-55s55,24.673,55,55v45H110V85z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
           )}
         </div>
-        <div className=" h-[20rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
-          <p className=" text-l mb-2 text-center font-medium uppercase text-black">
+        <div className=" w-1/10 m-3 h-[25rem] flex-shrink flex-grow overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-2 text-center text-xl font-bold text-black">
             Productos Seleccionados
           </p>
-          <ProductInfoFrame
-            allProducts={allProducts}
-            onRemoveProduct={handleRemoveProduct}
-          />
+          <div>
+            <ProductInfoFrame
+              allProducts={allProducts}
+              onRemoveProduct={handleRemoveProduct}
+            />
+          </div>
         </div>
       </div>
-      <div className=" flex justify-center ">
-        <div className=" mt-10">
-          <div className=" mb-4 w-[50rem] overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
-              Grafica de Comparacion
-            </p>
-            <div>
-              <PriceComparisonGraph allProducts={allProducts} />
-            </div>
-          </div>
-          <div className=" h-[30rem] w-[50rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
-              Tabla de Comparacion
-            </p>
+      <div className=" flex flex-wrap">
+        <div className=" w-1/10 m-3 h-[25rem] flex-shrink flex-grow overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-3 text-center text-xl font-bold text-black">
+            Tabla de Comparacion
+          </p>
+          <div>
             <PriceComparisonTable allProducts={allProducts} />
+          </div>
+        </div>
+        <div className=" w-1/10 m-3 flex-shrink flex-grow rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-3 text-center text-xl font-bold text-black">
+            Grafica de Comparacion
+          </p>
+          <div>
+            <PriceComparisonGraph allProducts={allProducts} />
           </div>
         </div>
       </div>

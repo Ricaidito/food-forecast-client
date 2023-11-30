@@ -66,7 +66,7 @@ const ReportHistory = ({ userReports, fetchReports }) => {
   return (
     <div className="p-4">
       <p className="mb-2 font-bold">Historial de reportes generados:</p>
-      <ul className="space-y-2">
+      <ul className="h-[7rem] space-y-2 overflow-hidden overflow-y-auto">
         {userReports.map(report => (
           <li key={report._id} className="flex items-center justify-between">
             <DocumentTextIcon className="h-5 w-5 text-gray-500" />

@@ -183,7 +183,7 @@ const MyProductInfo = () => {
             </div>
           </div>
           <div className=" mt-6 w-[30rem] bg-gray-100 p-6">
-            <div className="mx-auto w-full max-w-2xl rounded bg-white p-6 shadow-md">
+            <div className="mx-auto h-[30rem] w-full max-w-2xl overflow-y-auto rounded bg-white p-6 shadow-md">
               {product.priceHistory && product.priceHistory.length > 0 && (
                 <Table>
                   <Table.Head>

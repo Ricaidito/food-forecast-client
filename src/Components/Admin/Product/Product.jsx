@@ -134,8 +134,8 @@ const Product = () => {
             </div>
 
             <div className="px-5 pb-5 pt-6">
-              <h5 className="mb-6 w-[171.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-                Nombre: {productWithPrice.productName}
+              <h5 className="mb-6 w-[171.11px] text-xl font-bold leading-tight tracking-tight text-green-600">
+                {productWithPrice.productName}
               </h5>
               <span className="text-lg font-bold text-gray-700">
                 Precio actual: RD${latestPrice}

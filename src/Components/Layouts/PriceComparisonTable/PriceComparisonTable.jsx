@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
+import { Table } from "flowbite-react";
 
 const PriceComparisonTable = ({ allProducts }) => {
   const [uniqueMonths, setUniqueMonths] = useState([]);
@@ -49,39 +50,33 @@ const PriceComparisonTable = ({ allProducts }) => {
 
   return (
     <div>
-      <table className="w-full text-left text-sm text-gray-500 rtl:text-right">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Nombre del Producto
-            </th>
-            {uniqueMonths.map(month => (
-              <th key={month} scope="col" className="px-6 py-3">
-                {month}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
+      <Table striped>
+        <Table.Head className="text-xs font-bold text-black">
+          <Table.HeadCell>Nombre del Producto</Table.HeadCell>
+          {uniqueMonths.map(month => (
+            <Table.HeadCell key={month}>{month}</Table.HeadCell>
+          ))}
+        </Table.Head>
+        <Table.Body>
           {allProducts.map(product => (
-            <tr key={product._id} className="border-b bg-white">
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-gray-900"
-              >
+            <Table.Row key={product._id}>
+              <Table.Cell className="text-md font-bold text-lime-600">
                 {product.productName}
-              </th>
+              </Table.Cell>
               {uniqueMonths.map(month => (
-                <td key={month} className="px-6 py-4">
+                <Table.Cell
+                  key={month}
+                  className="text-md font-bold uppercase text-black"
+                >
                   {product.averagePrices && product.averagePrices[month]
                     ? product.averagePrices[month].toFixed(2)
                     : ""}
-                </td>
+                </Table.Cell>
               ))}
-            </tr>
+            </Table.Row>
           ))}
-        </tbody>
-      </table>
+        </Table.Body>
+      </Table>
     </div>
   );
 };

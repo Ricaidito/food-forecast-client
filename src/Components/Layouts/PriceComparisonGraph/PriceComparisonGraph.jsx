@@ -102,14 +102,14 @@ const PriceComparisonGraph = ({ allProducts }) => {
               display: true,
               title: {
                 display: true,
-                text: "Month",
+                text: "Mes",
               },
             },
             y: {
               display: true,
               title: {
                 display: true,
-                text: "Average Price",
+                text: "Precio Promedio",
               },
               beginAtZero: true,
             },
@@ -124,8 +124,8 @@ const PriceComparisonGraph = ({ allProducts }) => {
   }, [allProducts]);
 
   return (
-    <div>
-      <canvas ref={chartRef} />
+    <div className="flex min-h-[300px] w-full min-w-[300px] items-center justify-center">
+      <canvas ref={chartRef} className=" h-full w-full" />
     </div>
   );
 };

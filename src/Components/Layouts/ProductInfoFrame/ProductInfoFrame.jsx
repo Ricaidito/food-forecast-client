@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Table } from "flowbite-react";
 import { useProductContext } from "../../../Contexts/ProductContext";
 
 const ProductInfoFrame = ({ allProducts, onRemoveProduct }) => {
@@ -11,59 +12,50 @@ const ProductInfoFrame = ({ allProducts, onRemoveProduct }) => {
   return (
     <div>
       <div>
-        <table className="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Nombre del Producto
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Categoria
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Origen
-              </th>
-              <th scope="col" className="px-6 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table striped>
+          <Table.Head className="text-xs font-bold text-black">
+            <Table.HeadCell>Nombre del Producto</Table.HeadCell>
+            <Table.HeadCell>Categoria</Table.HeadCell>
+            <Table.HeadCell>Origen</Table.HeadCell>
+            <Table.HeadCell></Table.HeadCell>
+          </Table.Head>
+          <Table.Body>
             {allProducts.map(product => (
-              <tr
-                key={product._id}
-                className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
-              >
-                <th
-                  scope="row"
-                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-                >
+              <Table.Row key={product._id}>
+                <Table.Cell className="text-md font-bold text-green-600">
                   {product.productName}
-                </th>
-                <td className="px-6 py-4 uppercase">{product.category}</td>
-                <td className="px-6 py-4 uppercase">{product.origin}</td>
-                <td className="px-6 py-4">
+                </Table.Cell>
+                <Table.Cell className="text-md font-bold uppercase text-black">
+                  {product.category}
+                </Table.Cell>
+                <Table.Cell className="text-md font-bold uppercase text-black">
+                  {product.origin}
+                </Table.Cell>
+                <Table.Cell className="text-md font-bold text-black">
                   <button
                     onClick={() => handleRemoveProduct(product._id)}
                     className="rounded-md px-4 py-2 font-semibold"
                   >
                     <svg
-                      className="h-8 w-8 text-black hover:text-red-600"
-                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                       fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
                       stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      className="h-6 w-6"
                     >
-                      {" "}
-                      <line x1="18" y1="6" x2="6" y2="18" />{" "}
-                      <line x1="6" y1="6" x2="18" y2="18" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
-                </td>
-              </tr>
+                </Table.Cell>
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
+          </Table.Body>
+        </Table>
       </div>
     </div>
   );
