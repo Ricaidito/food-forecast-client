@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { is, tr } from "date-fns/locale";
 
 const CheckoutForm = () => {
   const { userID } = useUserContext();
@@ -99,6 +98,7 @@ const CheckoutForm = () => {
       }
     } catch (err) {
       console.error("Error during subscription:", err);
+      subscriptionError();
       setIsLoading(false);
     }
   };
