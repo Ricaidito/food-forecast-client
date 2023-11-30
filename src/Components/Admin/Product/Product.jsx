@@ -12,6 +12,10 @@ import { Table } from "flowbite-react";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-toastify";
 import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
+import {
+  getDisplayCategory,
+  getDisplayOrigin,
+} from "../../../utils/displayUtils";
 
 const Product = () => {
   const { productId } = useParams();
@@ -49,7 +53,6 @@ const Product = () => {
 
   const handleWatchlist = event => {
     if (event.target.checked) {
-      console.log("hola!!");
       addProductWatchlist(userID, productId).then(() => {
         setIsChecked(true);
         toast.success("Producto añadido a tu lista de seguimiento.", {
@@ -138,16 +141,16 @@ const Product = () => {
                 {productWithPrice.productName}
               </h5>
               <span className="text-lg font-bold text-gray-700">
-                Precio actual: RD${latestPrice}
+                Precio actual: ${latestPrice} DOP
               </span>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Categoria: {productWithPrice.category}
+                  Categoria: {getDisplayCategory(productWithPrice.category)}
                 </p>
               </div>
               <div className="mb-3 mt-2.5 flex items-center">
                 <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Lugar: {productWithPrice.origin}
+                  {getDisplayOrigin(productWithPrice.origin)}
                 </p>
               </div>
               {hasSubscription && (

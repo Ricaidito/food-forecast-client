@@ -4,6 +4,11 @@ import SearchBar from "../../Layouts/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import CategoryFilter from "../../Layouts/CategoryFilter/CategoryFilter";
+import OriginsFilter from "../../Layouts/OriginFilter/OriginFilter";
+import {
+  getDisplayOrigin,
+  getDisplayCategory,
+} from "../../../utils/displayUtils";
 import "./ProductsCatalog.css";
 
 const ProductsCatalog = () => {
@@ -12,9 +17,10 @@ const ProductsCatalog = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState(null);
+  const [origin, setOrigin] = useState(null);
 
-  const getAllProducts = (page, selectedCategory) => {
-    return getProducts(page, selectedCategory);
+  const getAllProducts = (page, selectedCategory, selectedOrigin) => {
+    return getProducts(page, selectedCategory, selectedOrigin);
   };
 
   const handleNextPage = () => {
@@ -23,19 +29,16 @@ const ProductsCatalog = () => {
   };
 
   const handlePreviousPage = () => {
-    if (currentPage === 1) {
-      return;
-    }
-
+    if (currentPage === 1) return;
     setCurrentPage(currentPage - 1);
     window.scrollTo(0, 0);
   };
 
   useEffect(() => {
-    getAllProducts(currentPage, category).then(response => {
+    getAllProducts(currentPage, category, origin).then(response => {
       setProducts(response.data);
     });
-  }, [currentPage, category]);
+  }, [currentPage, category, origin]);
 
   return (
     <div>
@@ -56,10 +59,20 @@ const ProductsCatalog = () => {
         <div className=" mt-[2.71rem] flex w-96 justify-center">
           <CategoryFilter switchCategory={setCategory} />
         </div>
+        <div className=" mt-[2.71rem] flex w-96 justify-center">
+          <OriginsFilter switchOrigin={setOrigin} />
+        </div>
       </div>
 
       <div className=" pt-[2.71rem]">
         <div className=" m-4 flex flex-wrap justify-center">
+          {products.length === 0 && (
+            <div>
+              <p className="mb-8 text-base text-gray-600 md:text-lg">
+                No se encontraron productos con los filtros seleccionados 😔
+              </p>
+            </div>
+          )}
           {products.map(p => (
             <div
               key={p._id}
@@ -75,18 +88,18 @@ const ProductsCatalog = () => {
               </Link>
               <div className="px-5 pb-5">
                 <a href="#">
-                  <h5 className="w-[141.11px] text-base font-bold leading-tight tracking-tight text-green-600">
+                  <h5 className="w-[141.11px] text-lg font-bold leading-tight tracking-tight text-green-600">
                     {p.productName}
                   </h5>
                 </a>
                 <div className="mb-3 mt-2.5 flex items-center">
                   <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
-                    Categoria: {p.category}
+                    Categoria: {getDisplayCategory(p.category)}
                   </p>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-gray-700">
-                    Lugar: {p.origin}
+                    {getDisplayOrigin(p.origin)}
                   </span>
                   {!isProductIdSelected(p._id) ? (
                     <div onClick={() => addProductId(p._id)}>

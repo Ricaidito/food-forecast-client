@@ -12,7 +12,6 @@ const SingleUserPriceComparisonGraph = ({ productIds }) => {
   const getProducts = productIds => {
     getUserProductsWithPriceHistory(userID, [productIds])
       .then(response => {
-        console.log(response.data);
         setProducts(response.data);
       })
       .catch(error => {

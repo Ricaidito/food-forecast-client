@@ -128,14 +128,6 @@ const Login = () => {
                 placeholder="*********"
               />
             </div>
-            <div className="mb-6 grid justify-items-end">
-              <a
-                href="#"
-                className="text-xs font-light text-neutral-600 hover:text-blue-500"
-              >
-                ¿Olvidó su contraseña?
-              </a>
-            </div>
             <button
               type="submit"
               className={`w-full rounded-lg p-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${

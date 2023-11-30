@@ -52,7 +52,7 @@ const Basket = () => {
             >
               {basketInfo.difference === 0
                 ? "El precio se mantiene igual"
-                : `RD$${basketInfo.difference}`}
+                : `$${basketInfo.difference} DOP`}
             </span>
           </p>
         </div>
@@ -68,7 +68,7 @@ const Basket = () => {
                   Fecha: {convertDateFormat(basket.extractionDate)}
                 </p>
                 <p className="text-xl font-medium text-black">
-                  Precio total de la canasta: RD${basket.totalAmount}
+                  Precio total de la canasta: ${basket.totalAmount} DOP
                 </p>
               </div>
             </div>
@@ -82,8 +82,7 @@ const Basket = () => {
                   Fecha: {convertDateFormat(basketInfo.previousExtractionDate)}
                 </p>
                 <p className="text-xl font-medium text-black">
-                  Precio total de la canasta: RD$
-                  {basketInfo.previousPrice}
+                  Precio total de la canasta: ${basketInfo.previousPrice} DOP
                 </p>
               </div>
             </div>
@@ -111,7 +110,7 @@ const Basket = () => {
                   {item.productName}
                 </Table.Cell>
                 <Table.Cell className="text-md font-bold text-black">
-                  RD${item.productPrice}
+                  ${item.productPrice} DOP
                 </Table.Cell>
               </Table.Row>
             ))}

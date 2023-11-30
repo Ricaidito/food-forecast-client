@@ -180,9 +180,9 @@ const Dashboard = () => {
         <div className=" w-1/10 m-3 flex-shrink flex-grow overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
           {hasSubscription ? (
             <>
-              <p className=" mb-3 text-xl font-bold">Reporteria 👑</p>
-              <p className=" uppercase">
-                <span className=" font-semibold">FECHA: </span>
+              <p className="mb-3 text-xl font-bold">Reportería 👑</p>
+              <p>
+                <span className=" font-semibold">Fecha: </span>
                 {formattedDate}
               </p>
 
@@ -190,7 +190,7 @@ const Dashboard = () => {
                 className="mt-4 h-9 w-[11rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
                 onClick={downloadReport}
               >
-                Descargar Reporte
+                Descargar reporte
               </button>
               <ReportHistory
                 userReports={userReports}
@@ -237,7 +237,7 @@ const Dashboard = () => {
         </div>
         <div className=" w-1/10 m-3 h-[25rem] flex-shrink flex-grow overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
           <p className=" mb-2 text-center text-xl font-bold text-black">
-            Productos Seleccionados
+            Productos seleccionados
           </p>
           <div>
             <ProductInfoFrame
@@ -250,7 +250,7 @@ const Dashboard = () => {
       <div className=" flex flex-wrap">
         <div className=" w-1/10 m-3 h-[25rem] flex-shrink flex-grow overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
           <p className=" mb-3 text-center text-xl font-bold text-black">
-            Tabla de Comparacion
+            Tabla de comparación
           </p>
           <div>
             <PriceComparisonTable allProducts={allProducts} />
@@ -258,7 +258,7 @@ const Dashboard = () => {
         </div>
         <div className=" w-1/10 m-3 flex-shrink flex-grow rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
           <p className=" mb-3 text-center text-xl font-bold text-black">
-            Grafica de Comparacion
+            Gráfica de comparación
           </p>
           <div>
             <PriceComparisonGraph allProducts={allProducts} />

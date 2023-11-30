@@ -89,8 +89,6 @@ const CheckoutForm = () => {
             return;
           }
         }
-
-        console.log("Subscription successful!");
         refetchUserConfig();
         setIsLoading(false);
         subscriptionSuccess();

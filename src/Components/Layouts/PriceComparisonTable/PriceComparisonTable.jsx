@@ -66,10 +66,10 @@ const PriceComparisonTable = ({ allProducts }) => {
               {uniqueMonths.map(month => (
                 <Table.Cell
                   key={month}
-                  className="text-md font-bold uppercase text-black"
+                  className="text-md font-bold text-black"
                 >
                   {product.averagePrices && product.averagePrices[month]
-                    ? product.averagePrices[month].toFixed(2)
+                    ? `$${product.averagePrices[month].toFixed(2)} DOP`
                     : ""}
                 </Table.Cell>
               ))}
