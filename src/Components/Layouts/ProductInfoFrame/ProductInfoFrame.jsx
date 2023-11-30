@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Table } from "flowbite-react";
-import { useProductContext } from "../../../Contexts/ProductContext";
+import {
+  getDisplayCategory,
+  getDisplayOrigin,
+} from "../../../utils/displayUtils";
 
 const ProductInfoFrame = ({ allProducts, onRemoveProduct }) => {
   const handleRemoveProduct = productId => {
@@ -25,11 +28,11 @@ const ProductInfoFrame = ({ allProducts, onRemoveProduct }) => {
                 <Table.Cell className="text-md font-bold text-green-600">
                   {product.productName}
                 </Table.Cell>
-                <Table.Cell className="text-md font-bold uppercase text-black">
-                  {product.category}
+                <Table.Cell className="text-md font-bold text-black">
+                  {getDisplayCategory(product.category)}
                 </Table.Cell>
-                <Table.Cell className="text-md font-bold uppercase text-black">
-                  {product.origin}
+                <Table.Cell className="text-md font-bold text-black">
+                  {getDisplayOrigin(product.origin)}
                 </Table.Cell>
                 <Table.Cell className="text-md font-bold text-black">
                   <button

@@ -121,10 +121,9 @@ const Settings = () => {
 
   const cancelSubscription = async () => {
     try {
-      const response = await axios.get(
+      await axios.get(
         `https://food-forecast-server.azurewebsites.net/payments/cancel-subscription/${userID}`
       );
-      console.log(response.data.message);
       refetchUserConfig();
     } catch (error) {
       console.error("Error cancelling subscription:", error);

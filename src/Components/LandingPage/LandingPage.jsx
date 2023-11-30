@@ -17,7 +17,7 @@ const LandingPage = () => {
       <div id="subscription">
         <Subscription />
       </div>
-      <div id="faq" className=" mt-[9.5rem]">
+      <div id="faq" className="mt-[9.5rem]">
         <FrequentQuestion />
       </div>
       <div>

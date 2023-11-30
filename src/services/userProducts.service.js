@@ -68,6 +68,18 @@ const updateUserProductsPrice = (userID, productID, price, date) => {
   );
 };
 
+const updateUserPoduct = (userId, productId, productData) => {
+  return axios.put(
+    `${url}/user-products/${userId}/products/${productId}`,
+    productData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+};
+
 export {
   addProduct,
   getUserProducts,
@@ -78,4 +90,5 @@ export {
   updateUserProductsPrice,
   getUserProductById,
   getUserProductsWithPriceHistory,
+  updateUserPoduct,
 };

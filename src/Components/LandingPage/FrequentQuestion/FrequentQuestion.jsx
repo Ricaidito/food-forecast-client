@@ -28,7 +28,7 @@ const FrequentQuestion = () => {
   ];
 
   return (
-    <div className="grid h-[787px] justify-items-center bg-lime-600 bg-opacity-25 pt-[8.81rem]">
+    <div className="grid h-[787px] justify-items-center bg-lime-600 bg-opacity-25 p-6 pt-[8.81rem]">
       <div>
         <p className="text-2xl font-bold text-stone-900">
           Preguntas frecuentes

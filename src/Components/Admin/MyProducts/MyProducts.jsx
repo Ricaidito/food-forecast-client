@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import TemplateImage from "../../../images/TemplateImage.png";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { getDisplayCategory } from "../../../utils/displayUtils";
 
 const MyProducts = () => {
   const productInitialState = {
@@ -406,11 +407,11 @@ const MyProducts = () => {
                       </h5>
                       <div className="mb-3 mt-2.5 flex items-center">
                         <p className=" w-[141.11px] text-lg font-bold leading-tight tracking-tight text-gray-700">
-                          Categoria: {product.category}
+                          Categoria: {getDisplayCategory(product.category)}
                         </p>
                       </div>
                       <span className="text-lg font-bold text-gray-700">
-                        Precio: RD${product.price}
+                        ${product.price} DOP
                       </span>
                     </Link>
                   </div>

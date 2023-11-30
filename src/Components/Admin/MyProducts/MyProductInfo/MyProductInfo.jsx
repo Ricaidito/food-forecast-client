@@ -7,8 +7,10 @@ import SingleUserPriceComparisonGraph from "../../../Layouts/SingleUserPriceComp
 import {
   updateUserProductsPrice,
   getUserProductById,
+  updateUserPoduct,
 } from "../../../../services/userProducts.service";
 import { upperCase } from "lodash";
+import CATEGORIES from "../../../../categories/productCategories";
 
 const MyProductInfo = () => {
   const { userID } = useUserContext();
@@ -26,6 +28,7 @@ const MyProductInfo = () => {
     origin: "",
     productImage: null,
   });
+
   const handleDateChange = date => {
     return date.toISOString();
   };
@@ -38,7 +41,6 @@ const MyProductInfo = () => {
   const getProduct = () => {
     getUserProductById(userID, productId).then(response => {
       const data = response.data;
-      console.log(data);
       if (data && data.priceHistory) {
         data.priceHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
         data.priceHistory = data.priceHistory.map(history => {
@@ -67,6 +69,18 @@ const MyProductInfo = () => {
     );
   };
 
+  const handleUpdateProduct = async () => {
+    const formData = new FormData();
+    formData.append("productName", product.productName);
+    formData.append("category", product.category);
+    formData.append("origin", product.origin);
+    formData.append("productImage", product.productImage);
+    await updateUserPoduct(userID, productId, formData);
+    getProduct();
+  };
+
+  console.log(product);
+
   return (
     <div className=" mb-12">
       <div className=" mt-6 flex justify-center space-x-[20rem]">
@@ -89,27 +103,32 @@ const MyProductInfo = () => {
             </div>
 
             <div className="mb-4">
-              <label className="mb-2 block text-gray-600">
-                Precio Mas Reciente:
-              </label>
+              <label className="mb-2 block text-gray-600">Precio actual:</label>
               <input
-                type="number"
-                className="w-full rounded border p-2"
-                value={product.priceHistory[0].price}
+                type="text"
+                className="w-full rounded border bg-gray-100 p-2"
+                value={`$${product.priceHistory[0].price} DOP`}
                 disabled
               />
             </div>
 
             <div className="mb-4">
               <label className="mb-2 block text-gray-600">Categoría:</label>
-              <input
-                type="text"
-                className="w-full rounded border p-2"
+              <select
+                id="products"
+                className="w-full rounded-lg border p-2"
                 value={product.category}
                 onChange={e =>
                   setProduct({ ...product, category: e.target.value })
                 }
-              />
+              >
+                <option defaultValue>Escoge la categoria</option>
+                {CATEGORIES.map(({ categoryValue, text }) => (
+                  <option key={categoryValue} value={categoryValue}>
+                    {text}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="mb-4">
@@ -140,8 +159,11 @@ const MyProductInfo = () => {
             </div>
 
             <div>
-              <button className="rounded bg-lime-600 p-2 text-white hover:bg-lime-700">
-                Guardar Cambios
+              <button
+                className="rounded bg-lime-600 p-2 text-white hover:bg-lime-700"
+                onClick={() => handleUpdateProduct()}
+              >
+                Guardar cambios
               </button>
             </div>
           </div>
@@ -149,9 +171,9 @@ const MyProductInfo = () => {
         <div>
           <div className=" w-[30rem] bg-gray-100 p-6">
             <div className="mx-auto w-full max-w-2xl rounded bg-white p-6 shadow-md">
-              <p className=" text-lg font-semibold">Actualizacion de Precio</p>
+              <p className=" text-lg font-semibold">Actualización de precio</p>
               <div className=" my-4">
-                <p className=" mb-2 block text-gray-600">Precio Nuevo:</p>
+                <p className=" mb-2 block text-gray-600">Precio nuevo:</p>
                 <input
                   type="number"
                   step="0.01"
@@ -162,7 +184,7 @@ const MyProductInfo = () => {
               </div>
               <div>
                 <p className="mb-2 block text-gray-600">
-                  Fecha de Actualizacion:
+                  Fecha de actualizacion:
                 </p>
                 <Datepicker
                   name="updateDate"
@@ -177,7 +199,7 @@ const MyProductInfo = () => {
                   className="rounded bg-lime-600 p-2 text-white hover:bg-lime-700"
                   onClick={handleUpdatePrice}
                 >
-                  Actualizar Precio
+                  Actualizar precio
                 </button>
               </div>
             </div>
@@ -194,7 +216,7 @@ const MyProductInfo = () => {
                     {product.priceHistory.map((history, index) => (
                       <Table.Row key={index}>
                         <Table.Cell>{history.date}</Table.Cell>
-                        <Table.Cell>{history.price}</Table.Cell>
+                        <Table.Cell>${history.price} DOP</Table.Cell>
                       </Table.Row>
                     ))}
                   </Table.Body>
@@ -206,7 +228,7 @@ const MyProductInfo = () => {
       </div>
       <div className=" mt-5">
         <p className="mb-2 block text-center font-semibold text-gray-600">
-          Grafica De Comportamiento
+          Grafica de comportamiento
         </p>
         <div className=" mt-4 flex justify-center">
           <div className=" w-[60rem] ">
