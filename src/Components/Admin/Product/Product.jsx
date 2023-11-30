@@ -128,78 +128,85 @@ const Product = () => {
       ?.productPrice | 0;
 
   return (
-    <div className=" mb-12 mt-10 flex justify-center ">
-      <div className=" grid grid-cols-1">
-        <div>
-          <div className=" grid w-full grid-cols-2 rounded-lg border border-gray-200 bg-white shadow">
-            <div>
-              <img src={productWithPrice.imageUrl} alt="" />
-            </div>
+    <div>
+      <div className="container mx-auto px-6 py-20 text-center">
+        <h1 className="mb-2 text-4xl font-bold text-gray-800 md:text-6xl">
+          Info de <span className="text-green-600">Producto</span>
+        </h1>
+      </div>
+      <div className=" mb-12 mt-10 flex flex-wrap justify-center ">
+        <div className=" grid grid-cols-1">
+          <div>
+            <div className=" flex flex-wrap justify-center rounded-lg border border-gray-200 bg-white shadow">
+              <div className=" w-1/10 flex-shrink flex-grow">
+                <img src={productWithPrice.imageUrl} alt="" />
+              </div>
 
-            <div className="px-5 pb-5 pt-6">
-              <h5 className="mb-6 w-[171.11px] text-xl font-bold leading-tight tracking-tight text-green-600">
-                {productWithPrice.productName}
-              </h5>
-              <span className="text-lg font-bold text-gray-700">
-                Precio actual: ${latestPrice} DOP
-              </span>
-              <div className="mb-3 mt-2.5 flex items-center">
-                <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  Categoria: {getDisplayCategory(productWithPrice.category)}
-                </p>
-              </div>
-              <div className="mb-3 mt-2.5 flex items-center">
-                <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
-                  {getDisplayOrigin(productWithPrice.origin)}
-                </p>
-              </div>
-              {hasSubscription && (
-                <div>
-                  <div className=" mb-2">
-                    <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
-                      ¿Recibir notificaciones de este producto al correo?
-                    </p>
-                  </div>
-                  <label className="relative inline-flex cursor-pointer items-center">
-                    <input
-                      type="checkbox"
-                      value=""
-                      className="peer sr-only"
-                      checked={isChecked}
-                      onChange={handleWatchlist}
-                    />
-                    <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
-                  </label>
+              <div className="px-5 pb-5 pt-6">
+                <h5 className="w-1/10 mb-6 flex-shrink flex-grow text-xl font-bold leading-tight tracking-tight text-green-600">
+                  {productWithPrice.productName}
+                </h5>
+                <span className="text-lg font-bold text-gray-700">
+                  Precio actual: ${latestPrice} DOP
+                </span>
+                <div className="mb-3 mt-2.5 flex items-center">
+                  <p className="  text-lg font-bold leading-tight tracking-tight text-gray-700">
+                    Categoria: {getDisplayCategory(productWithPrice.category)}
+                  </p>
                 </div>
-              )}
+                <div className="mb-3 mt-2.5 flex items-center">
+                  <p className=" text-lg font-bold leading-tight tracking-tight text-gray-700">
+                    {getDisplayOrigin(productWithPrice.origin)}
+                  </p>
+                </div>
+                {hasSubscription && (
+                  <div>
+                    <div className=" mb-2">
+                      <p className="text-md font-bold leading-tight tracking-tight text-gray-700">
+                        ¿Recibir notificaciones de este producto al correo?
+                      </p>
+                    </div>
+                    <label className="relative inline-flex cursor-pointer items-center">
+                      <input
+                        type="checkbox"
+                        value=""
+                        className="peer sr-only"
+                        checked={isChecked}
+                        onChange={handleWatchlist}
+                      />
+                      <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
+                    </label>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <div className=" mt-10">
-          <div className=" flex w-full justify-center gap-x-32">
-            <div>
-              <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
-                Historial de Precios
-              </h3>
-              <div className=" h-[20rem] w-[20rem] overflow-y-auto">
-                <Table>
-                  <Table.Head>
-                    <Table.HeadCell>Fecha</Table.HeadCell>
-                    <Table.HeadCell>Precio</Table.HeadCell>
-                  </Table.Head>
-                  <Table.Body>
-                    {productWithPrice.priceHistory.map(item => (
-                      <Table.Row key={item._id}>
-                        <Table.Cell>{item.date}</Table.Cell>
-                        <Table.Cell>{item.productPrice}</Table.Cell>
-                      </Table.Row>
-                    ))}
-                  </Table.Body>
-                </Table>
+          <div className=" mt-10">
+            <div className=" flex w-full justify-center gap-x-32">
+              <div>
+                <h3 className="mb-6 w-[141.11px] text-base font-bold leading-tight tracking-tight text-gray-700">
+                  Historial de Precios
+                </h3>
+                <div className=" h-[20rem] w-[20rem] overflow-y-auto">
+                  <Table>
+                    <Table.Head>
+                      <Table.HeadCell>Fecha</Table.HeadCell>
+                      <Table.HeadCell>Precio</Table.HeadCell>
+                    </Table.Head>
+                    <Table.Body>
+                      {productWithPrice.priceHistory.map(item => (
+                        <Table.Row key={item._id}>
+                          <Table.Cell>{item.date}</Table.Cell>
+                          <Table.Cell>{item.productPrice}</Table.Cell>
+                        </Table.Row>
+                      ))}
+                    </Table.Body>
+                  </Table>
+                </div>
               </div>
-            </div>
-            <div className=" h-[20rem] w-[40rem]">
-              <SinglePriceComparisonGraph productIds={productId} />
+              <div className=" h-[20rem] w-[40rem]">
+                <SinglePriceComparisonGraph productIds={productId} />
+              </div>
             </div>
           </div>
         </div>

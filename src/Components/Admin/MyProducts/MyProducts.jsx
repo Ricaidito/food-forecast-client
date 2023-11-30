@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { useProductContext } from "../../../Contexts/ProductContext";
 import TemplateImage from "../../../images/TemplateImage.png";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 import { getDisplayCategory } from "../../../utils/displayUtils";
 
 const MyProducts = () => {
@@ -69,6 +70,16 @@ const MyProducts = () => {
       .then(response => {
         console.log(response.status);
         getProducts();
+        toast.success("Producto Eliminado Correctamente!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch(error => {
         console.log(error);
@@ -90,6 +101,16 @@ const MyProducts = () => {
         console.log(response.status);
         getProducts();
         setNewProduct(productInitialState);
+        toast.success("Precio Añadido Correctamente!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch(error => {
         console.log(error);
@@ -126,7 +147,16 @@ const MyProducts = () => {
   const handleFileUpload = () => {
     uploadUserProductsTemplate(userID, file).then(() => {
       getProducts();
-      alert("File uploaded successfully!");
+      toast.success("Productos Añadidos Correctamente!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setModalOpen(false);
     });
   };
