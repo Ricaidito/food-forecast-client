@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "flowbite-react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "./Settings.css";
 
 const Settings = () => {
@@ -53,6 +54,17 @@ const Settings = () => {
   const handleDelete = productID => {
     deleteProductWatchlist(userID, productID).then(() => {
       getWatchlist();
+
+      toast.success("Producto Eliminado Exitosamente!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     });
   };
 
@@ -75,7 +87,6 @@ const Settings = () => {
         const response = await updateUserImage(userID, {
           profilePicture: imageData.profilePicture,
         });
-        if (response.status === 201) alert("Imagen Actualizada Exitosamente!");
         getUserImage(userID).then(response => {
           setUserImage(response.data);
           window.location.reload();
@@ -94,6 +105,16 @@ const Settings = () => {
       setUpdatedName(updatedName);
       setUpdatedLastName(updatedLastName);
       update(updatedName, updatedLastName);
+      toast.success("Campos Actualizados Correctamente!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     });
   };
 
@@ -410,7 +431,7 @@ const Settings = () => {
           <p className=" text-center text-xl font-bold text-gray-800">
             Manejo de Suscripciones
           </p>
-          <div className=" mt-4">
+          <div className=" mt-4 text-center">
             {hasSubscription ? (
               <>
                 <p>

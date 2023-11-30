@@ -11,6 +11,7 @@ import {
 } from "../../../../services/userProducts.service";
 import { upperCase } from "lodash";
 import CATEGORIES from "../../../../categories/productCategories";
+import { toast } from "react-toastify";
 
 const MyProductInfo = () => {
   const { userID } = useUserContext();
@@ -65,6 +66,16 @@ const MyProductInfo = () => {
     updateUserProductsPrice(userID, productId, newPrice, updateDate).then(
       () => {
         getProduct();
+        toast.success("Precio Actualizado Correctamente!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     );
   };
@@ -77,12 +88,27 @@ const MyProductInfo = () => {
     formData.append("productImage", product.productImage);
     await updateUserPoduct(userID, productId, formData);
     getProduct();
+    toast.success("Cambios Realizados Correctamente!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   console.log(product);
 
   return (
     <div className=" mb-12">
+      <div className="container mx-auto px-6 py-20 text-center">
+        <h1 className="mb-2 text-4xl font-bold text-gray-800 md:text-6xl">
+          Info de Mi <span className="text-green-600">Producto</span>
+        </h1>
+      </div>
       <div className=" mt-6 flex justify-center space-x-[20rem]">
         <div className="bg-gray-100 p-6">
           <div className="mx-auto w-full rounded bg-white p-6 shadow-md">

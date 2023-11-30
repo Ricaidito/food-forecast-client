@@ -1,5 +1,6 @@
 // ProductContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const ProductContext = createContext();
 
@@ -39,11 +40,31 @@ export function ProductProvider({ children }) {
   const addProductId = productId => {
     if (!selectedProductIds.includes(productId)) {
       setSelectedProductIds(prevIds => [...prevIds, productId]);
+      toast.success("Producto Añadido Correctamente!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const removeProductId = productId => {
     setSelectedProductIds(prevIds => prevIds.filter(id => id !== productId));
+    toast.success("Producto Eliminado Correctamente!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const clearProductIds = () => {
@@ -58,6 +79,16 @@ export function ProductProvider({ children }) {
   const addUserProductId = userProductId => {
     if (!selectedUserProductIds.includes(userProductId)) {
       setSelectedUserProductIds(prevIds => [...prevIds, userProductId]);
+      toast.success("Producto Añadido Correctamente!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -65,6 +96,16 @@ export function ProductProvider({ children }) {
     setSelectedUserProductIds(prevIds =>
       prevIds.filter(id => id !== userProductId)
     );
+    toast.success("Producto Eliminado Correctamente!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const clearUserProductIds = () => {
