@@ -124,7 +124,7 @@ const AdminNavBar = () => {
               {!hasSubscription && (
                 <>
                   <li
-                    className="block rounded bg-green-600 p-0 py-2 pl-3 pr-4 font-bold text-white hover:bg-lime-600"
+                    className="block rounded bg-lime-600 p-0 py-2 pl-3 pr-4 font-bold text-white hover:bg-green-600"
                     onClick={() => setShowModal(true)}
                   >
                     Premium 👑

@@ -25,15 +25,21 @@ const DownloadButton = ({ downloadUrl, fileName, children }) => {
     <div className="mt-5 flex justify-center">
       <button
         onClick={handleDownload}
-        className="inline-flex items-center rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+        className="inline-flex items-center rounded bg-lime-600 px-4 py-2 font-bold text-white hover:bg-green-600"
       >
         <svg
-          className="mr-2 h-4 w-4 fill-current"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="mr-1 h-6 w-6"
         >
-          <path d="M.5 9.5a.5.5 0 0 1 .5-.5h4.5V1.5a.5.5 0 0 1 1 0v7.5h4.5a.5.5 0 0 1 0 1H9v4.5a.5.5 0 0 1-1 0V10H1a.5.5 0 0 1-.5-.5zM4 0a.5.5 0 0 1 .5.5V8h3V.5a.5.5 0 0 1 1 0V8h3.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H1a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5H4V.5A.5.5 0 0 1 4 0z" />
+          <path
+            fillRule="evenodd"
+            d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+            clipRule="evenodd"
+          />
         </svg>
+
         {children}
       </button>
     </div>

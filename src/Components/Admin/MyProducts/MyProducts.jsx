@@ -237,7 +237,7 @@ const MyProducts = () => {
             </div>
             <button
               type="submit"
-              className="mt-[1.75rem] h-[53px] w-[229px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+              className="mt-[1.75rem] h-[53px] w-[229px] rounded-[32px] bg-lime-600 text-[17px] font-medium text-white shadow hover:bg-green-600"
               onClick={event => handleAddProduct(event)}
             >
               Añadir Producto
@@ -290,7 +290,7 @@ const MyProducts = () => {
             <div className=" mt-3 flex justify-center">
               <button
                 type="button"
-                className="mb-2 mr-2 rounded-lg bg-green-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+                className="mb-2 mr-2 rounded-lg bg-lime-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-600"
                 onClick={handleFileUpload}
               >
                 Subir Archivo
