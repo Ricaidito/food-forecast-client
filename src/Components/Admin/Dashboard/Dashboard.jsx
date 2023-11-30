@@ -184,17 +184,14 @@ const Dashboard = () => {
 
   return (
     <div className="m-2 p-2">
-      <div className=" mb-12 mt-2">
-        <p className="text-center text-3xl font-bold text-black">DASHBOARD</p>
+      <div className="container mx-auto px-6 py-20 text-center">
+        <h1 className="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
+          ¡Bienvenid@, <span className=" text-green-600">{name}!</span>
+        </h1>
       </div>
-      <div className=" flex justify-between">
-        <div className=" overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
-          <p className=" text-xl font-medium uppercase">
-            Bienvenido a Food Forecast, {name}!
-          </p>
-          <p>
-            Aqui podras ver la comparacion de los productos que seleccionaste
-          </p>
+      <div className=" flex justify-between ">
+        <div className=" w-[25rem] overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
+          <p className=" mb-3 text-xl font-bold">Reporteria</p>
           <p className=" uppercase">
             <span className=" font-semibold">FECHA: </span>
             {formattedDate}
@@ -221,30 +218,32 @@ const Dashboard = () => {
             </button>
           )}
         </div>
-        <div className=" h-[20rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
-          <p className=" text-l mb-2 text-center font-medium uppercase text-black">
-            Productos Seleccionados
+        <div className=" w-[50rem] rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-3 text-center text-xl font-bold text-black">
+            Grafica de Comparacion
           </p>
-          <ProductInfoFrame
-            allProducts={allProducts}
-            onRemoveProduct={handleRemoveProduct}
-          />
+          <div>
+            <PriceComparisonGraph allProducts={allProducts} />
+          </div>
         </div>
       </div>
-      <div className=" flex justify-center ">
-        <div className=" mt-10">
-          <div className=" mb-4 w-[50rem] overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
-              Grafica de Comparacion
-            </p>
-            <div>
-              <PriceComparisonGraph allProducts={allProducts} />
-            </div>
+      <div className=" mt-10 flex justify-between">
+        <div className=" mb-4 h-[25rem] w-[38.5rem] overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-2 text-center text-xl font-bold text-black">
+            Productos Seleccionados
+          </p>
+          <div>
+            <ProductInfoFrame
+              allProducts={allProducts}
+              onRemoveProduct={handleRemoveProduct}
+            />
           </div>
-          <div className=" h-[30rem] w-[50rem] overflow-hidden overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
-            <p className=" text-md mb-3 text-center font-semibold uppercase text-black">
-              Tabla de Comparacion
-            </p>
+        </div>
+        <div className=" h-[25rem] w-[38.5rem] overflow-hidden overflow-x-auto overflow-y-auto rounded-[10px] border border-lime-900 border-opacity-25 p-6 shadow-lg">
+          <p className=" mb-3 text-center text-xl font-bold text-black">
+            Tabla de Comparacion
+          </p>
+          <div>
             <PriceComparisonTable allProducts={allProducts} />
           </div>
         </div>

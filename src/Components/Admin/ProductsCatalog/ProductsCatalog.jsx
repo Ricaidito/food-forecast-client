@@ -7,7 +7,8 @@ import CategoryFilter from "../../Layouts/CategoryFilter/CategoryFilter";
 import "./ProductsCatalog.css";
 
 const ProductsCatalog = () => {
-  const { isProductIdSelected, addProductId } = useProductContext();
+  const { isProductIdSelected, addProductId, removeProductId } =
+    useProductContext();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState(null);
@@ -58,7 +59,7 @@ const ProductsCatalog = () => {
       </div>
 
       <div className=" pt-[2.71rem]">
-        <div className=" grid grid-cols-6 justify-items-center gap-y-6">
+        <div className=" grid grid-cols-4 justify-items-center gap-y-12">
           {products.map(p => (
             <div
               key={p._id}
@@ -86,15 +87,36 @@ const ProductsCatalog = () => {
                   <span className="text-lg font-bold text-gray-700">
                     Lugar: {p.origin}
                   </span>
-                  {!isProductIdSelected(p._id) && (
-                    <button
-                      onClick={() => {
-                        addProductId(p._id);
-                      }}
-                      className="rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                    >
-                      Comparar
-                    </button>
+                  {!isProductIdSelected(p._id) ? (
+                    <div onClick={() => addProductId(p._id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
+                        />
+                      </svg>
+                    </div>
+                  ) : (
+                    <div onClick={() => removeProductId(p._id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" />
+                        <path d="M3.265 10.602l7.668 4.129a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z" />
+                        <path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z" />
+                      </svg>
+                    </div>
                   )}
                 </div>
               </div>
