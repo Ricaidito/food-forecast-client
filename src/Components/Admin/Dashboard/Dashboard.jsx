@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserConfigContext } from "../../../Contexts/UserConfigContext";
 import axios from "axios";
+import ReportHistory from "../ReportHistory/ReportHistory";
 
 const useFetchUserProducts = (userID, productIds) => {
   const [userProducts, setUserProducts] = useState([]);
@@ -63,6 +64,7 @@ const Dashboard = () => {
   const catalogProductIds = useFetchCatalogProducts(selectedProductIds);
   const userProducts = useFetchUserProducts(userID, selectedUserProductIds);
   const allProducts = [...catalogProductIds, ...userProducts];
+  const [userReports, setUserReports] = useState([]);
 
   const handleRemoveProduct = productId => {
     if (isProductIdSelected(productId)) {
@@ -70,6 +72,14 @@ const Dashboard = () => {
     } else {
       removeUserProductId(productId);
     }
+  };
+
+  const generateReportName = () => {
+    const currentDate = new Date();
+    const reportDate = currentDate.toLocaleDateString().split("/");
+    const [day, month, year] = reportDate;
+    const formattedDate = `${year}_${month}_${day}`;
+    return `reporte_${formattedDate}.pdf`;
   };
 
   const downloadReport = async () => {
@@ -86,30 +96,52 @@ const Dashboard = () => {
       const downloadUrl = window.URL.createObjectURL(pdfBlob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `foodForecastReport ${formattedDate}.pdf`);
+      link.setAttribute("download", generateReportName());
       document.body.appendChild(link);
       link.click();
       link.remove();
 
-      toast.success("Descarga Exitosa!!!", {
+      toast.success("¡Descarga Exitosa!", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-        draggable: true,
+        draggable: false,
         progress: undefined,
         theme: "light",
       });
+      fetchUserReports();
     } catch (error) {
       console.error("Error downloading the file", error);
+      toast.error("Ha ocurrido un error con la desgarga.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const fetchUserReports = async () => {
+    try {
+      const reports = await axios.get(
+        `https://food-forecast-server.azurewebsites.net/reports/history/${userID}`
+      );
+      setUserReports(reports.data);
+    } catch (error) {
+      toast.error("Error cargando historial de reportes");
     }
   };
 
   const subscriptionError = () => {
     toast.warn("Necesita la Suscripción Premium!", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -118,6 +150,10 @@ const Dashboard = () => {
       theme: "light",
     });
   };
+
+  useEffect(() => {
+    fetchUserReports();
+  }, []);
 
   if (selectedProductIds.length === 0) {
     return (
@@ -164,12 +200,18 @@ const Dashboard = () => {
             {formattedDate}
           </p>
           {hasSubscription ? (
-            <button
-              className="mt-4 h-9 w-[11rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
-              onClick={downloadReport}
-            >
-              Descargar Reporte
-            </button>
+            <>
+              <button
+                className="mt-4 h-9 w-[11rem] rounded-md bg-lime-600 font-medium text-white shadow hover:bg-white hover:text-lime-600 hover:shadow-lg"
+                onClick={downloadReport}
+              >
+                Descargar Reporte
+              </button>
+              <ReportHistory
+                userReports={userReports}
+                fetchReports={fetchUserReports}
+              />
+            </>
           ) : (
             <button
               className="text-white-500 mt-4 h-9 w-[11rem] cursor-not-allowed rounded-md bg-gray-300 font-medium text-white shadow"
