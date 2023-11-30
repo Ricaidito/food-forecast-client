@@ -138,19 +138,6 @@ const Dashboard = () => {
     }
   };
 
-  const subscriptionError = () => {
-    toast.warn("Necesita la Suscripción Premium!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-
   useEffect(() => {
     fetchUserReports();
   }, []);
@@ -193,7 +180,7 @@ const Dashboard = () => {
         <div className=" w-1/10 m-3 flex-shrink flex-grow overflow-hidden rounded-[10px] border border-lime-900 border-opacity-25 p-6 text-start shadow-lg">
           {hasSubscription ? (
             <>
-              <p className=" mb-3 text-xl font-bold">Reporteria</p>
+              <p className=" mb-3 text-xl font-bold">Reporteria 👑</p>
               <p className=" uppercase">
                 <span className=" font-semibold">FECHA: </span>
                 {formattedDate}

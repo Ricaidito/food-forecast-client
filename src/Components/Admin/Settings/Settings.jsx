@@ -164,7 +164,7 @@ const Settings = () => {
                       </label>
                       <div>
                         <input
-                          className=" pl-11.5 pr-4.5 w-full rounded border bg-gray-100 py-3 text-black focus-visible:outline-none"
+                          className=" pl-11.5 pr-4.5 w-full rounded border bg-gray-100 py-3 text-black"
                           type="email"
                           name="emailAddress"
                           id="emailAddress"
@@ -308,7 +308,7 @@ const Settings = () => {
         {hasSubscription ? (
           <div className=" w-1/10 m-3 flex-shrink flex-grow rounded-[10px] border border-lime-900 border-opacity-25 bg-white p-6 shadow-lg">
             <p className="mb-2 text-center text-xl font-bold">
-              Lista de productos seguidos
+              Lista de productos seguidos 👑
             </p>
             {watchlist.length === 0 ? (
               <div className=" container px-6 py-20">
@@ -321,7 +321,6 @@ const Settings = () => {
                 <Table striped>
                   <Table.Head className="bg-gray-50 text-xs uppercase text-gray-700">
                     <Table.HeadCell className="px-6 py-3"></Table.HeadCell>{" "}
-                    {/* Empty HeadCell for image */}
                     <Table.HeadCell className="px-6 py-3 font-bold">
                       Nombre del Producto
                     </Table.HeadCell>
@@ -329,7 +328,6 @@ const Settings = () => {
                       Origen
                     </Table.HeadCell>
                     <Table.HeadCell className="px-6 py-3"></Table.HeadCell>{" "}
-                    {/* Empty HeadCell for the button */}
                   </Table.Head>
                   <Table.Body>
                     {watchlist.map(product => (
