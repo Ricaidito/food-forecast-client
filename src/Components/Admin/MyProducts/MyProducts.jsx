@@ -145,6 +145,18 @@ const MyProducts = () => {
   };
 
   const handleFileUpload = () => {
+    if (!file) {
+      toast.error("No has seleccionado un archivo!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+      return;
+    }
     uploadUserProductsTemplate(userID, file).then(() => {
       getProducts();
       toast.success("Productos Añadidos Correctamente!", {
